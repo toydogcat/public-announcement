@@ -2,8 +2,14 @@ const announcements = [
     {
         title: "Initial Multimedia Announcement",
         date: "2026-06-03",
-        path: "x7r2p9.html",
+        path: "announcements/scfz8mg3.html",
         preview: "This announcement contains the processed video segments of the initial briefing."
+    },
+    {
+        title: "馬祖資訊專頁 - 被遺忘的海上軍事王國",
+        date: "2026-06-04",
+        path: "announcements/ci55za4g.html",
+        preview: "馬祖 = 戰地遺跡 + 閩東文化 + 海蝕地景 + 藍眼淚。深入了解這座海上軍事王國。"
     }
 ];
 
