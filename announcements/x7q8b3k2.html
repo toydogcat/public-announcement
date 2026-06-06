@@ -78,14 +78,14 @@
         }
         .barcode-visual {
             font-family: 'Libre Barcode 39', cursive;
-            font-size: 54px;
+            font-size: 60px;
             line-height: 1;
             color: #000000;
             letter-spacing: 0;
             margin: 0;
             user-select: none;
-            /* 輕微拉伸以提高部分舊款掃描器的識別率 */
-            transform: scaleY(1.1);
+            /* 水平與垂直雙向拉伸，使條碼更寬更長，提高掃描器辨識率 */
+            transform: scale(1.15, 1.35);
             transform-origin: center;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             white-space: nowrap;
@@ -204,8 +204,8 @@
             padding: 1.8rem 1.5rem 2.8rem;
         }
         .barcode-display-wrapper.vertical .barcode-visual {
-            transform: rotate(90deg) scaleY(1.1) translateX(12px);
-            font-size: 46px;
+            transform: rotate(90deg) scale(1.15, 2.7) translateX(14px);
+            font-size: 50px;
         }
         .barcode-display-wrapper.vertical .barcode-text-code {
             bottom: 0.8rem;
@@ -223,7 +223,7 @@
                 padding: 2rem 1rem 3.2rem;
             }
             .barcode-visual {
-                font-size: 42px;
+                font-size: 46px;
             }
             .barcode-text-code {
                 font-size: 1.25rem;
@@ -233,8 +233,8 @@
                 padding: 1.5rem 1rem 2.5rem;
             }
             .barcode-display-wrapper.vertical .barcode-visual {
-                transform: rotate(90deg) scaleY(1.1) translateX(10px);
-                font-size: 36px;
+                transform: rotate(90deg) scale(1.15, 2.7) translateX(11px);
+                font-size: 40px;
             }
             .barcode-display-wrapper.vertical .barcode-text-code {
                 bottom: 0.6rem;
@@ -243,7 +243,7 @@
         }
         @media (max-width: 380px) {
             .barcode-visual {
-                font-size: 34px;
+                font-size: 38px;
             }
             .barcode-text-code {
                 font-size: 1.15rem;
@@ -252,8 +252,8 @@
                 min-height: 310px;
             }
             .barcode-display-wrapper.vertical .barcode-visual {
-                transform: rotate(90deg) scaleY(1.1) translateX(8px);
-                font-size: 32px;
+                transform: rotate(90deg) scale(1.15, 2.7) translateX(9px);
+                font-size: 35px;
             }
             .barcode-display-wrapper.vertical .barcode-text-code {
                 bottom: 0.5rem;
@@ -262,7 +262,7 @@
         }
         @media (max-width: 320px) {
             .barcode-visual {
-                font-size: 28px;
+                font-size: 32px;
             }
             .barcode-text-code {
                 font-size: 1rem;
@@ -271,8 +271,8 @@
                 min-height: 270px;
             }
             .barcode-display-wrapper.vertical .barcode-visual {
-                transform: rotate(90deg) scaleY(1.1) translateX(6px);
-                font-size: 26px;
+                transform: rotate(90deg) scale(1.15, 2.7) translateX(7px);
+                font-size: 29px;
             }
             .barcode-display-wrapper.vertical .barcode-text-code {
                 bottom: 0.5rem;
