@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>進階網路安全防護：從偵測到主動防禦</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .security-tip {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background: rgba(0, 242, 255, 0.05);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .tool-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed var(--accent-color);
+        }
+        .tool-link:hover {
+            opacity: 0.8;
+            border-bottom-style: solid;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+        .checklist-item::before {
+            content: '🛡️';
+            margin-right: 0.8rem;
+        }
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        .code-block {
+            background: #000;
+            color: #00f2ff;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 0.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>進階網路安全防護指南</h1>
+            <p style="opacity: 0.5;">發佈日期：2026-06-06 | 專業分析與主動防禦篇</p>
+            <div class="qr-container" style="margin-top: 1.5rem;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://toydogcat.github.io/public-announcement/announcements/r4e2w9q1.html" alt="QR Code" style="background: white; padding: 8px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <p style="font-size: 0.7rem; opacity: 0.3; margin-top: 0.5rem;">掃描分享此專業指南</p>
+            </div>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <div class="card">
+            <h2>一、 網頁預先偵測工具</h2>
+            <p>在點擊任何可疑連結前，先利用全球安全社群的力量進行分析。</p>
+            
+            <div class="security-tip">
+                <p><span class="highlight">VirusTotal (URL Tab):</span></p>
+                <p>輸入網址即可調動全球超過 70 個防毒引擎與網址掃描器進行評分，快速判斷是否已被標記為惡意網域。</p>
+                <a href="https://www.virustotal.com/gui/home/upload" target="_blank" class="tool-link">前往 VirusTotal</a>
+            </div>
+
+            <div class="security-tip">
+                <p><span class="highlight">urlscan.io:</span></p>
+                <p>專為分析師設計。它會在受控環境中開啟網頁，紀錄所有的重新導向、載入的 JavaScript 檔案並提供截圖。這讓你在不接觸風險的情況下「透視」網站行為。</p>
+                <a href="https://urlscan.io/" target="_blank" class="tool-link">前往 urlscan.io</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>二、 主動防禦：安全加密 DNS 配置</h2>
+            <p>利用 DNS 層級的過濾，在惡意網頁連載入的機會都沒有之前就將其阻斷。</p>
+            
+            <h3>1.1.1.2 (Cloudflare for Families)：最強大的數位保鏢</h3>
+            <p>這不僅僅是加快上網速度，更是在 DNS 解析階段就「物理斷絕」你與詐騙網站的接觸。</p>
+            
+            <div class="security-tip">
+                <p><span class="highlight">它是如何運作的？（以假網址為例）</span></p>
+                <p>假設你點擊了一個極像官網的連結：<br><span style="font-size: 0.8rem; opacity: 0.6;">https://www.binance.com.account-security-update.tech/</span></p>
+                <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>情資比對：</strong> 當你發出連線請求，1.1.1.2 會先在 Cloudflare 全球威脅庫中檢查該網域。</li>
+                    <li><strong>直接阻斷 (Sinkholing)：</strong> 一旦確認是釣魚或惡意網址，1.1.1.2 <strong>拒絕解析</strong> 該網址的正確 IP。</li>
+                    <li><strong>根源防禦：</strong> 你的瀏覽器會直接顯示「無法連上這個網站」。詐騙頁面連載入的機會都沒有，從根源防止帳密被騙或惡意合約簽署。</li>
+                </ol>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">※ 這同樣能防禦利用 <strong>Punycode</strong>（長得很像的特殊字元）偽裝的假網域。</p>
+            </div>
+
+            <div class="security-tip">
+                <p><span class="highlight">瀏覽器設定 (DoH):</span></p>
+                <p>在瀏覽器設定搜尋「DNS」，選擇「自訂」並輸入：</p>
+                <div class="code-block">https://security.cloudflare-dns.com/dns-query</div>
+            </div>
+
+            <div class="security-tip">
+                <p><span class="highlight">Windows 系統設定:</span></p>
+                <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>開啟「設定」 > 「網路和網際網路」 > 「乙太網路/Wi-Fi」。</li>
+                    <li>點擊「DNS 伺服器指派」旁的「編輯」。</li>
+                    <li>將自動改為「手動」，開啟 IPv4。</li>
+                    <li>慣用 DNS 輸入：<span class="highlight">1.1.1.2</span></li>
+                    <li>其他 DNS 輸入：<span class="highlight">1.0.0.2</span></li>
+                </ol>
+            </div>
+            <p style="text-align: center; margin-top: 1rem;">
+                <a href="https://one.one.one.one/help/" target="_blank" class="tool-link">👉 點此驗證 DNS 是否設定成功</a>
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>三、 瀏覽器環境隔離</h2>
+            <p>當必須開啟高風險網址時，確保風險不會外溢到主系統。</p>
+            <ul>
+                <li><strong>Windows Sandbox / 虛擬機：</strong> 最徹底的隔離方式。在一個隨用隨丟的環境中執行，關閉後一切痕跡消失。</li>
+                <li><strong>隱私模式 (Incognito)：</strong> 雖然無法防止惡意程式下載，但可以防止該網站讀取你原本瀏覽器的 Cookie 或登入憑證 (Session)，避免 Session Hijacking。</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>四、 核心防護總結</h2>
+            <div class="checklist-item"><strong>不點即看：</strong> 先用 VirusTotal/urlscan.io 檢查。</div>
+            <div class="checklist-item"><strong>主動阻斷：</strong> 全面改用 1.1.1.2 安全 DNS。</div>
+            <div class="checklist-item"><strong>環境隔離：</strong> 高風險操作一律在 Sandbox 或隱私模式進行。</div>
+            <div class="checklist-item"><strong>持續更新：</strong> 保持作業系統與瀏覽器自動更新，修補 Zero-day 漏洞。</div>
+        </div>
+
+        <footer style="text-align: center; margin-top: 4rem; opacity: 0.3; font-size: 0.8rem;">
+            © 2026 網路安全教育小組 | 本文件僅供教育目的使用
+        </footer>
+    </div>
+</body>
+</html>

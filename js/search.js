@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "網路安全防護指南 - 專業教學",
+        date: "2026-06-06",
+        path: "announcements/r4e2w9q1.html",
+        preview: "進階安全教學：整合 VirusTotal/urlscan.io 偵測工具，並實作 Cloudflare 1.1.1.2 安全 DNS 主動防禦配置。"
+    },
+    {
         title: "Initial Multimedia Announcement",
         date: "2026-06-03",
         path: "announcements/scfz8mg3.html",
