@@ -52,16 +52,22 @@
         }
         .barcode-display-wrapper {
             background: #ffffff;
-            padding: 2.5rem 1.5rem 1.5rem;
+            padding: 2.5rem 1.5rem 3.5rem;
             border-radius: 16px;
             margin-bottom: 2rem;
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 170px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .barcode-display-wrapper::after {
             content: 'SCAN ME';
             position: absolute;
-            top: 6px;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
             font-family: 'Outfit', sans-serif;
@@ -72,14 +78,19 @@
         }
         .barcode-visual {
             font-family: 'Libre Barcode 39', cursive;
-            font-size: 80px;
+            font-size: 54px;
             line-height: 1;
             color: #000000;
             letter-spacing: 0;
-            margin: 0 auto 1rem;
+            margin: 0;
             user-select: none;
             /* 輕微拉伸以提高部分舊款掃描器的識別率 */
             transform: scaleY(1.1);
+            transform-origin: center;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            white-space: nowrap;
+            display: inline-block;
+            width: max-content;
         }
         .barcode-text-code {
             font-family: 'Outfit', sans-serif;
@@ -88,6 +99,11 @@
             color: #111111;
             letter-spacing: 0.08em;
             margin: 0;
+            position: absolute;
+            bottom: 1.2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         .copy-btn {
             background: linear-gradient(90deg, #00f2ff, #7000ff);
@@ -149,6 +165,120 @@
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .toggle-layout-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .toggle-layout-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(0, 242, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 242, 255, 0.15);
+        }
+        .toggle-layout-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* 垂直條碼專屬樣式 */
+        .barcode-display-wrapper.vertical {
+            min-height: 440px;
+            padding: 1.8rem 1.5rem 2.8rem;
+        }
+        .barcode-display-wrapper.vertical .barcode-visual {
+            transform: rotate(90deg) scaleY(1.1) translateX(12px);
+            font-size: 46px;
+        }
+        .barcode-display-wrapper.vertical .barcode-text-code {
+            bottom: 0.8rem;
+        }
+        
+        /* 響應式條碼大小與排版調整，避免在手機版因邊距過大而溢出 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem !important;
+            }
+            .card {
+                padding: 1.2rem !important;
+            }
+            .barcode-display-wrapper {
+                padding: 2rem 1rem 3.2rem;
+            }
+            .barcode-visual {
+                font-size: 42px;
+            }
+            .barcode-text-code {
+                font-size: 1.25rem;
+            }
+            .barcode-display-wrapper.vertical {
+                min-height: 360px;
+                padding: 1.5rem 1rem 2.5rem;
+            }
+            .barcode-display-wrapper.vertical .barcode-visual {
+                transform: rotate(90deg) scaleY(1.1) translateX(10px);
+                font-size: 36px;
+            }
+            .barcode-display-wrapper.vertical .barcode-text-code {
+                bottom: 0.6rem;
+                font-size: 1.1rem;
+            }
+        }
+        @media (max-width: 380px) {
+            .barcode-visual {
+                font-size: 34px;
+            }
+            .barcode-text-code {
+                font-size: 1.15rem;
+            }
+            .barcode-display-wrapper.vertical {
+                min-height: 310px;
+            }
+            .barcode-display-wrapper.vertical .barcode-visual {
+                transform: rotate(90deg) scaleY(1.1) translateX(8px);
+                font-size: 32px;
+            }
+            .barcode-display-wrapper.vertical .barcode-text-code {
+                bottom: 0.5rem;
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 320px) {
+            .barcode-visual {
+                font-size: 28px;
+            }
+            .barcode-text-code {
+                font-size: 1rem;
+            }
+            .barcode-display-wrapper.vertical {
+                min-height: 270px;
+            }
+            .barcode-display-wrapper.vertical .barcode-visual {
+                transform: rotate(90deg) scaleY(1.1) translateX(6px);
+                font-size: 26px;
+            }
+            .barcode-display-wrapper.vertical .barcode-text-code {
+                bottom: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -177,10 +307,19 @@
                 <div class="barcode-text-code">/PSI0JP2</div>
             </div>
             
-            <button class="copy-btn" onclick="copyCarrier()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                複製載具代碼
-            </button>
+            <div class="btn-group">
+                <button class="copy-btn" onclick="copyCarrier()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    複製載具代碼
+                </button>
+                <button class="toggle-layout-btn" onclick="toggleLayout()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
+                        <polyline points="21 3 21 8 16 8"></polyline>
+                    </svg>
+                    切換直式顯示
+                </button>
+            </div>
         </div>
 
         <div class="info-list">
@@ -212,6 +351,30 @@
             }).catch(err => {
                 console.error('無法複製代碼: ', err);
             });
+        }
+
+        function toggleLayout() {
+            const wrapper = document.querySelector('.barcode-display-wrapper');
+            const btn = document.querySelector('.toggle-layout-btn');
+            const isVertical = wrapper.classList.toggle('vertical');
+            
+            if (isVertical) {
+                btn.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
+                        <polyline points="21 3 21 8 16 8"></polyline>
+                    </svg>
+                    切換水平顯示
+                `;
+            } else {
+                btn.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
+                        <polyline points="21 3 21 8 16 8"></polyline>
+                    </svg>
+                    切換直式顯示
+                `;
+            }
         }
     </script>
 </body>
