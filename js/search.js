@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "24GB 顯卡本地 AI Agent 模型挑選指南",
+        date: "2026-06-06",
+        path: "announcements/a7k2w1m9.html",
+        preview: "如何在有限的 24GB VRAM 硬體下，挑選最穩定的本地 AI 模型？深度解析 Qwen、Llama 與 Gemma 的實戰差異。"
+    },
+    {
         title: "網路安全防護指南 - 專業教學",
         date: "2026-06-06",
         path: "announcements/r4e2w9q1.html",

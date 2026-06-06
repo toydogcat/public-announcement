@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24GB 顯卡本地 AI Agent 模型挑選指南</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        :root {
+            --mindmap-bg: rgba(255, 255, 255, 0.03);
+            --node-color: var(--accent-color);
+        }
+        .mindmap-container {
+            background: var(--mindmap-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        .tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .node {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 10px;
+            position: relative;
+            text-align: center;
+            min-width: 150px;
+        }
+        .node.root { border-color: var(--accent-color); font-weight: bold; color: var(--accent-color); }
+        .branch-container { display: flex; justify-content: center; width: 100%; }
+        .branch { display: flex; flex-direction: column; align-items: center; }
+        
+        .security-tip {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background: rgba(112, 0, 255, 0.05);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.1), rgba(112, 0, 255, 0.1));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .model-tag {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>24GB 顯卡 AI Agent 模型挑選指南</h1>
+            <p style="opacity: 0.5;">深度解析：如何在有限硬體下發揮最大 AI 戰力</p>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <div class="card">
+            <h2>核心挑戰：24GB VRAM 的物理天花板</h2>
+            <p>在 24GB 顯示卡（如 RTX 3090/4090 或 A5000）上部署本地 Agent 時，最大的誤區是「盲目追求參數大小」。過度壓縮（量化）大模型反而會導致邏輯像素遺失，讓模型變笨。</p>
+        </div>
+
+        <div class="card">
+            <h2>決策心智圖 (Decision Roadmap)</h2>
+            <div class="mindmap-container">
+                <div class="tree">
+                    <div class="node root">24GB VRAM Agent</div>
+                    <div class="branch-container">
+                        <div class="branch">
+                            <div class="node">速度優先</div>
+                            <div class="node" style="border-style: dashed;"><span class="model-tag">Llama 3.1 8B</span><br>輕量、極速</div>
+                        </div>
+                        <div class="branch">
+                            <div class="node">複雜規劃</div>
+                            <div class="node" style="border-style: dashed;"><span class="model-tag">Qwen 2.5 14B</span><br>邏輯與硬體平衡</div>
+                        </div>
+                        <div class="branch">
+                            <div class="node">日常流暢</div>
+                            <div class="node" style="border-style: dashed;"><span class="model-tag">Gemma 2 9B</span><br>高質量常識、語氣</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>三大避坑指南</h2>
+            
+            <div class="security-tip">
+                <h3>1. MTP (Multi-Token Prediction) 的陷阱</h3>
+                <p>MTP 雖然能提升生成速度，但在 Agent 任務中，若第一步推理偏差，MTP 會像骨牌效應一樣放大錯誤。對於需要嚴謹邏輯的 Agent 迴圈，MTP 往往是毒藥。</p>
+            </div>
+
+            <div class="security-tip">
+                <h3>2. 注意力稀釋與 KV Cache</h3>
+                <p>Agent 在長時間對話後會「崩潰」（如重複說話或遺忘指令），這是因為 KV Cache 堆疊導致注意力被稀釋。<strong>務必進行 20 輪對話壓力測試</strong>，觀察模型在長時間工作後的穩定性。</p>
+            </div>
+
+            <div class="security-tip">
+                <h3>3. 稠密 (Dense) vs 混合專家 (MoE)</h3>
+                <p>在 24GB 顯卡上，MoE 模型（如 40B 總參數但僅 12B 活躍）通常能展現出遠超預期的生成速度，且保有強大知識量，是極具性價比的選擇。</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h2 style="margin-top: 0;">實戰起手式總結</h2>
+            <ul>
+                <li><strong>基準線 (Baseline)：</strong> 從 <span class="highlight">Llama 3.1 8B Instruct</span> 開始，測試基本反應。</li>
+                <li><strong>進階規劃：</strong> 需要多步驟推理時，首選 <span class="highlight">Qwen 2.5 14B Instruct</span>。</li>
+                <li><strong>知識型助理：</strong> 追求真實世界常識與流暢體感，選擇 <span class="highlight">Gemma 2 9B Instruct</span>。</li>
+                <li><strong>驗證方法：</strong> 執行「Side-by-Side」並排測試，固定 20 輪對話壓力。</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 4rem; opacity: 0.3; font-size: 0.8rem;">
+            © 2026 AI 戰略研究小組 | 穩定性大於跑分
+        </footer>
+    </div>
+</body>
+</html>
