@@ -10,6 +10,12 @@ const announcements = [
         date: "2026-06-04",
         path: "announcements/ci55za4g.html",
         preview: "馬祖 = 戰地遺跡 + 閩東文化 + 海蝕地景 + 藍眼淚。深入了解這座海上軍事王國。"
+    },
+    {
+        title: "電子發票手機條碼載具",
+        date: "2026-06-06",
+        path: "announcements/x7q8b3k2.html",
+        preview: "收錄個人常用之電子發票手機條碼載具資訊，省去攜帶或開啟實體條碼的繁瑣步驟。"
     }
 ];
 
