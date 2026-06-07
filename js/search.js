@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "全球廣播電台目錄 - 跨越國界的聲音探索",
+        date: "2026-06-06",
+        path: "announcements/w2k9r4p1.html",
+        preview: "收錄全球各國廣播電台資源，是您了解國際新聞、學習語言或欣賞異國音樂的絕佳入口。"
+    },
+    {
         title: "24GB 顯卡本地 AI Agent 模型挑選指南",
         date: "2026-06-06",
         path: "announcements/a7k2w1m9.html",

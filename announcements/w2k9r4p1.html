@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球廣播電台目錄 - 探索世界的聲音</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .radio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .radio-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .radio-card:hover {
+            border-color: var(--accent-color);
+            background: rgba(0, 242, 255, 0.05);
+            transform: translateY(-3px);
+        }
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .external-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: transform 0.3s ease;
+        }
+        .external-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>全球廣播電台目錄</h1>
+            <p style="opacity: 0.5;">跨越國界，聆聽來自全球各地的即時聲音</p>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <div class="card">
+            <h2>🌍 探索世界，無需遠行</h2>
+            <p>透過「Radio Taiwan」提供的多國電台目錄，您可以輕鬆存取全球數百個國家的廣播電台。無論是想了解國際時事、學習外語，還是單純想感受異國的音樂氛圍，這裡都是您的最佳入口。</p>
+            
+            <div class="radio-grid">
+                <div class="radio-card">
+                    <span class="icon">📻</span>
+                    <h3>即時新聞</h3>
+                    <p style="font-size: 0.85rem; opacity: 0.7;">獲取第一手的國際新聞，從不同國家的視角看世界。</p>
+                </div>
+                <div class="radio-card">
+                    <span class="icon">🎵</span>
+                    <h3>多元音樂</h3>
+                    <p style="font-size: 0.85rem; opacity: 0.7;">從歐洲的古典樂到南美洲的節奏，探索無限音軌。</p>
+                </div>
+                <div class="radio-card">
+                    <span class="icon">🗣️</span>
+                    <h3>語言學習</h3>
+                    <p style="font-size: 0.85rem; opacity: 0.7;">沈浸在道地的母語環境中，是提升聽力最有效的方式。</p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <p>點擊下方按鈕，開始您的全球聲音之旅：</p>
+                <a href="https://www.radiotaiwan.tw/radio-websites-per-country/" target="_blank" class="external-link">進入全球電台目錄</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>使用小技巧</h2>
+            <ul>
+                <li><strong>按國家搜尋：</strong> 目錄已將全球分為不同區域，您可以快速定位到特定國家。</li>
+                <li><strong>背景播放：</strong> 大多數電台支持網頁背景播放，讓您邊工作邊聆聽。</li>
+                <li><strong>發現新聲音：</strong> 嘗試點擊您從未關注過的國家，或許會發現令你驚豔的在地頻道。</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 4rem; opacity: 0.3; font-size: 0.8rem;">
+            © 2026 全球聲音探索小組 | 跨越頻率的連結
+        </footer>
+    </div>
+</body>
+</html>
