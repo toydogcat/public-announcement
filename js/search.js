@@ -34,6 +34,18 @@ const announcements = [
         date: "2026-06-06",
         path: "announcements/x7q8b3k2.html",
         preview: "收錄個人常用之電子發票手機條碼載具資訊，省去攜帶或開啟實體條碼的繁瑣步驟。"
+    },
+    {
+        title: "英文學習資源",
+        date: "2026-06-06",
+        path: "announcements/e9r2p1k5.html",
+        preview: "精選 YouTube 英文學習頻道資源，涵蓋口說、聽力與日常對話練習。"
+    },
+    {
+        title: "資產資訊中心",
+        date: "2026-06-06",
+        path: "announcements/a3f9k8v1.html",
+        preview: "整合股市（大盤、台積電、0050/0056）及黃金、白銀、比特幣等資產行情導引。"
     }
 ];
 
