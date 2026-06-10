@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遠端分享控制中心</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .remote-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            max-width: 550px;
+            margin: 2rem auto;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .remote-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4285F4, #34A853, #FBBC05, #EA4335);
+        }
+        .remote-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+        .remote-desc {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        .btn-remote {
+            background: #ffffff;
+            color: #111111;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+        .btn-remote:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+            background: #f0f0f0;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+        .info-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .info-box h4 {
+            color: #4285F4;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .info-box p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>遠端分享控制</h1>
+            <p style="opacity: 0.5;">更新日期：2026-06-06</p>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <div class="remote-card">
+            <div class="remote-title">Google Chrome 遠端桌面</div>
+            <p class="remote-desc">
+                安全地存取您的電腦，或與他人分享您的螢幕。透過網頁瀏覽器即可實現跨平台的遠端控制與技術支援。
+            </p>
+            
+            <a href="https://remotedesktop.google.com/?hl=zh-tw&pli=1" target="_blank" class="btn-remote">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                啟動分享控制
+            </a>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <h4>遠端存取</h4>
+                    <p>隨時隨地從其他裝置存取您的電腦內容。</p>
+                </div>
+                <div class="info-box">
+                    <h4>遠端支援</h4>
+                    <p>與他人分享螢幕以獲得即時技術協助。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -46,6 +46,12 @@ const announcements = [
         date: "2026-06-06",
         path: "announcements/a3f9k8v1.html",
         preview: "整合股市（大盤、台積電、0050/0056）及黃金、白銀、比特幣等資產行情導引。"
+    },
+    {
+        title: "遠端分享控制中心",
+        date: "2026-06-06",
+        path: "announcements/r9t3k4m2.html",
+        preview: "快速存取 Google 遠端桌面，實現安全且跨平台的螢幕分享與遠端存取控制。"
     }
 ];
 
@@ -54,7 +60,11 @@ const resultsDiv = document.getElementById('results');
 
 function displayResults(filter = '') {
     resultsDiv.innerHTML = '';
-    const filtered = announcements.filter(a => 
+    
+    // Sort announcements by date (descending - newest first)
+    const sortedAnnouncements = [...announcements].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    const filtered = sortedAnnouncements.filter(a => 
         a.title.toLowerCase().includes(filter.toLowerCase()) || 
         a.preview.toLowerCase().includes(filter.toLowerCase())
     );
