@@ -52,6 +52,12 @@ const announcements = [
         date: "2026-06-06",
         path: "announcements/r9t3k4m2.html",
         preview: "快速存取 Google 遠端桌面，實現安全且跨平台的螢幕分享與遠端存取控制。"
+    },
+    {
+        title: "考古題快速查閱系統",
+        date: "2026-06-06",
+        path: "announcements/k7v4p2m9.html",
+        preview: "專為考生設計的極速考古題查閱工具，優化閱讀體驗並提升複習效率。"
     }
 ];
 
