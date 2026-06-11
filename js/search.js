@@ -55,9 +55,15 @@ const announcements = [
     },
     {
         title: "考古題快速查閱系統",
-        date: "2026-06-06",
+        date: "2026-06-11",
         path: "announcements/k7v4p2m9.html",
         preview: "專為考生設計的極速考古題查閱工具，優化閱讀體驗並提升複習效率。"
+    },
+    {
+        title: "本地資訊",
+        date: "2026-06-06",
+        path: "announcements/v8n2m7p1.html",
+        preview: "存取內網環境下的本地服務，包含金星閱讀等數位資源入口。"
     }
 ];
 

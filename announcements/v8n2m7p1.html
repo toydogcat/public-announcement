@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>考古題快速查閱工具</title>
+    <title>本地資訊</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        .exam-card {
+        .local-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
@@ -21,29 +21,29 @@
             margin: 2rem auto;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        .exam-card::before {
+        .local-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #00f2ff, #00d2ff);
+            background: linear-gradient(90deg, #ffcc00, #ff9900);
         }
-        .exam-title {
+        .local-title {
             font-size: 1.6rem;
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 1.5rem;
         }
-        .exam-desc {
+        .local-desc {
             color: rgba(255, 255, 255, 0.7);
             line-height: 1.8;
             margin-bottom: 2rem;
             font-size: 1rem;
         }
-        .btn-exam {
-            background: #00f2ff;
+        .btn-local {
+            background: #ffcc00;
             color: #111111;
             text-decoration: none;
             padding: 1rem 2.5rem;
@@ -53,38 +53,29 @@
             align-items: center;
             gap: 0.8rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
         }
-        .btn-exam:hover {
+        .btn-local:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 242, 255, 0.5);
-            background: #00e0ff;
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.5);
+            background: #ffdb4d;
         }
-        .feature-list {
-            text-align: left;
+        .server-info {
             margin-top: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.8rem;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-        .feature-icon {
-            color: #00f2ff;
-            font-weight: bold;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.8rem;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>學習輔助工具</h1>
-            <p style="opacity: 0.5;">更新日期：2026-06-11</p>
+            <h1>本地資訊服務</h1>
+            <p style="opacity: 0.5;">更新日期：2026-06-06</p>
         </header>
         
         <nav>
@@ -92,26 +83,19 @@
             <a href="../search.html">搜尋公告</a>
         </nav>
 
-        <div class="exam-card">
-            <div class="exam-title">考古題快速查閱系統</div>
-            <p class="exam-desc">
-                專為考生設計的極速查閱介面。一鍵開啟歷屆考古題，優化閱讀體驗，讓您在最短的時間內掌握命題趨勢。
+        <div class="local-card">
+            <div class="local-title">金星閱讀 (Venus Reading)</div>
+            <p class="local-desc">
+                存取本地伺服器託管的閱讀資源。提供流暢的數位閱讀體驗，僅限內網環境連線使用。
             </p>
             
-            <a href="https://toydogcat.github.io/easy-read-exam/" target="_blank" class="btn-exam">
+            <a href="http://192.168.0.148:3001/" target="_blank" class="btn-local">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                立即開始練習
+                啟動金星閱讀
             </a>
 
-            <div class="feature-list">
-                <div class="feature-item">
-                    <span class="feature-icon">✓</span>
-                    <span><strong>極簡介面：</strong> 去除冗餘干擾，專注於題目內容。</span>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">✓</span>
-                    <span><strong>快速切換：</strong> 支援多年度考古題即時載入，提升複習效率。</span>
-                </div>
+            <div class="server-info">
+                Internal Server: 192.168.0.148:3001
             </div>
         </div>
     </div>
