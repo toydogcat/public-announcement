@@ -64,6 +64,12 @@ const announcements = [
         date: "2026-06-06",
         path: "announcements/v8n2m7p1.html",
         preview: "存取內網環境下的本地服務，包含金星閱讀等數位資源入口。"
+    },
+    {
+        title: "行銷方法論 - 流量與成交的藝術",
+        date: "2026-06-10",
+        path: "announcements/m2k9r4p1.html",
+        preview: "深度解析網路行銷核心：如何利用短影音、SEO 及私域流量實現「低粉高爆」與高效成交。"
     }
 ];
 

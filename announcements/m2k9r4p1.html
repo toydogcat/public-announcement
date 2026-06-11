@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行銷方法論 - 流量與成交的藝術</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .marketing-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            max-width: 800px;
+            margin: 2rem auto;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .marketing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff00cc, #3333ff);
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .content-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #ff00cc;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .formula-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.2rem;
+            border-radius: 16px;
+        }
+        .formula-card h4 {
+            color: #ff00cc;
+            margin-bottom: 0.5rem;
+        }
+        .formula-card p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+        .tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: rgba(255, 0, 204, 0.1);
+            color: #ff00cc;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        /* 內容主題與流量密碼樣式 */
+        .formula-section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 2.5rem 0 1.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .theme-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .theme-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 0, 204, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 0, 204, 0.1);
+        }
+        .theme-card h4 {
+            color: #ff00cc;
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 600;
+        }
+        .theme-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0 0 1rem 0;
+            line-height: 1.4;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.8rem;
+        }
+        .theme-card ul {
+            margin: 0;
+            padding-left: 0;
+            color: rgba(255, 255, 255, 0.85);
+            list-style: none;
+        }
+        .theme-card li {
+            margin-bottom: 0.6rem;
+            font-size: 0.88rem;
+            line-height: 1.45;
+            position: relative;
+            padding-left: 15px;
+        }
+        .theme-card li::before {
+            content: "•";
+            color: #ff00cc;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        .theme-card li strong {
+            color: #00f2ff;
+        }
+
+        /* 11 大流量密碼卡片樣式 */
+        .codes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+        .code-card {
+            background: linear-gradient(135deg, rgba(51, 51, 255, 0.05) 0%, rgba(255, 0, 204, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .code-card:hover {
+            background: linear-gradient(135deg, rgba(51, 51, 255, 0.08) 0%, rgba(255, 0, 204, 0.08) 100%);
+            border-color: #ff00cc;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 0, 204, 0.15);
+        }
+        .code-card h4 {
+            color: #ffffff;
+            font-size: 1.1rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+        .code-number {
+            background: linear-gradient(135deg, #ff00cc 0%, #3333ff 100%);
+            color: #ffffff;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .code-desc {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+            line-height: 1.4;
+        }
+        .code-example {
+            font-size: 0.82rem;
+            color: #00f2ff;
+            background: rgba(0, 242, 255, 0.05);
+            padding: 0.5rem 0.7rem;
+            border-radius: 8px;
+            margin: 0.3rem 0 0 0;
+            border-left: 3px solid #00f2ff;
+            line-height: 1.4;
+        }
+        
+        /* 行銷漏斗與媒介演變樣式 */
+        .funnel-wrapper {
+            margin: 2.5rem 0 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+        }
+        .funnel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+        .funnel-stage {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .funnel-stage:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .funnel-stage-1 {
+            width: 100%;
+            background: linear-gradient(90deg, rgba(255, 0, 204, 0.15) 0%, rgba(51, 51, 255, 0.15) 100%);
+            border-color: rgba(255, 0, 204, 0.3);
+        }
+        .funnel-stage-2 {
+            width: 85%;
+            background: linear-gradient(90deg, rgba(255, 0, 204, 0.12) 0%, rgba(51, 51, 255, 0.12) 100%);
+            border-color: rgba(255, 0, 204, 0.25);
+        }
+        .funnel-stage-3 {
+            width: 70%;
+            background: linear-gradient(90deg, rgba(255, 0, 204, 0.09) 0%, rgba(51, 51, 255, 0.09) 100%);
+            border-color: rgba(255, 0, 204, 0.2);
+        }
+        .funnel-stage-4 {
+            width: 55%;
+            background: linear-gradient(90deg, rgba(255, 0, 204, 0.06) 0%, rgba(51, 51, 255, 0.06) 100%);
+            border-color: rgba(255, 0, 204, 0.15);
+        }
+        .funnel-stage h5 {
+            margin: 0;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+        }
+        .funnel-stage p {
+            margin: 0.3rem 0 0 0;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: normal;
+        }
+        
+        .evolution-table-wrapper {
+            overflow-x: auto;
+            margin-top: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .evolution-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .evolution-table th, .evolution-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .evolution-table th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #ff00cc;
+            font-weight: 600;
+        }
+        .evolution-table tr:last-child td {
+            border-bottom: none;
+        }
+        .evolution-table tr:hover {
+            background: rgba(255, 255, 255, 0.01);
+        }
+        .evolution-highlight {
+            color: #00f2ff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>行銷方法論</h1>
+            <p style="opacity: 0.5;">更新日期：2026-06-10</p>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <div class="marketing-card">
+            <span class="tag">STRATEGY</span>
+            <div class="section-title">核心本質：吸引流量 + 篩選成交</div>
+            <div class="content-text">
+                網路行銷的本質始終如一：<strong>吸引流量</strong> 並透過有效的機制進行 <strong>篩選與成交</strong>。
+                從早期的部落格文章創造 Email 名單進行精準推送，到 Google 搜尋時代的 SEO（搜尋引擎最佳化），
+                再到 FB 社團、微信帶貨等社群行銷，其核心都是在累積「名單」與「私域流量」以進行後續的價值轉化。
+            </div>
+
+            <div class="highlight-box">
+                <div class="section-title">🎥 短影音：現代流量密碼</div>
+                <div class="content-text">
+                    現在是注意力碎片化的時代，短影音（YT Shorts, TikTok, 小紅書）成為了獲取流量最快的途徑。
+                    但必須記住：<strong>不要無腦追求流量</strong>。不是目標受眾的流量，不僅不會轉化，還會消耗客服與服務的人力成本。
+                </div>
+            </div>
+
+            <div class="section-title">關鍵指標：低粉高爆</div>
+            <div class="content-text">
+                如何判斷一個主題是否具有爆發潛力？觀察 <strong>「低粉高爆」</strong> 的案例。
+                這表示該影片的成功是來自於「主題與內容」本身引起了演算法的推薦，而非依賴創作者原本的名氣。
+                在開始製作前，應先去各大平台（YT, 抖音, 小紅書）實測搜尋，找出真正有市場流量的主題公式。
+            </div>
+
+            <div class="formula-grid">
+                <div class="formula-card">
+                    <h4>導流思維</h4>
+                    <p>短影音（1-2分鐘）主要用於破冰與建立第一印象，無法直接完成複雜成交。成功後務必引導至私域社團（如 FB 團購、Line 群）進行深度行銷。</p>
+                </div>
+                <div class="formula-card">
+                    <h4>主題優先</h4>
+                    <p>做「平台愛看」的內容，而非「自己想做」的內容。利用影片推薦系統的邏輯，順勢而為。</p>
+                </div>
+            </div>
+
+            <div class="formula-section-title">📋 內容創作結構公式：7大內容主題 X 11大流量密碼</div>
+            
+            <h3 style="color: #ffffff; font-size: 1.2rem; margin: 1.5rem 0 1rem; font-weight: 600;">✨ 7 大內容主題</h3>
+            <div class="themes-grid">
+                <div class="theme-card">
+                    <h4>👀 曬過程</h4>
+                    <p class="theme-desc">展示真實的製作、改造、測試或挑戰過程，以真實感建立信任與好奇心。</p>
+                    <ul>
+                        <li><strong>製作過程：</strong>「如何從零手寫一個 React 會議室系統？24小時縮時實錄」</li>
+                        <li><strong>改造計畫：</strong>「把一張廢棄桌子改造成高科技極簡升降桌的完整記錄」</li>
+                        <li><strong>產品測試：</strong>「實測最新 AI 助理是否能真的幫我寫出無 Bug 程式碼」</li>
+                        <li><strong>體驗分享：</strong>「體驗盲人模式生活一天，我的真實心路歷程與反思」</li>
+                        <li><strong>任務挑戰：</strong>「挑戰 30 天每天拍 1 條短影音，看最後流量是爆還是死？」</li>
+                    </ul>
+                </div>
+                <div class="theme-card">
+                    <h4>📖 說故事</h4>
+                    <p class="theme-desc">用情感與角色帶入感，讓生硬的資訊或廣告變得生動有趣。</p>
+                    <ul>
+                        <li><strong>成就故事：</strong>「我如何從月薪三萬的程式小白，自學成為跨國軟體架構師」</li>
+                        <li><strong>案例故事：</strong>「這家傳統早餐店，只用了一招 LINE 群組行銷就在半年內翻倍業績」</li>
+                        <li><strong>他人故事：</strong>「他用一台二手相機，記錄下被遺忘的街頭百態，吸引百萬追蹤的故事」</li>
+                    </ul>
+                </div>
+                <div class="theme-card">
+                    <h4>⚖️ 選立場</h4>
+                    <p class="theme-desc">表達鮮明態度，引導認同，激發評論與受眾的共鳴或討論。</p>
+                    <ul>
+                        <li><strong>正面觀點：</strong>「為什麼我認為現在是 AI 創業者最好的時代？」</li>
+                        <li><strong>反面觀點：</strong>「無腦追求高學歷？別傻了，這 3 個職場真相學校從不教你」</li>
+                        <li><strong>中立觀點：</strong>「AI 會取代工程師嗎？理性剖析人機協作的未來機會與挑戰」</li>
+                    </ul>
+                </div>
+                <div class="theme-card">
+                    <h4>💼 賣產品</h4>
+                    <p class="theme-desc">直接展示產品或服務的優勢，但要聚焦於「能為受眾解決什麼痛點」。</p>
+                    <ul>
+                        <li><strong>展現服務：</strong>「我們的 P2P 會議記錄助手，如何幫你的團隊每天省下 2 小時整理時間」</li>
+                        <li><strong>展現產品：</strong>「開箱這款符合人體工學的辦公椅，真的能拯救你長年腰痛嗎？」</li>
+                    </ul>
+                </div>
+                <div class="theme-card">
+                    <h4>💡 教知識</h4>
+                    <p class="theme-desc">分享乾貨、行業內幕或整理好的實用資訊，為讀者創造直接的實用價值。</p>
+                    <ul>
+                        <li><strong>行業揭秘：</strong>「房仲經理不說的實話：看房時必須注意的 5 個隱形大坑」</li>
+                        <li><strong>乾貨輸出：</strong>「5分鐘學會 Git 版本控制的 10 個核心常用指令」</li>
+                        <li><strong>正向推薦：</strong>「行銷新手必讀的 3 本神作，幫你少走兩年彎路」</li>
+                        <li><strong>反向推薦：</strong>「踩雷警告！這 5 個看似省錢但實則浪費時間的軟體不要用」</li>
+                        <li><strong>資訊整理：</strong>「2026年最新免費 AI 開發工具包全集，一鍵打包下載」</li>
+                    </ul>
+                </div>
+                <div class="theme-card">
+                    <h4>🐔 熬雞湯</h4>
+                    <p class="theme-desc">訴諸感性與共情，探討個人成長與人際交往，提供情緒價值。</p>
+                    <ul>
+                        <li><strong>自我成長：</strong>「原諒自己的不完美，才是真正強大的開始」</li>
+                        <li><strong>人際關係：</strong>「遠離消耗你的人：3 個保護自我能量的社交邊界法則」</li>
+                        <li><strong>處事之道：</strong>「遇事不慌、做事有方：成年人最該修煉的 3 個冷靜思維」</li>
+                    </ul>
+                </div>
+                <div class="theme-card">
+                    <h4>🎭 演劇情</h4>
+                    <p class="theme-desc">用情境劇、角色扮演或趣味觀察，融入熱門梗，提升娛樂性與轉發率。</p>
+                    <ul>
+                        <li><strong>POV：</strong>「當你去面試程式設計師，面試官卻問你喜不喜歡喝咖啡（主觀視角模擬）」</li>
+                        <li><strong>熱門梗：</strong>「用近期最火的舞蹈梗，演出當工程師解決了一個卡了三天的 Bug 時的狀態」</li>
+                        <li><strong>生活觀察：</strong>「捷運上 5 種不同類型的通勤族迷惑行為大賞」</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="color: #ffffff; font-size: 1.2rem; margin: 1.5rem 0 1rem; font-weight: 600;">🔥 11 大流量密碼</h3>
+            <div class="codes-grid">
+                <div class="code-card">
+                    <h4><span class="code-number">1</span> 成本</h4>
+                    <p class="code-desc">利用低成本、免費或省錢等高吸引力詞語，直擊人性痛點。</p>
+                    <p class="code-example">💡 舉例：「0元創業法：教你如何靠開源軟體打造自己的線上事業」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">2</span> 受眾</h4>
+                    <p class="code-desc">直接點名特定族群，讓他們產生「這與我高度相關」的自覺。</p>
+                    <p class="code-example">💡 舉例：「專門寫給『30歲想轉職』的程式新手：少走彎路的最短路徑」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">3</span> 隨機</h4>
+                    <p class="code-desc">出乎意料的發展、開箱驚喜或隨機抽樣，引發受眾的好奇心。</p>
+                    <p class="code-example">💡 舉例：「隨機街訪路人！看看他們的手機裡，最常用的是哪一款行銷 App？」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">4</span> 反差</h4>
+                    <p class="code-desc">巨大的前後對比，或是身份、場景的衝突感，極具視覺張力。</p>
+                    <p class="code-example">💡 舉例：「從負債百萬到月入三十萬，這個 22 歲大學生只做了這一件事」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">5</span> 貼金</h4>
+                    <p class="code-desc">借勢知名品牌、名人、權威機構或熱門事物，為自己增信。</p>
+                    <p class="code-example">💡 舉例：「跟著馬斯克學效率！揭秘世界首富每天在用的 3 個時間管理法」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">6</span> 互動</h4>
+                    <p class="code-desc">引導觀眾留言、投票、答題或參與決策，提高社群權重與推薦度。</p>
+                    <p class="code-example">💡 舉例：「你覺得這兩個設計哪個好看？底下留言 1 或 2，由你來決定我們的 LOGO」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">7</span> 熱點</h4>
+                    <p class="code-desc">結合當下最新最火的新聞、節日或流行話題，順風搭便車。</p>
+                    <p class="code-example">💡 舉例：「搭上 AI 浪潮！這款最新發布的寫程式神器到底值不值得訂閱？」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">8</span> 懷舊</h4>
+                    <p class="code-desc">喚起童年回憶、青春共鳴或經典回顧，引發情感共鳴與大量轉發。</p>
+                    <p class="code-example">💡 舉例：「那些年我們用過的 5.25 吋軟碟片！你還記得當初玩過的單機遊戲嗎？」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">9</span> 吐槽</h4>
+                    <p class="code-desc">幽默犀利地指出痛點、常態怪象或共同槽點，讓人忍不住點頭贊同。</p>
+                    <p class="code-example">💡 舉例：「工程師每天都會聽到的 5 句崩潰需求：『這個很簡單，只要改個顏色就好』」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">10</span> 賀爾蒙</h4>
+                    <p class="code-desc">利用高顏值、身材、美好視覺、感性聲音或精緻氛圍吸引眼球。</p>
+                    <p class="code-example">💡 舉例：「沉浸式精緻書桌改造：暖光氛圍與極簡配件的療癒日常」</p>
+                </div>
+                <div class="code-card">
+                    <h4><span class="code-number">11</span> 光練不說</h4>
+                    <p class="code-desc">不廢話，直接上手展示結果、現場實操或靜默展示精湛技藝。</p>
+                    <p class="code-example">💡 舉例：「不要多說！直接 10 分鐘展示如何盲打程式碼並跑通一個小遊戲」</p>
+                </div>
+            </div>
+
+            <div class="formula-section-title">⏳ 流量本質：行銷漏斗與媒介演變</div>
+            <div class="content-text" style="margin-bottom: 1.5rem;">
+                行銷的工具和媒介雖然會隨著時代而不斷演進（從早期的部落格文字，到搜尋引擎 SEO，再到現代短影音），
+                但其底層的邏輯卻從來沒有改變過。<strong>行銷的本質，永遠都是「吸引流量」並透過有效的機制進行「篩選與成交」</strong>。
+                不論人們的注意力轉移到哪裡，流量都需要透過一個「漏斗」來層層過濾、建立信任，最後完成轉化。
+            </div>
+
+            <div style="text-align: center; margin: 2rem 0;">
+                <img src="../images/marketing_funnel_concept.webp" alt="行銷漏斗與媒介演變概念圖" style="max-width: 100%; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 30px rgba(0,0,0,0.5);">
+            </div>
+
+            <div class="funnel-wrapper">
+                <h3 style="color: #ffffff; font-size: 1.2rem; text-align: center; margin-bottom: 1.5rem;">🎯 經典行銷漏斗階段</h3>
+                
+                <div class="funnel-container">
+                    <div class="funnel-stage funnel-stage-1">
+                        <h5>1. 曝光與吸引 (Awareness)</h5>
+                        <p>獲得大眾的注意力，讓人知道你的存在</p>
+                    </div>
+                    <div class="funnel-stage funnel-stage-2">
+                        <h5>2. 興趣與留存 (Interest & Leads)</h5>
+                        <p>篩選出真正感興趣的受眾，收集名單 / 引導關注</p>
+                    </div>
+                    <div class="funnel-stage funnel-stage-3">
+                        <h5>3. 培育與信任 (Trust & Nurture)</h5>
+                        <p>提供有價值的內容，建立深度信任關係</p>
+                    </div>
+                    <div class="funnel-stage funnel-stage-4">
+                        <h5>4. 篩選與成交 (Conversion)</h5>
+                        <p>在私域中精準推送，引導最後的付款成交</p>
+                    </div>
+                </div>
+
+                <h3 style="color: #ffffff; font-size: 1.2rem; text-align: center; margin-top: 2.5rem; margin-bottom: 1.5rem;">📈 跨越時代的工具演變對照</h3>
+                <div class="evolution-table-wrapper">
+                    <table class="evolution-table">
+                        <thead>
+                            <tr>
+                                <th>漏斗階段</th>
+                                <th>遠古文字時代 (Email/Blog)</th>
+                                <th>Google 搜尋時代 (SEO/Web)</th>
+                                <th class="evolution-highlight">現代短影音時代 (Shorts/私域)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. 曝光與吸引</strong></td>
+                                <td>部落格長文、論壇貼文</td>
+                                <td>網站 SEO 排名、關鍵字點擊</td>
+                                <td class="evolution-highlight">短影音、平台演算法推薦 (低粉高爆)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. 興趣與留存</strong></td>
+                                <td>填寫 Email 訂閱電子報</td>
+                                <td>網站會員註冊、聯絡表單留存</td>
+                                <td class="evolution-highlight">追蹤帳號、引導至私域社群 (Line/FB)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. 培育與信任</strong></td>
+                                <td>定期發送電子報 (Newsletter)</td>
+                                <td>官網產品評測、QA 乾貨內容</td>
+                                <td class="evolution-highlight">社群群組即時互動、直播互動</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. 篩選與成交</strong></td>
+                                <td>Email 廣告信精準推送</td>
+                                <td>引導至 Landing Page 銷售頁</td>
+                                <td class="evolution-highlight">私域一對一客服、限時團購連結</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.2); border-radius: 12px; padding: 1.2rem; margin-top: 2rem; text-align: center; color: #00f2ff; font-weight: 600;">
+                    💡 核心啟示：注意力在哪裡，流量就在哪裡。工具會不斷更新，但「行銷漏斗」的本質永恆不變！
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
