@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna AI Hub - 智慧服務中心</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .luna-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            max-width: 800px;
+            margin: 2rem auto;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .luna-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00f2ff, #7000ff);
+        }
+        .luna-title {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #00f2ff, #a066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        .luna-desc {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            text-align: left;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn-luna {
+            background: linear-gradient(90deg, #00f2ff, #7000ff);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(112, 0, 255, 0.3);
+            margin-bottom: 3rem;
+        }
+        .btn-luna:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 242, 255, 0.5);
+            background: linear-gradient(90deg, #00e0ff, #8020ff);
+        }
+        .qr-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .qr-section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+        .qr-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .qr-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .qr-box:hover {
+            transform: scale(1.03);
+            border-color: rgba(0, 242, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .qr-image {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            padding: 5px;
+        }
+        .qr-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+        }
+        .pwa-guide {
+            text-align: left;
+            margin-top: 3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        .pwa-guide h3 {
+            color: #00f2ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .pwa-platform {
+            margin-bottom: 1.5rem;
+        }
+        .pwa-platform:last-child {
+            margin-bottom: 0;
+        }
+        .pwa-platform h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+        .pwa-platform ol {
+            padding-left: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+        .pwa-platform li {
+            margin-bottom: 0.4rem;
+        }
+        @media (max-width: 600px) {
+            .qr-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .luna-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>官方公告</h1>
+            <p style="opacity: 0.5;">更新日期：2026-06-13</p>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <div class="luna-card">
+            <h2 class="luna-title">Luna AI Hub 智慧服務門戶正式上線</h2>
+            <p class="luna-desc">
+                親愛的用戶，我們很高興地宣布 <strong>Luna AI Hub</strong> 門戶網站已正式部署上線！作為 Luna 系統的核心樞紐，該平台整合了強大的 AI 互動、個人化秘書以及多項量身打造的智慧化核心服務。<br><br>
+                本專案採用極致流暢的 Progressive Web App (PWA) 規範進行開發，不僅載入速度極快，更能完美適應您的各式裝置螢幕。
+            </p>
+            
+            <a href="https://luna-ai-b7862.web.app/" target="_blank" class="btn-luna">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                立即探索 Luna AI Hub
+            </a>
+
+            <div class="qr-section">
+                <h3 class="qr-section-title">📱 掃描 QR Code 快速存取</h3>
+                <div class="qr-container">
+                    <div class="qr-box">
+                        <img src="Luna-D.webp" alt="Luna-D QR Code" class="qr-image">
+                        <span class="qr-label">Luna-D (深色主題)</span>
+                    </div>
+                    <div class="qr-box">
+                        <img src="Luna-L.webp" alt="Luna-L QR Code" class="qr-image">
+                        <span class="qr-label">Luna-L (淺色主題)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pwa-guide">
+                <h3>💡 PWA 桌面應用程式安裝指南</h3>
+                
+                <div class="pwa-platform">
+                    <h4>📱 行動裝置 (iOS / Android)</h4>
+                    <ol>
+                        <li>使用手機瀏覽器（如 Safari、Chrome 或 Brave）開啟 <a href="https://luna-ai-b7862.web.app/" target="_blank" style="color: #00f2ff;">luna-ai-b7862.web.app</a>。</li>
+                        <li>點選瀏覽器的<strong>「分享」</strong>圖示或<strong>「功能表 (三個點)」</strong>。</li>
+                        <li>點選<strong>「加到主畫面」</strong> (Add to Home Screen)。</li>
+                        <li>即可在您的桌面上新增專屬的 Luna AI 圖示，點擊即可像獨立 App 般全螢幕使用！</li>
+                    </ol>
+                </div>
+
+                <div class="pwa-platform" style="margin-top: 1.5rem;">
+                    <h4>💻 電腦網頁 (Desktop)</h4>
+                    <ol>
+                        <li>使用 Chrome / Edge / Brave 等瀏覽器開啟網站。</li>
+                        <li>在網址列右方會看見<strong>「安裝應用程式」</strong>的 (+) 圖示。</li>
+                        <li>點選並確認安裝，即可將 Luna AI 儲存至您的系統應用程式中，隨時快速啟動。</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

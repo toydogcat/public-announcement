@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "Luna AI Hub 智慧服務門戶正式上線",
+        date: "2026-06-13",
+        path: "announcements/l8a2i9h3.html",
+        preview: "Luna AI 官方入口網站，整合了強大的 AI 對話、個人助手與多項智慧化核心服務，採用 PWA 規範設計，提供極速流暢體驗。"
+    },
+    {
         title: "娛樂資訊中心 - 電台與漫畫探索",
         date: "2026-06-06",
         path: "announcements/w2k9r4p1.html",
