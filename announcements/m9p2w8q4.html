@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>經典港產老電影推薦</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 950px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .movie-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.06) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            backdrop-filter: blur(15px);
+        }
+        .movie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff007f, #ffaa00);
+            opacity: 0.8;
+        }
+        .movie-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 0, 127, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(255, 0, 127, 0.15);
+        }
+        .movie-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .movie-badge {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 0, 127, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #ff007f;
+            border: 1px solid rgba(255, 0, 127, 0.2);
+        }
+        .movie-meta {
+            display: flex;
+            flex-direction: column;
+        }
+        .movie-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.05em;
+        }
+        .movie-cast {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.2rem;
+        }
+        .movie-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+            flex-grow: 1;
+        }
+        .btn-watch {
+            background: linear-gradient(135deg, #ff007f 0%, #ff5e3a 100%);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .btn-watch:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.5);
+            background: linear-gradient(135deg, #ff1a8c 0%, #ff7354 100%);
+        }
+        .tips-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 950px;
+            margin: 2rem auto;
+            backdrop-filter: blur(10px);
+        }
+        .tips-card h2 {
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .tips-card ul {
+            list-style-type: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .tips-card li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+        .tips-card li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #ffaa00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 style="background: linear-gradient(to right, #ff007f, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">經典港產老電影</h1>
+            <p style="opacity: 0.5;">更新日期：2026-06-17</p>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <div class="movie-grid">
+            <div class="movie-card">
+                <div class="movie-header">
+                    <div class="movie-badge">👻</div>
+                    <div class="movie-meta">
+                        <div class="movie-title">猛鬼撞鬼 (Funny Ghost)</div>
+                        <div class="movie-cast">主演：吳君如、樓南光、陳百祥、江欣燕</div>
+                    </div>
+                </div>
+                <p class="movie-desc">香港鬼片搞笑經典之作。講述舞女阿如（吳君如 飾）因債台高築，借好姊妹的錢高價賭馬卻不幸慘敗，因而展開一段荒謬好笑、驚悚連連的撞鬼奇遇，結合爆笑與經典動作喜劇元素。</p>
+                <a href="https://www.youtube.com/watch?v=J4xb2YfZYj8" target="_blank" class="btn-watch">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    立即線上觀看
+                </a>
+            </div>
+
+            <div class="movie-card">
+                <div class="movie-header">
+                    <div class="movie-badge">🎬</div>
+                    <div class="movie-meta">
+                        <div class="movie-title">五福星撞鬼</div>
+                        <div class="movie-cast">主演：洪金寶、曾志偉、馮淬帆、吳耀漢、秦祥林</div>
+                    </div>
+                </div>
+                <p class="movie-desc">經典五福星系列與靈異題材的趣味結合！五福星在一場意外中誤闖荒廢鬼屋，洪金寶帶隊整蠱女警，沒想到卻惹來真鬼反擊與附身，五福星各顯神通、笑料百出，是經典不可錯過的華語喜劇長片。</p>
+                <a href="https://www.youtube.com/watch?v=Ot4-S8rAkEM" target="_blank" class="btn-watch">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    立即線上觀看
+                </a>
+            </div>
+        </div>
+
+        <div class="tips-card">
+            <h2>💡 觀影小貼士</h2>
+            <ul>
+                <li><strong>高畫質體驗：</strong> 影片均提供高畫質（HD）播放，並支援多語系字幕（繁／簡／英），請在播放器右下角設定中開啟。</li>
+                <li><strong>持續更新：</strong> 此頁面將定期收錄更多經典華語老電影，歡迎收藏此網頁以隨時獲取更新。</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 4rem; opacity: 0.3; font-size: 0.8rem;">
+            © 2026 經典華語電影保存庫 | 回味港片黃金時代
+        </footer>
+    </div>
+</body>
+</html>

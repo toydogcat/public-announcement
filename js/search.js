@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "經典港產老電影推薦",
+        date: "2026-06-17",
+        path: "announcements/m9p2w8q4.html",
+        preview: "收錄極具情懷的經典香港老電影，包含《猛鬼撞鬼》、《五福星撞鬼》等搞笑幽默與恐怖喜劇片。"
+    },
+    {
         title: "Luna AI Hub 智慧服務門戶正式上線",
         date: "2026-06-13",
         path: "announcements/l8a2i9h3.html",
