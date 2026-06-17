@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "Vibe Coding 實戰技巧",
+        date: "2026-06-17",
+        path: "announcements/v3k8r9p2.html",
+        preview: "分享高效的 Vibe Coding 技巧與開源工具（如 rtk Token 優化工具、ponytail 極簡思考法），助你最大化釋放 AI 輔助開發效能。"
+    },
+    {
         title: "經典老音樂推薦",
         date: "2026-06-17",
         path: "announcements/r7k3w9q2.html",

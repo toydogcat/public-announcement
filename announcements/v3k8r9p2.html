@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding 實戰技巧</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .vibe-section {
+            max-width: 950px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .vibe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .vibe-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.06) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        .vibe-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00f2ff, #39ff14);
+            opacity: 0.8;
+        }
+        .vibe-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(57, 255, 20, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(57, 255, 20, 0.15);
+        }
+        .vibe-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .vibe-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(57, 255, 20, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #39ff14;
+            border: 1px solid rgba(57, 255, 20, 0.2);
+        }
+        .vibe-meta {
+            display: flex;
+            flex-direction: column;
+        }
+        .vibe-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.05em;
+        }
+        .vibe-subtitle {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.2rem;
+        }
+        .vibe-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        .btn-github {
+            background: linear-gradient(135deg, #00f2ff 0%, #0072ff 100%);
+            color: #000000;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .btn-github.green {
+            background: linear-gradient(135deg, #39ff14 0%, #00b4db 100%);
+            box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
+        }
+        .btn-github:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(0, 242, 255, 0.5);
+            opacity: 0.95;
+        }
+        .tips-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 950px;
+            margin: 3rem auto 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .tips-card h2 {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .tips-card ul {
+            list-style-type: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .tips-card li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+        .tips-card li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #39ff14;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 style="background: linear-gradient(to right, #00f2ff, #39ff14); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Vibe Coding 實戰技巧</h1>
+            <p style="opacity: 0.5;">更新日期：2026-06-17</p>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <div class="vibe-section">
+            <div class="vibe-grid">
+                <!-- RTK Card -->
+                <div class="vibe-card">
+                    <div class="vibe-header">
+                        <div class="vibe-icon">⚡</div>
+                        <div class="vibe-meta">
+                            <div class="vibe-title">rtk (Rust Token Killer)</div>
+                            <div class="vibe-subtitle">專案維護：rtk-ai</div>
+                        </div>
+                    </div>
+                    <p class="vibe-desc">一個極速且針對 Token 優化的 CLI 代理工具。在 AI 寫 Code 協作時，透過自動重寫與壓縮命令、智慧快取，最高可幫你省下 60% 至 90% 的開發操作 Token 開銷，是防範 Token 爆炸的必備神器。</p>
+                    <a href="https://github.com/rtk-ai/rtk" target="_blank" class="btn-github">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        探索 RTK 專案
+                    </a>
+                </div>
+
+                <!-- Ponytail Card -->
+                <div class="vibe-card">
+                    <div class="vibe-header">
+                        <div class="vibe-icon">💡</div>
+                        <div class="vibe-meta">
+                            <div class="vibe-title">ponytail</div>
+                            <div class="vibe-subtitle">專案維護：DietrichGebert</div>
+                        </div>
+                    </div>
+                    <p class="vibe-desc">讓你的 AI 助手具備「最懶資深開發者」的思考邏輯！秉持「沒寫出來的程式碼才是最完美的程式碼」哲學，透過極簡的規則設定與系統提示詞，引導 AI 選擇最簡單、最無痛的解法，拒絕過度設計與代碼膨脹。</p>
+                    <a href="https://github.com/DietrichGebert/ponytail" target="_blank" class="btn-github green">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        探索 Ponytail 專案
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-card">
+            <h2>💡 Vibe Coding 心法</h2>
+            <ul>
+                <li><strong>Token 意識：</strong> 時常注意 AI 的 Context Window 大小，善用 rtk 等代理工具來節省傳輸量與運行開銷。</li>
+                <li><strong>奧卡姆剃刀原則：</strong> 撰寫程式碼時不預先為未來做假設。如 ponytail 倡導的理念，尋找最直覺、最乾淨、改動最少的路徑去解決問題。</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 4rem; opacity: 0.3; font-size: 0.8rem;">
+            © 2026 數位極客探索中心 | 釋放 AI 開發的最大效能
+        </footer>
+    </div>
+</body>
+</html>
