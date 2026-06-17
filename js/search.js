@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "經典老音樂推薦",
+        date: "2026-06-17",
+        path: "announcements/r7k3w9q2.html",
+        preview: "收錄滿滿回憶的經典音樂，包含大合集（8090後金曲、經典華語佳作）以及精選翻唱單曲（Let Her Go、魔法騎士主題曲）。"
+    },
+    {
         title: "經典港產老電影推薦",
         date: "2026-06-17",
         path: "announcements/m9p2w8q4.html",
