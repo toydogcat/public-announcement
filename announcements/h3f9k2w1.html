@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>熱門 AI 與學術技職證照全指南 - 升學與就業規劃</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .hero-banner {
+            width: 100%;
+            border-radius: 24px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            display: block;
+        }
+        
+        .hero-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s ease;
+        }
+        
+        .hero-banner:hover img {
+            transform: scale(1.03);
+        }
+
+        /* 頂部徽章與標題 */
+        .page-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.15) 0%, rgba(112, 0, 255, 0.15) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            color: var(--accent-color);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* 自訂 Tab 樣式 */
+        .tabs-container {
+            margin: 2.5rem 0;
+        }
+
+        .tab-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 1.2rem;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(0, 242, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.15) 0%, rgba(112, 0, 255, 0.15) 100%);
+            border-color: var(--accent-color);
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 242, 255, 0.15);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 證照卡片設計 */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .cert-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 1.8rem;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cert-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 242, 255, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 15px 30px rgba(0, 242, 255, 0.1);
+        }
+
+        .cert-card:hover::before {
+            opacity: 1;
+        }
+
+        .cert-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .badge-aws { background: rgba(255, 153, 0, 0.15); color: #ff9900; border: 1px solid rgba(255, 153, 0, 0.3); }
+        .badge-azure { background: rgba(0, 120, 212, 0.15); color: #0078d4; border: 1px solid rgba(0, 120, 212, 0.3); }
+        .badge-gcp { background: rgba(66, 133, 244, 0.15); color: #4285f4; border: 1px solid rgba(66, 133, 244, 0.3); }
+        .badge-local { background: rgba(0, 180, 130, 0.15); color: #00b482; border: 1px solid rgba(0, 180, 130, 0.3); }
+        .badge-academic { background: rgba(255, 0, 127, 0.15); color: #ff007f; border: 1px solid rgba(255, 0, 127, 0.3); }
+
+        .cert-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .cert-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .cert-meta {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* 警告與提示區塊 */
+        .info-alert {
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.08) 0%, rgba(255, 94, 58, 0.08) 100%);
+            border: 1px solid rgba(255, 170, 0, 0.25);
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin: 2.5rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-alert::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: #ffaa00;
+        }
+
+        .info-alert-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffaa00;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-alert-content {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        .info-alert-content ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .info-alert-content li {
+            margin-bottom: 0.4rem;
+        }
+
+        /* 表格設計 */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 2.5rem 0;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        th, td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.04);
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* 互動式分析工具 */
+        .quiz-card {
+            background: linear-gradient(135deg, rgba(112, 0, 255, 0.08) 0%, rgba(0, 242, 255, 0.08) 100%);
+            border: 1px solid rgba(112, 0, 255, 0.25);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(15px);
+        }
+
+        .quiz-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            background: linear-gradient(to right, #00f2ff, #7000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quiz-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .quiz-step {
+            margin-bottom: 1.8rem;
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 242, 255, 0.4);
+            color: #ffffff;
+        }
+
+        .quiz-option.selected {
+            background: rgba(0, 242, 255, 0.15);
+            border-color: var(--accent-color);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 242, 255, 0.2);
+        }
+
+        .quiz-btn {
+            display: block;
+            width: 100%;
+            max-width: 250px;
+            margin: 2rem auto 0;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            color: #ffffff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 242, 255, 0.3);
+            text-align: center;
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 242, 255, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .quiz-results {
+            display: none;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .result-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 768px) {
+            .tab-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .tab-btn {
+                padding: 1rem;
+            }
+            th, td {
+                padding: 0.8rem 1rem;
+                font-size: 0.85rem;
+            }
+            .quiz-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="page-tag">官方發布 • 證照與升學指引</div>
+            <h1>熱門 AI 與學術技職證照指南</h1>
+            <p style="opacity: 0.5;">最後更新日期: 2026-06-24</p>
+            
+            <div class="qr-container" style="margin-top: 1.5rem;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://toydogcat.github.io/public-announcement/announcements/h3f9k2w1.html" alt="QR Code" style="background: white; padding: 8px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <p style="font-size: 0.7rem; opacity: 0.3; margin-top: 0.5rem;">掃描分享此公告網址</p>
+            </div>
+        </header>
+        
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <!-- 封面圖片區 -->
+        <div class="hero-banner">
+            <img src="cert_cover.png" alt="AI and Professional Certification cover illustration">
+        </div>
+
+        <div class="card">
+            <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
+                在當今人工智慧高速發展與升學制度多元化的時代，擁有一張具備公信力的證照，不論是在學期間的<b>升學加分（國中超額比序、高中學習歷程）</b>，還是踏入社會的<b>就業談薪、技術轉職</b>，都是強而有力的實力證明。
+                然而，不同的階段有截然不同的採計邏輯。本公告為您詳細拆解各階段最主流的證照與備考策略。
+            </p>
+        </div>
+
+        <!-- ⚠️ 重要資訊：AWS證照停考驗證 -->
+        <div class="info-alert">
+            <div class="info-alert-title">
+                <span>⚠️</span> 國際證照重大異動與實務提醒 (2026 最新)
+            </div>
+            <div class="info-alert-content">
+                <ul>
+                    <li><strong>AWS Machine Learning – Specialty (MLS-C01) 已於 2026 年 3 月 31 日正式停考：</strong> 過去被視為黃金級的 ML Specialty 已步入歷史。若您目前持有，自取得日起 3 年內仍有效。新考生請挑戰其後繼架構：
+                        <ul>
+                            <li>初階通識：<strong>AWS Certified AI Practitioner (AIF-C01)</strong>（著重生成式 AI 基礎概念）。</li>
+                            <li>中階實作：<strong>AWS Certified Machine Learning Engineer – Associate (MLA-C01)</strong>（著重 MLOps 與 SageMaker 部署）。</li>
+                            <li>高階專業：<strong>AWS Certified Generative AI Developer – Professional (AIP-C01)</strong>（針對 Bedrock 及 Agent 開發）。</li>
+                        </ul>
+                    </li>
+                    <li><strong>證照時效性：</strong> 國際巨頭（AWS、Microsoft、GCP）證照通常<b>僅有 2~3 年效期</b>，需定期重考或完成更新；而台灣本土的 <strong>經濟部 iPAS 證照則為「永久有效」</strong>，極具在地競爭優勢。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 分類切換區 -->
+        <div class="tabs-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-junior')">在學：國中升高中</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-senior')">在學：高中升大學</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-career')">就業：社會人士與職場</button>
+            </div>
+
+            <!-- Tab 1: 國中升高中 -->
+            <div id="tab-junior" class="tab-content active">
+                <h2 style="margin-bottom: 1rem; color: var(--accent-color);">🎯 國中升高中：免試入學「多元學習表現」採計原則</h2>
+                <p style="margin-bottom: 1.5rem; opacity: 0.8;">
+                    此階段的核心邏輯在於<b>「標準化」、「政府/學術機構核發」</b>。證照主要用於免試入學超額比序中的「多元學習表現」積分。
+                    請特別注意：多數就學區的「多元表現」積分設有上限，若服務學習或幹部積分已滿，證照主要作為<b>同分超額比序的備用工具</b>。如果是技藝班學生，則有高職進路的實質加分。
+                </p>
+
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-academic">🗣️ 語言檢定</span>
+                            <h3 class="cert-title">英語能力檢定 (須達 CEF A2 級以上)</h3>
+                            <p class="cert-desc">包含全民英檢 (GEPT) 初級複試通過、多益 (TOEIC) / TOEIC Bridge 達到對應標準。是最廣泛被各就學區採計的標準化語言證照。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 2年(多益)/永久(英檢)</div>
+                            <div class="meta-item">⭐ 難易度: 簡單~中等</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-academic">🌸 本土語認證</span>
+                            <h3 class="cert-title">本土語言能力認證 (閩/客/原住民語)</h3>
+                            <p class="cert-desc">教育部閩南語、客委會客語、原民會原住民族語言能力認證（初級以上）。近年政策大力推行，備考門檻相對英文低，是穩拿多元表現積分的熱門選擇。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 永久有效</div>
+                            <div class="meta-item">⭐ 難易度: 簡單</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-local">🔧 技職檢定</span>
+                            <h3 class="cert-title">勞動部技術士技能檢定 - 丙級</h3>
+                            <p class="cert-desc">特別針對參加「國中技藝教育學程」之學生。取得電腦軟體應用丙級、烘焙食品丙級或餐飲類丙級技術士證，在五專免試入學及高職特色招生中擁有極大加分權重。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 永久有效</div>
+                            <div class="meta-item">⭐ 難易度: 中等 (需實作訓練)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: 高中升大學 -->
+            <div id="tab-senior" class="tab-content">
+                <h2 style="margin-bottom: 1rem; color: var(--accent-color);">🎓 高中升大學：個人申請「學習歷程檔案」核心攻略</h2>
+                <p style="margin-bottom: 1.5rem; opacity: 0.8;">
+                    到了高中與高職階段，採計邏輯發生根本性轉變：<b>大學教授不在乎單純的累積點數，而是看重「證照與申請科系的適向性（關聯性）」</b>。
+                    所有考取的證照必須在「高級中等學校學生學習歷程資料庫」中擁有官方 4 碼證照代碼才能正式上傳至「檢定證照紀錄」。
+                </p>
+
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-academic">💻 資訊與資工</span>
+                            <h3 class="cert-title">APCS 大學程式設計先修檢測</h3>
+                            <p class="cert-desc">由師大主辦，檢測程式設計觀念與實作能力（使用 C/C++、Python、Java）。許多頂尖大學資工/資管系設有「APCS 超額篩選組」，是理工科高中生含金量最高、近乎必考的檢定。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 永久 (大學通常採計近3年)</div>
+                            <div class="meta-item">⭐ 難易度: 困難 (需具備良好演算法邏輯)</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-azure">🤖 商管與跨領域 AI</span>
+                            <h3 class="cert-title">Microsoft Azure AI-900 / 經濟部 iPAS</h3>
+                            <p class="cert-desc">微軟 Azure AI 基礎認證或經濟部 iPAS AI 應用規劃師。適合申請管理、商管、統計或資訊傳播科系的學生，證明自己具備 AI 工具應用與商業情境規劃的跨界素養。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: AI-900(永久/官網認可)/iPAS(永久)</div>
+                            <div class="meta-item">⭐ 難易度: 簡單~中等 (免寫程式)</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-academic">🩺 醫藥與公共衛生</span>
+                            <h3 class="cert-title">急救相關證照 (CPR+AED / 紅十字會)</h3>
+                            <p class="cert-desc">中華民國紅十字會急救員證或衛福部認可之 CPR+AED 證書。對於申請醫學、護理、物理治療、公共衛生或體育相關科系的學生，能展現強烈的專業熱忱與即戰力。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 3年 (需定期複訓)</div>
+                            <div class="meta-item">⭐ 難易度: 簡單 (重出席與實作操作)</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-local">⚙️ 技職與科大進路</span>
+                            <h3 class="cert-title">勞動部乙級 / 丙級技術士證照</h3>
+                            <p class="cert-desc">如視覺傳達設計、網頁設計、會計事務、機械製圖等。對科大四技二專甄選，乙級技術士證在第一階段可直接獲得優待加分（最高可達 15% 總分），是技職學生的命脈。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 永久有效</div>
+                            <div class="meta-item">⭐ 難易度: 乙級困難 / 丙級中等</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: 就業與職場 -->
+            <div id="tab-career" class="tab-content">
+                <h2 style="margin-bottom: 1rem; color: var(--accent-color);">💼 就業與職場進階：國際巨頭與本土官方 AI/ML 技術認證</h2>
+                <p style="margin-bottom: 1.5rem; opacity: 0.8;">
+                    就業市場看重的是<b>「實戰能力」、「即戰力」與「雲端架構部署」</b>。在外商、大型軟體公司與科技大廠，具備三大雲端巨頭認證是最好的談薪籌碼；在政府標案、本土傳產與金融業，經濟部的官方認證則有法規加分優勢。
+                </p>
+
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-aws">☁️ AWS 雲端生態系</span>
+                            <h3 class="cert-title">AWS AI & Machine Learning 系列</h3>
+                            <p class="cert-desc">針對 2026 年新制：初階推薦 <strong>AI Practitioner (AIF-C01)</strong>，專注 GenAI 概念；工程與部署導向則挑戰 <strong>ML Engineer - Associate (MLA-C01)</strong> 與 <strong>GenAI Developer - Professional (AIP-C01)</strong>，是雲端 AI 崗位金字招牌。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 3年</div>
+                            <div class="meta-item">⭐ 難易度: 中等至極難 (AIP-C01 需程式經驗)</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-azure">💻 微軟與微軟 AI 生態</span>
+                            <h3 class="cert-title">Azure AI Engineer Associate (AI-102)</h3>
+                            <p class="cert-desc">實作型證照，考核如何在 Azure 上整合微軟認知服務、Azure OpenAI Service 及認知搜索。國內許多採用微軟架構之醫療、政務專案與金融機構高度重視此證照。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 2年 (需線上免費續期)</div>
+                            <div class="meta-item">⭐ 難易度: 中等 (需程式與 API 開發基礎)</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-gcp">📊 谷歌機器學習工程</span>
+                            <h3 class="cert-title">Professional ML Engineer (GCP)</h3>
+                            <p class="cert-desc">偏向 MLOps、數據工程與自動化。考核如何在 Google Cloud 環境中將機器學習模型進行規模化生產部署、監控與防護，適合資深 ML 工程師與架構師。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 2年</div>
+                            <div class="meta-item">⭐ 難易度: 困難 (重數據管線規劃與維護)</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-local">🇹🇼 台灣官方背書</span>
+                            <h3 class="cert-title">經濟部 iPAS AI 應用規劃師</h3>
+                            <p class="cert-desc">國家級認證，永久有效。包含人工智慧概論與生成式 AI 應用。近年因應產業趨勢加入「AI 治理素養」與「協作開發」，在台灣企業與政府專案標案中具有加分優勢。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 永久有效</div>
+                            <div class="meta-item">⭐ 難易度: 中等 (初級通過率約 38%)</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-local">💡 生產力與通識</span>
+                            <h3 class="cert-title">資策會 生成式 AI 能力認證</h3>
+                            <p class="cert-desc">針對非技術背景人員，驗證 ChatGPT, Claude 等工具在文本創作、文案、圖像與簡報上的工作流程應用與 Prompt Engineering。非常適合行政、企劃、新鮮人證明 AI 生產力。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 永久有效</div>
+                            <div class="meta-item">⭐ 難易度: 簡單 (高通過率)</div>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <div>
+                            <span class="cert-badge badge-aws">🎯 硬體硬核與特定領域</span>
+                            <h3 class="cert-title">NVIDIA DLI 深度學習學院認證</h3>
+                            <p class="cert-desc">針對電腦視覺、大型語言模型(LLMs)及自駕車、元宇宙等領域。基於 NVIDIA DGX 超算平台實操，技術難度高，是演算法與底層 AI 工程師的硬核直通卡。</p>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="meta-item">⏱️ 效期: 依課程不同</div>
+                            <div class="meta-item">⭐ 難易度: 困難 (需硬實力與實操驗收)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 證照對比表格 -->
+        <h2 style="margin-top: 3rem; color: #ffffff;">📊 熱門證照核心指標橫向對比</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>證照名稱</th>
+                        <th>主辦單位</th>
+                        <th>適合人群</th>
+                        <th>考試費用估計</th>
+                        <th>證照效期</th>
+                        <th>含金量/公信力</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>APCS 程式檢測</strong></td>
+                        <td>國立臺灣師範大學</td>
+                        <td>高中生（資工、資管科系申請）</td>
+                        <td>免報名費</td>
+                        <td>永久有效</td>
+                        <td>🔥🔥🔥🔥🔥 (升學必備)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>iPAS AI 應用規劃師</strong></td>
+                        <td>經濟部</td>
+                        <td>大專院校生、國內傳產/金融業</td>
+                        <td>約 NT$ 1,200</td>
+                        <td>永久有效</td>
+                        <td>🔥🔥🔥🔥 (台灣企業高認可)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Azure AI-900</strong></td>
+                        <td>Microsoft</td>
+                        <td>零技術 PM、行銷、在學大專生</td>
+                        <td>美金 $99 (約 NT$ 3,200)</td>
+                        <td>永久有效</td>
+                        <td>🔥🔥🔥 (最知名入門磚)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AWS AI Practitioner (AIF-C01)</strong></td>
+                        <td>Amazon (AWS)</td>
+                        <td>初入雲端與 AI 領域人員、PM</td>
+                        <td>美金 $75 (約 NT$ 2,400)</td>
+                        <td>3 年</td>
+                        <td>🔥🔥🔥🔥 (最新熱門首選)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Azure AI Engineer (AI-102)</strong></td>
+                        <td>Microsoft</td>
+                        <td>AI 實作開發人員、醫療政務專案</td>
+                        <td>美金 $165 (約 NT$ 5,300)</td>
+                        <td>2 年 (免費續期)</td>
+                        <td>🔥🔥🔥🔥 (中階必備)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GCP Professional ML Engineer</strong></td>
+                        <td>Google Cloud</td>
+                        <td>MLOps、資深數據工程師</td>
+                        <td>美金 $200 (約 NT$ 6,500)</td>
+                        <td>2 年</td>
+                        <td>🔥🔥🔥🔥🔥 (頂級架構必考)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NVIDIA DLI 實作認證</strong></td>
+                        <td>NVIDIA</td>
+                        <td>自駕、元宇宙、邊緣運算研發</td>
+                        <td>美金 $99 - $149 起</td>
+                        <td>依課程而定</td>
+                        <td>🔥🔥🔥🔥🔥 (硬體與研發極佳)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 💡 互動式分析測驗：純前端實作 -->
+        <div class="quiz-card">
+            <h3 class="quiz-title">🧭 證照定向分析小工具</h3>
+            <p class="quiz-subtitle">快速勾選您的現狀與目標，AI 即時為您匹配最適合報考的證照組合！</p>
+            
+            <div class="quiz-step">
+                <div class="quiz-question">1. 您目前的身份/階段是？</div>
+                <div class="quiz-options" id="q-stage">
+                    <div class="quiz-option" onclick="selectOption('stage', 'junior', this)">國中在學</div>
+                    <div class="quiz-option" onclick="selectOption('stage', 'senior', this)">高中/高職在學</div>
+                    <div class="quiz-option" onclick="selectOption('stage', 'career', this)">大專院校生/就業人士</div>
+                </div>
+            </div>
+
+            <div class="quiz-step">
+                <div class="quiz-question">2. 您的專業背景或未來目標領域是？</div>
+                <div class="quiz-options" id="q-field">
+                    <div class="quiz-option" onclick="selectOption('field', 'tech', this)">資訊技術/程式開發/AI工程</div>
+                    <div class="quiz-option" onclick="selectOption('field', 'business', this)">商管/企劃/專案管理 (不寫程式)</div>
+                    <div class="quiz-option" onclick="selectOption('field', 'general', this)">語文/學術/其他非理工領域</div>
+                </div>
+            </div>
+
+            <button class="quiz-btn" onclick="runAnalysis()">開始分析匹配</button>
+
+            <div class="quiz-results" id="quiz-results">
+                <div class="result-title">✨ 您的專屬證照推薦報告 ✨</div>
+                <div id="results-content" style="line-height: 1.8; color: rgba(255,255,255,0.9);">
+                    <!-- Dynamic Results -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 備考小建議 -->
+        <div class="card" style="border-color: rgba(112, 0, 255, 0.3);">
+            <h3 style="margin-bottom: 1rem; color: #ffffff;">💡 備考與選照核心建議</h3>
+            <ul style="margin-left: 1.5rem; line-height: 1.8; opacity: 0.85;">
+                <li style="margin-bottom: 0.6rem;"><strong>先廣後專：</strong> 零基礎者可先考 <strong>Azure AI-900</strong> 或本土 <strong>資策會生成式 AI 認證</strong> 建立宏觀概念與 Prompt 技巧，再評估是否投入程式開發。</li>
+                <li style="margin-bottom: 0.6rem;"><strong>英文是第一生產力：</strong> 國際證照（如 AWS、Google）雖然部分有簡體中文，但翻譯有時不夠精準，且最新題庫均為英文。建議養成閱讀英文技術文檔的習慣。</li>
+                <li style="margin-bottom: 0.6rem;"><strong>別陷於證照迷思：</strong> 證照是「敲門磚」與「基本功證明」，企業更看重您的 GitHub 專案作品集、APCS 實作分數、或雲端資源部署經驗。證照＋實作專案才是無敵組合。</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 4rem; opacity: 0.3; font-size: 0.8rem; padding-bottom: 2rem;">
+            © 2026 Luna AI 資訊公告平台 | 證照數據已依據 2026 最新官方公告完成核實
+        </footer>
+    </div>
+
+    <script>
+        // Tab 切換邏輯
+        function switchTab(evt, tabId) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabButtons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Quiz 選擇邏輯
+        let selectedStage = '';
+        let selectedField = '';
+
+        function selectOption(category, value, element) {
+            const parent = element.parentElement;
+            const options = parent.getElementsByClassName("quiz-option");
+            for (let i = 0; i < options.length; i++) {
+                options[i].classList.remove("selected");
+            }
+            element.classList.add("selected");
+
+            if (category === 'stage') {
+                selectedStage = value;
+            } else if (category === 'field') {
+                selectedField = value;
+            }
+        }
+
+        function runAnalysis() {
+            if (!selectedStage || !selectedField) {
+                alert("請先選擇您目前的「身份」與「專業領域目標」喔！");
+                return;
+            }
+
+            const resultsContainer = document.getElementById("quiz-results");
+            const resultsContent = document.getElementById("results-content");
+            resultsContainer.style.display = "block";
+
+            let recommendations = "";
+
+            if (selectedStage === 'junior') {
+                recommendations = `
+                    <p><b>您的定位：國中升學階段</b></p>
+                    <p>對於國中階段，目標應放在「穩拿超額比序的多元表現分數」或準備「高職技藝通道」：</p>
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.2rem; border-radius: 12px; margin-top: 1rem;">
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><b>第一推薦：本土語言能力認證（閩南語/客語/原民語初級）</b> — 取得最省時，許多免試就學區均有穩定加分，是性價比極高的保底手段。</li>
+                            <li><b>第二推薦：全民英檢 (GEPT) 初級以上（需達 CEF A2 級標準）</b> — 證明基本學術能力，也是少數全國就學區均有共識採計的證照。</li>
+                            <li><b>如果是志在技職/五專：</b>務必爭取參加學校<b>國中技藝學程</b>，並報考勞動部核發的 <b>電腦軟體應用丙級、烘焙或餐飲丙級證照</b>，此在五專免試入學中有強力的加權優勢。</li>
+                        </ul>
+                    </div>
+                `;
+            } else if (selectedStage === 'senior') {
+                if (selectedField === 'tech') {
+                    recommendations = `
+                        <p><b>您的定位：高中職在學 ➔ 目標資訊理工科系</b></p>
+                        <p>在個人申請「學習歷程檔案」中，教授極度看重「專業關聯性」，建議鎖定以下黃金組合：</p>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.2rem; border-radius: 12px; margin-top: 1rem;">
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><b>第一首選：APCS（大學程式設計先修檢測）</b> — 許多頂尖資工系（如台成清交政、科大）設有專屬的 APCS 組，實作級 3 級分以上幾乎是申請資工系的黃金直通車。</li>
+                                <li><b>第二推薦：TQC+ Python 程式設計認證 或 Cisco CCNA</b> — 若 APCS 尚在準備，可先用 TQC+ 在學習歷程中證明程式學程足跡；若想攻讀網路/資安，Cisco CCNA 是極具份量的加分牌。</li>
+                                <li><b>加分建議：</b>可搭配微軟 <b>Azure AI-900</b> 作為通識亮點，向教授展現您在高中就具備雲端與 AI 部署的宏觀思維。</li>
+                            </ul>
+                        </div>
+                    `;
+                } else if (selectedField === 'business') {
+                    recommendations = `
+                        <p><b>您的定位：高中職在學 ➔ 目標商管/法政/行銷科系</b></p>
+                        <p>商管行銷領域非常注重「跨界整合與數位力」，如何用 AI 提升效率是您的最大賣點：</p>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.2rem; border-radius: 12px; margin-top: 1rem;">
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><b>第一推薦：Microsoft Azure AI-900 (AI Fundamentals)</b> — 全球公認度最高的 AI 通識證照。在學習歷程中展示這張，能向商管教授證明您具備「與工程團隊溝通」並運用雲端資源解決商業問題的潛力。</li>
+                                <li><b>第二推薦：經濟部 iPAS AI 應用規劃師（初級）</b> — 國家級官方認證，且永久有效。考科包含生成式 AI 與人工智慧概論，能快速在眾多商管科系申請者中脫穎而出。</li>
+                                <li><b>第三推薦：勞動部會計事務技術士或 MOS 證照</b> — 針對商管基本功。若目標是科大，乙級或丙級技術士證在甄選入學有明文的百分比加分優待。</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    recommendations = `
+                        <p><b>您的定位：高中職在學 ➔ 目標語文/學術/社科/醫護領域</b></p>
+                        <p>這些領域看重語文專長或特定的現場實作技能，請瞄準：</p>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.2rem; border-radius: 12px; margin-top: 1rem;">
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><b>語文類（通關基本牌）：多益 (TOEIC) 金色證書（860分以上）或英檢中高級</b> — 對於外語、文史、法政等科系是絕對強力的能力證明。若有 JLPT N3-N1（日檢）或第二外語檢定更佳。</li>
+                                <li><b>醫學/護理/公衛/體育系首選：CPR+AED 或 紅十字會急救員證</b> — 這是展現生命科學領域關懷與現場急救即戰力的最佳佐證。</li>
+                                <li><b>跨域數位素養：資策會生成式 AI 能力認證</b> — 證明自己即便就讀人文學科，依然具備利用 AI 進行文本創作、文案及資料整理的高效數位生產力。</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            } else { // career
+                if (selectedField === 'tech') {
+                    recommendations = `
+                        <p><b>您的定位：大專院校生/就業人士 ➔ 資訊技術與開發工程師</b></p>
+                        <p>就業市場看重「實戰部署」與「雲端架構」，請直接挑戰高含金量技術證照：</p>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.2rem; border-radius: 12px; margin-top: 1rem;">
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><b>雲端 AI 架構與部署：AWS ML Engineer - Associate (MLA-C01) 與 GenAI Developer - Professional (AIP-C01)</b> — AWS 於 2026 推出的全新實戰認證，全面取代已停考的舊 ML Specialty。掌握 SageMaker 與 Bedrock 架構者，在科技外商與雲端服務公司薪資談判籌碼最大。</li>
+                                <li><b>API 與微軟生態整合：Azure AI Engineer Associate (AI-102)</b> — 考核在 Azure 上架構與部署 AI 方案的能力，在大型醫療系統、政府標案及金融機構專案中是硬性加分條件。</li>
+                                <li><b>硬核研發與自駕：NVIDIA DLI 深度學習學院認證</b> — 針對電腦視覺、大型語言模型實操。直接代表您對 NVIDIA 硬體底層及超算平台的掌握程度，是高薪演算法工程師直通卡。</li>
+                            </ul>
+                        </div>
+                    `;
+                } else if (selectedField === 'business') {
+                    recommendations = `
+                        <p><b>您的定位：大專院校生/就業人士 ➔ 商業管理/PM/行銷企劃/非程式技術崗</b></p>
+                        <p>非技術人員在職場上最需要證明的是「如何運用 AI 工具提升團隊生產力與優化業務流程」：</p>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.2rem; border-radius: 12px; margin-top: 1rem;">
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><b>國內轉職與標案加分：經濟部 iPAS AI 應用規劃師（初級/中級）</b> — 國家發證、永久有效。近年初級通過率約 38%，具有極高在地公信力。能為企業投標政府專案時提供法定專業人員名額加分。</li>
+                                <li><b>國際級基礎認證：AWS Certified AI Practitioner (AIF-C01) 或 Azure AI-900</b> — 著重在 AI 基礎知識與 GenAI 的商業應用情境，不需寫程式，是跨部門溝通與 PM 必備的數位敲門磚。</li>
+                                <li><b>辦公效率證明：資策會生成式 AI 能力認證 / 辦公室應用能力認證</b> — 實際考核 ChatGPT / Claude 的提示詞應用（Prompt Engineering），能具體向主管證明你具備「一人抵三人」的 AI 高效辦公能力。</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    recommendations = `
+                        <p><b>您的定位：大專院校生/就業人士 ➔ 語文/學術/跨領域與多元就業</b></p>
+                        <p>跨領域就業或專門學術領域中，數位素養與語言是雙引擎：</p>
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.2rem; border-radius: 12px; margin-top: 1rem;">
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li><b>核心語言通行證：TOEIC 多益金色證書（860+）或全民英檢中高級以上</b> — 無論進入外商、跨國貿易、或是學術機構，外語能力都是最堅實的基底。</li>
+                                <li><b>數位加分牌：經濟部 iPAS AI 應用規劃師 或 資策會生成式 AI 能力認證</b> — 跨領域者最怕被定型為「不懂數位科技」，這兩張證照是成本低、效益高的「數位素養證明書」，能打破專業壁壘。</li>
+                                <li><b>特殊實務證照：衛福部 CPR+AED 證書 或 勞動部電腦軟體應用乙級</b> — 依具體行業需求而定。乙級電腦軟體應用在許多公家機關與學校行政聘任中是明文列出的評分加分項。</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            }
+
+            resultsContent.innerHTML = recommendations;
+            
+            // 滾動到結果畫面
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "熱門 AI 與學術技職證照全指南 - 升學與就業規劃",
+        date: "2026-06-24",
+        path: "announcements/h3f9k2w1.html",
+        preview: "深度解析在學期間（國中升高中、高中升大學）與就業階段之熱門 AI、雲端及學術技職證照，包含 2026 年 AWS 新制驗證與專屬定向分析匹配小工具。"
+    },
+    {
         title: "Vibe Coding 實戰技巧",
         date: "2026-06-17",
         path: "announcements/v3k8r9p2.html",
