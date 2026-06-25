@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 浪潮下的職涯重建指引：失業風險族群、轉職路徑與賦能課程全解析</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .hero-banner {
+            width: 100%;
+            border-radius: 24px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            display: block;
+        }
+        
+        .hero-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s ease;
+        }
+        
+        .hero-banner:hover img {
+            transform: scale(1.03);
+        }
+
+        .page-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 0, 127, 0.15) 0%, rgba(112, 0, 255, 0.15) 100%);
+            border: 1px solid rgba(255, 0, 127, 0.3);
+            color: #ff007f;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* 區塊標題 */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 2.5rem 0 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 0.8rem;
+        }
+
+        /* 卡片網格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.05);
+        }
+
+        /* 風險徽章 */
+        .risk-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+        }
+        .risk-high { background: rgba(255, 50, 50, 0.15); color: #ff3232; border: 1px solid rgba(255, 50, 50, 0.3); }
+        .risk-med { background: rgba(255, 170, 0, 0.15); color: #ffaa00; border: 1px solid rgba(255, 170, 0, 0.3); }
+
+        .job-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            padding-right: 4.5rem;
+        }
+
+        .bullet-list {
+            margin-left: 1.2rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.6;
+        }
+
+        .bullet-list li {
+            margin-bottom: 0.4rem;
+        }
+
+        /* 警告與法規區塊 */
+        .gov-banner {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.08) 0%, rgba(112, 0, 255, 0.08) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.25);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .gov-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 課程分類 */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .course-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            border-color: var(--secondary-color);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .course-type {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 互動式分析工具 */
+        .interactive-tool {
+            background: linear-gradient(135deg, rgba(112, 0, 255, 0.06) 0%, rgba(255, 0, 127, 0.06) 100%);
+            border: 1px solid rgba(112, 0, 255, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(15px);
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ff007f, #7000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tool-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .selector-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .role-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .role-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.2rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .role-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 0, 127, 0.4);
+            color: #ffffff;
+        }
+
+        .role-btn.active {
+            background: rgba(255, 0, 127, 0.15);
+            border-color: #ff007f;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.2);
+        }
+
+        .result-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-index {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .result-column h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.6rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .role-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            .interactive-tool {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="page-tag">職涯轉型 • 官方認證指引</div>
+            <h1>AI 浪潮下失業風險族群之轉職與賦能規劃</h1>
+            <p style="opacity: 0.5;">最後更新日期: 2026-06-25</p>
+
+            <div class="qr-container" style="margin-top: 1.5rem;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://toydogcat.github.io/public-announcement/announcements/x2m8q9p1.html" alt="QR Code" style="background: white; padding: 8px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <p style="font-size: 0.7rem; opacity: 0.3; margin-top: 0.5rem;">掃描分享此轉職指南</p>
+            </div>
+        </header>
+
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <!-- 封面圖片區 -->
+        <div class="hero-banner">
+            <img src="career_transition.png" alt="Career Rebuilding and Transition in the AI Era illustration">
+        </div>
+
+        <div class="card">
+            <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
+                隨著大型語言模型（LLMs）、代理式 AI（Agentic AI）與自動化工作流的快速普及，許多傳統崗位正面臨職務重組或消失的危機。
+                數發部最新指出，AI 時代的轉型關鍵並非「與機器競爭速度」，而是<b>「透過人機協作重塑個人專業」</b>。本指南旨在協助面臨潛在失業風險的族群，盤點可轉型之工作崗位，並提供對齊國家政策的能力提升路徑。
+            </p>
+        </div>
+
+        <!-- 數發部 AI 產業人才認定指引 3.0 重點 -->
+        <div class="gov-banner">
+            <div class="gov-title">
+                <span>🏛️</span> 國家法規與人才框架指引 (2026 最新)
+            </div>
+            <p style="font-size: 0.95rem; line-height: 1.6; opacity: 0.9; margin-bottom: 1rem;">
+                數位發展部於 <b>2026 年 5 月 19 日</b>正式發布了 <strong>《AI 產業人才認定指引 3.0》</strong>，並與 2026 年 1 月公布之<b>《人工智慧基本法》</b>完成對齊。其核心變更對於轉職者極具指引價值：
+            </p>
+            <ul style="margin-left: 1.5rem; line-height: 1.6; font-size: 0.95rem; opacity: 0.85;">
+                <li style="margin-bottom: 0.5rem;"><strong>AI 人才三大分類：</strong> 歸納為「AI 研究人才」、「AI 開發人才」與 <strong>「AI 應用人才」</strong>。對於非工程背景的轉職者，目標應設定為「AI 應用人才」。</li>
+                <li style="margin-bottom: 0.5rem;"><strong>兩大核心能力新增：</strong>
+                    <ul>
+                        <li><b>AI 治理素養：</b> 了解 AI 風險、法律與合規要求，避免企業導入 AI 時違法（如侵權、偏見或個資洩漏）。</li>
+                        <li><b>AI 協作與開發：</b> 順應 Agentic AI 與 Vibe Coding 趨勢，利用 AI 代理人工具與自動化引擎協作生產。</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 風險族群分析 -->
+        <h2 class="section-title">📊 潛在失業風險最高之五大族群</h2>
+        <div class="card-grid">
+            <div class="info-card">
+                <span class="risk-badge risk-high">🔥 風險：極高</span>
+                <h3 class="job-title">行政文書與助理人員</h3>
+                <ul class="bullet-list">
+                    <li><b>受影響原因：</b> 報表整理、會議紀錄摘要、排程及收發郵件等重複性工作，已被 AI 工作流自動化工具（如 Make、Zapier、Copilot）完全取代。</li>
+                    <li><b>核心保留優勢：</b> 人際溝通協調、跨部門資源整合、辦公室實務經驗。</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <span class="risk-badge risk-high">🔥 風險：極高</span>
+                <h3 class="job-title">基礎翻譯與文案人員</h3>
+                <ul class="bullet-list">
+                    <li><b>受影響原因：</b> 機器翻譯（如 DeepL）與生成式模型（如 Claude）已能產出高流暢度的日常翻譯及初階廣告行銷文案。</li>
+                    <li><b>核心保留優勢：</b> 文化敏感度、在地品牌情感連結、精準語意審查。</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <span class="risk-badge risk-high">🔥 風險：極高</span>
+                <h3 class="job-title">初階美編與插畫助理</h3>
+                <ul class="bullet-list">
+                    <li><b>受影響原因：</b> Midjourney、Stable Diffusion 等影像生成工具，使得去背、基礎排版、初階素材插畫的製作成本趨近於零。</li>
+                    <li><b>核心保留優勢：</b> 藝術美感整合、UI/UX 用戶體驗直覺、品牌風格把控。</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <span class="risk-badge risk-med">⚡ 風險：中高</span>
+                <h3 class="job-title">一線客服與電話人員</h3>
+                <ul class="bullet-list">
+                    <li><b>受影響原因：</b> 語音與文字 AI 客服代理人已能處理 80% 以上的日常諮詢、退換貨申請及簡單疑難排解。</li>
+                    <li><b>核心保留優勢：</b> 高度同理心、複雜客訴危機處理、VIP 客戶關係維護。</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <span class="risk-badge risk-med">⚡ 風險：中高</span>
+                <h3 class="job-title">初階程式編寫與測試員</h3>
+                <ul class="bullet-list">
+                    <li><b>受影響原因：</b> AI 協作工具及 Agent 軟體開發模型（如 Cursor, v0）已大幅降低程式碼編寫與初級偵錯的門檻（Vibe Coding 潮）。</li>
+                    <li><b>核心保留優勢：</b> 系統架構規劃、業務邏輯理解、軟體安全防禦架構。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 互動式風險自測與轉型匹配 -->
+        <div class="interactive-tool">
+            <h3 class="tool-title">🧭 AI 職涯風險自測與轉型指引小工具</h3>
+            <p class="tool-subtitle">點擊您的現有崗位，系統將即時分析風險指數，並適配推薦的轉職方向與升級路徑！</p>
+
+            <span class="selector-label">請選擇您目前從事（或相似）的崗位：</span>
+            <div class="role-buttons">
+                <button class="role-btn" onclick="analyzeCareer('admin', this)">行政助理 / 文書辦公</button>
+                <button class="role-btn" onclick="analyzeCareer('writer', this)">文案創作 / 基礎翻譯</button>
+                <button class="role-btn" onclick="analyzeCareer('designer', this)">初階美編 / 視覺插畫</button>
+                <button class="role-btn" onclick="analyzeCareer('support', this)">客戶服務 / 電話客服</button>
+                <button class="role-btn" onclick="analyzeCareer('coder', this)">初階程式 / 軟體測試</button>
+            </div>
+
+            <div class="result-container" id="tool-result">
+                <div class="result-header">
+                    <h3 id="res-title" style="margin: 0; color: #ffffff;">行政助理 / 文書辦公</h3>
+                    <div class="result-index" id="res-risk">風險指數：85% (極高)</div>
+                </div>
+                <div class="result-grid">
+                    <div class="result-column">
+                        <h4>⚠️ AI 取代的職務項目</h4>
+                        <p id="res-replaced" style="font-size: 0.95rem; opacity: 0.8; line-height: 1.6;"></p>
+                        
+                        <h4 style="margin-top: 1.5rem;">🌟 人類核心保留優勢</h4>
+                        <p id="res-advantage" style="font-size: 0.95rem; opacity: 0.8; line-height: 1.6;"></p>
+                    </div>
+                    <div class="result-column">
+                        <h4>🎯 建議轉職新崗位</h4>
+                        <p id="res-newjob" style="font-size: 0.95rem; opacity: 0.8; line-height: 1.6; font-weight: 700; color: var(--accent-color);"></p>
+                        
+                        <h4 style="margin-top: 1.5rem;">📚 推薦賦能課程與證照</h4>
+                        <p id="res-courses" style="font-size: 0.95rem; opacity: 0.8; line-height: 1.6;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 課程與證照類型規劃 -->
+        <h2 class="section-title">📚 對應轉職課程與證照類型規劃</h2>
+        <p style="opacity: 0.8; margin-bottom: 1.5rem;">
+            為因應數發部《AI 產業人才認定指引 3.0》，轉職課程體系已全面往<b>「實務應用」、「人機協作」與「倫理合規」</b>靠攏。建議轉職者依自身方向選擇以下課程類型：
+        </p>
+
+        <div class="course-grid">
+            <div class="course-card">
+                <div class="course-type">Type A • 素養與工具應用類</div>
+                <h3 style="color: #ffffff; margin-bottom: 0.8rem; font-size: 1.15rem;">AI 辦公生產力與提示工程</h3>
+                <p style="font-size: 0.9rem; opacity: 0.75; line-height: 1.6; margin-bottom: 1rem;">
+                    教授如何利用主流生成式 AI 進行高效日常辦公，著重提示詞設計（Prompt Engineering）、自動化工作流建置。
+                </p>
+                <ul style="font-size: 0.85rem; opacity: 0.6; padding-left: 1.2rem;">
+                    <li>精選證照：資策會生成式 AI 能力認證</li>
+                    <li>核心技能：ChatGPT/Claude 辦公自動化、Make/Zapier 工作流</li>
+                </ul>
+            </div>
+
+            <div class="course-card">
+                <div class="course-type">Type B • 專案與管理規劃類</div>
+                <h3 style="color: #ffffff; margin-bottom: 0.8rem; font-size: 1.15rem;">AI 專案經理與導入規劃</h3>
+                <p style="font-size: 0.9rem; opacity: 0.75; line-height: 1.6; margin-bottom: 1rem;">
+                    針對企業數位轉型需求，教授如何盤點業務痛點，設計 AI 導入專案與成效評估。
+                </p>
+                <ul style="font-size: 0.85rem; opacity: 0.6; padding-left: 1.2rem;">
+                    <li>精選證照：經濟部 iPAS AI 應用規劃師</li>
+                    <li>核心技能：AI 專案規劃、AI 工具選型與系統驗收</li>
+                </ul>
+            </div>
+
+            <div class="course-card">
+                <div class="course-type">Type C • 技術與低程式碼類</div>
+                <h3 style="color: #ffffff; margin-bottom: 0.8rem; font-size: 1.15rem;">低程式碼 AI 系統整合工程</h3>
+                <p style="font-size: 0.9rem; opacity: 0.75; line-height: 1.6; margin-bottom: 1rem;">
+                    適合初階技術人員升級，學習 API 串接、基本 Python 數據工程，以及 Agentic AI 代理人架構實務。
+                </p>
+                <ul style="font-size: 0.85rem; opacity: 0.6; padding-left: 1.2rem;">
+                    <li>精選證照：Microsoft Azure AI-102 證照</li>
+                    <li>核心技能：LLM API 串接、向量資料庫與 RAG 檢索實作</li>
+                </ul>
+            </div>
+
+            <div class="course-card">
+                <div class="course-type">Type D • 治理與風險合規類</div>
+                <h3 style="color: #ffffff; margin-bottom: 0.8rem; font-size: 1.15rem;">AI 倫理治理與基本法遵</h3>
+                <p style="font-size: 0.9rem; opacity: 0.75; line-height: 1.6; margin-bottom: 1rem;">
+                    對應《人工智慧基本法》合規需求，教授 AI 倫理、偏見測試、個資保護與稽核流程。
+                </p>
+                <ul style="font-size: 0.85rem; opacity: 0.6; padding-left: 1.2rem;">
+                    <li>推薦課程：台灣人工智慧學校 (AIA) AI 治理與基本法規課程</li>
+                    <li>核心技能：AI 合規稽核、資安隱私測試、偏見審查</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 轉職心態與建議 -->
+        <div class="card" style="border-color: rgba(255, 0, 127, 0.3); margin-top: 3rem;">
+            <h3 style="margin-bottom: 1rem; color: #ffffff; display: flex; align-items: center; gap: 0.5rem;"><span>💡</span> 專家給轉職者的關鍵心法</h3>
+            <ul style="margin-left: 1.5rem; line-height: 1.8; opacity: 0.85; font-size: 0.95rem;">
+                <li style="margin-bottom: 0.6rem;"><strong>攜帶原有專業，升級工具：</strong> 轉職並非徹底拋棄過去的經驗。例如會計人員轉型，其優勢在於財務專業邏輯，加上 AI 工具後，能成為更高效的「數位財務顧問」，而非單純的工程師。</li>
+                <li style="margin-bottom: 0.6rem;"><strong>強調「人機協作價值」：</strong> 在履歷與面試中，展示你如何利用 AI 提升效率。例如：「成功導入 AI 客服工具，將重複性回答自動化比例提升至 80%，並將個人精力專注於高價值 VIP 客訴，提升客滿度 15%。」</li>
+                <li style="margin-bottom: 0.6rem;"><strong>國家級政策是風向標：</strong> 政府（數發部）正大力補助符合《AI 產業人才認定指引 3.0》的培訓課程。可多加利用「產業人才投資方案（三年七萬）」報名相關 AI 實戰與認證課程，降低學習成本。</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 4rem; opacity: 0.3; font-size: 0.8rem; padding-bottom: 2rem;">
+            © 2026 Luna AI 資訊公告平台 | 轉職數據對齊數位發展部 3.0 指引核實發布
+        </footer>
+    </div>
+
+    <script>
+        const careerData = {
+            admin: {
+                title: "行政助理 / 文書辦公",
+                risk: "風險指數：85% (極高)",
+                replaced: "重複性高的報表數據整理、行事曆排程安排、常規會議紀錄聽寫摘要、基礎中英郵件回覆、以及資料建檔等。",
+                advantage: "具備組織內部跨部門人際溝通、軟性協調與同理心；熟悉公司行政流程與實質業務邏輯。",
+                newjob: "AI 辦公效率分析師 / 數位轉型導入專案經理助理 / 數位行銷流程專案經理 (PM)",
+                courses: "1. <strong>工作流自動化課程：</strong>學習 Make、Zapier 等無程式碼自動化平台串接。<br>2. <strong>提示詞工程課程：</strong>如「生成式 AI 辦公室應用認證」課程，學習高效 Prompt Engineering。"
+            },
+            writer: {
+                title: "文案創作 / 基礎翻譯",
+                risk: "風險指數：80% (極高)",
+                replaced: "日常產品說明書翻譯、社交媒體小編常規貼文撰寫、基礎 SEO 文章填充、SEO 關鍵字清單整理。",
+                advantage: "具備深厚的人類情感共鳴、文化敏感度、品牌核心故事的深度打磨、以及精確的合規語意審查能力。",
+                newjob: "AI 提示工程師 / 品牌行銷與 AI 內容總監 / 數位內容稽核師",
+                courses: "1. <strong>提示詞設計與進階語境控制課程：</strong>學習如何調校 LLM 以產出具品牌調性的內容。<br>2. <strong>AI 倫理與智慧財產權課程：</strong>針對生成式內容的版權法規及偏見審查進行研習。"
+            },
+            designer: {
+                title: "初階美編 / 視覺插畫",
+                risk: "風險指數：75% (極高)",
+                replaced: "簡單圖片去背與光影修飾、海報排版素材拼接、基礎商品廣告合成圖、以及初階插畫與 icon 設計。",
+                advantage: "具備品牌美學視覺架構規劃、使用者經驗 (UI/UX) 動效與人機互動直覺、以及引導創意的導演能力。",
+                newjob: "AI 創意指導 / UI-UX 用戶體驗設計師 / 生成式視覺整合創作者",
+                courses: "1. <strong>生成式影像工具實作課：</strong>深入掌握 Midjourney 參數控制、Stable Diffusion 局部重繪與 ControlNet 控制。<br>2. <strong>UI-UX 設計專案實戰課程：</strong>學習 Figma 與 AI 輔助設計流程整合。"
+            },
+            support: {
+                title: "客戶服務 / 電話客服",
+                risk: "風險指數：70% (中高)",
+                replaced: "一線常見問答集 (FAQ) 文字解答、初階產品使用引導、退換貨申請受理與資料比對。",
+                advantage: "具備高度的情緒價值提供、同理心安撫、面對複雜個案的靈活應變能力，以及 VIP 客戶關係的維護。",
+                newjob: "AI 客服知識庫架構經理 / 客戶成功經理 (Customer Success Manager) / 複雜投訴危機處理專案人員",
+                courses: "1. <strong>AI 客服系統訓練與知識庫優化課程：</strong>學習如何整理高階 FAQ 語料庫與微調客服 Agent。<br>2. <strong>高階商務溝通與客戶成功管理實務：</strong>提升人際談判與情緒溝通能力。"
+            },
+            coder: {
+                title: "初階程式 / 軟體測試",
+                risk: "風險指數：65% (中高)",
+                replaced: "重複性常規程式碼編寫、基礎單元測試腳本撰寫、常規 API 接頭編寫、以及簡單排版切版。",
+                advantage: "具備系統整體架構設計能力、理解複雜業務需求並轉化為軟體邏輯、以及高級系統安全防禦規劃。",
+                newjob: "AI 協作軟體工程師 (Vibe Coding Specialist) / MLOps 運維工程師 / AI 代理人開發整合師",
+                courses: "1. <strong>AI 輔助開發與軟體架構課程：</strong>學習在 Cursor / GitHub Copilot 環境下進行軟體重構與大模型整合。<br>2. <strong>雲端 AI 證照：</strong>報考 AWS ML Engineer - Associate (MLA-C01) 或 Azure AI-102。"
+            }
+        };
+
+        function analyzeCareer(key, element) {
+            // 切換按鈕狀態
+            const buttons = document.getElementsByClassName("role-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            element.classList.add("active");
+
+            // 填寫數據
+            const data = careerData[key];
+            document.getElementById("res-title").innerText = data.title;
+            document.getElementById("res-risk").innerText = data.risk;
+            document.getElementById("res-replaced").innerHTML = data.replaced;
+            document.getElementById("res-advantage").innerHTML = data.advantage;
+            document.getElementById("res-newjob").innerHTML = data.newjob;
+            document.getElementById("res-courses").innerHTML = data.courses;
+
+            // 顯示結果
+            const container = document.getElementById("tool-result");
+            container.style.display = "block";
+            
+            // 滾動到結果
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

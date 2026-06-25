@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "AI 浪潮下的職涯重建指引：失業風險族群、轉職路徑與賦能課程全解析",
+        date: "2026-06-25",
+        path: "announcements/x2m8q9p1.html",
+        preview: "針對因 AI 浪潮面臨失業風險之行政、文案、設計、客服與初階程式人員，提供精確的轉職路徑與升級方案，並對齊數發部 3.0 能力框架，內含風險自測分析小工具。"
+    },
+    {
         title: "熱門 AI 與學術技職證照全指南 - 升學與就業規劃",
         date: "2026-06-24",
         path: "announcements/h3f9k2w1.html",
