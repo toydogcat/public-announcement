@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "TDX 運輸資料流通服務：AEO 搜尋與 PageSpeed 網頁效能深度分析報告",
+        date: "2026-07-12",
+        path: "announcements/t5x9d2k4.html",
+        preview: "深度解析 TDX 運輸資料流通服務在 AI 搜尋引擎（AEO）的曝光度，以及 PageSpeed 行動與桌面端效能瓶頸，提供 JSON-LD 結構化資料範例與網頁效能優化策略。"
+    },
+    {
         title: "AI 浪潮下的職涯重建指引：失業風險族群、轉職路徑與賦能課程全解析",
         date: "2026-06-25",
         path: "announcements/x2m8q9p1.html",

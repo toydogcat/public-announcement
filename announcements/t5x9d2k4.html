@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDX 運輸資料流通服務：AEO 搜尋與 PageSpeed 網頁效能深度分析報告</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0c;
+            color: #e0e0e0;
+        }
+
+        /* 頂部標章與排版 */
+        .page-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.15) 0%, rgba(112, 0, 255, 0.15) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            color: var(--accent-color);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* 核心摘要卡片 */
+        .summary-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .metric-box {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .metric-box:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 242, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .value-aeo {
+            background: linear-gradient(135deg, #00f2ff, #00b482);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .value-speed-desktop {
+            background: linear-gradient(135deg, #e7a61a, #00b482);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .value-speed-mobile {
+            background: linear-gradient(135deg, #ff4c4c, #e7a61a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-label {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        /* Tabs 切換樣式 */
+        .tabs-container {
+            margin: 2.5rem 0;
+        }
+
+        .tab-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 1.2rem;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(0, 242, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.15) 0%, rgba(112, 0, 255, 0.15) 100%);
+            border-color: var(--accent-color);
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 242, 255, 0.15);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 警告、提示與狀態區塊 */
+        .info-alert {
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.08) 0%, rgba(255, 94, 58, 0.08) 100%);
+            border: 1px solid rgba(255, 170, 0, 0.25);
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-alert::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: #ffaa00;
+        }
+
+        .info-alert-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffaa00;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-alert-content {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        .info-danger {
+            background: linear-gradient(135deg, rgba(255, 76, 76, 0.08) 0%, rgba(200, 30, 30, 0.08) 100%);
+            border: 1px solid rgba(255, 76, 76, 0.25);
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-danger::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: #ff4c4c;
+        }
+
+        .info-danger-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ff4c4c;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-success {
+            background: linear-gradient(135deg, rgba(0, 180, 130, 0.08) 0%, rgba(0, 242, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 180, 130, 0.25);
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-success::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: #00b482;
+        }
+
+        .info-success-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #00b482;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* SVG 數據圖表設計 */
+        .chart-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .chart-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            align-self: flex-start;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 0.8rem;
+        }
+
+        /* 詳細原始數據折疊區 */
+        details {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border-color: rgba(0, 242, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.05);
+        }
+
+        summary {
+            padding: 1.2rem 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+
+        summary:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--accent-color);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::after {
+            content: '−';
+            transform: rotate(180deg);
+            color: var(--accent-color);
+        }
+
+        .details-content {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.05);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            color: #a8ffb2;
+            margin: 1rem 0;
+        }
+
+        /* 響應式表格 */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        th, td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.04);
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* 互動診斷計算器 */
+        .calc-card {
+            background: linear-gradient(135deg, rgba(112, 0, 255, 0.08) 0%, rgba(0, 242, 255, 0.08) 100%);
+            border: 1px solid rgba(112, 0, 255, 0.25);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(15px);
+        }
+
+        .calc-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            background: linear-gradient(to right, #00f2ff, #7000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .calc-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .calc-flex {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .calc-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .calc-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calc-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(0, 242, 255, 0.3);
+        }
+
+        .calc-item input[type="checkbox"] {
+            margin-top: 0.3rem;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .calc-item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .calc-item-title {
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .calc-item-desc {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .calc-item-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .tag-aeo { background: rgba(0, 242, 255, 0.15); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.2); }
+        .tag-perf { background: rgba(112, 0, 255, 0.15); color: #c084fc; border: 1px solid rgba(112, 0, 255, 0.2); }
+        .tag-seo { background: rgba(0, 180, 130, 0.15); color: #34d399; border: 1px solid rgba(0, 180, 130, 0.2); }
+
+        .calc-results-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .calc-score-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .calc-score-block {
+            text-align: center;
+        }
+
+        .calc-score-num {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #ffffff;
+            transition: color 0.4s ease;
+        }
+
+        .calc-score-num.level-low { color: #ff4c4c; }
+        .calc-score-num.level-mid { color: #e7a61a; }
+        .calc-score-num.level-high { color: #00b482; }
+
+        .calc-score-title {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+            margin-top: 0.2rem;
+        }
+
+        .calc-savings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+        }
+
+        .calc-saving-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .calc-saving-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calc-saving-val {
+            font-weight: 700;
+            color: #00f2ff;
+        }
+
+        .priority-indicator {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .priority-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .priority-steps {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        /* 列表式解析排版 */
+        .analysis-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 0.8rem;
+        }
+
+        .analysis-heading .icon {
+            color: var(--accent-color);
+        }
+
+        .analysis-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .analysis-item {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .analysis-item::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        .analysis-item-title {
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+        }
+
+        .analysis-item-desc {
+            font-size: 0.92rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* 響應式適配 */
+        @media (max-width: 768px) {
+            .tab-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .calc-flex {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-card {
+                padding: 1.5rem;
+            }
+
+            th, td {
+                padding: 0.8rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header style="text-align: center; padding: 3rem 0 2rem;">
+            <div class="page-tag">專業報告 • 平台優化分析</div>
+            <h1 style="font-size: 2.2rem; font-weight: 800; line-height: 1.3;">
+                TDX 運輸資料流通服務<br>
+                <span style="font-size: 1.6rem; font-weight: 600; opacity: 0.85; display: block; margin-top: 0.5rem; letter-spacing: 0.05em; background: linear-gradient(90deg, #00f2ff, #7000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    AEO 智慧搜尋與 PageSpeed 網頁效能深度分析
+                </span>
+            </h1>
+            <p style="opacity: 0.5; margin-top: 1rem;">發布日期：2026-07-12 | 分析工具：AEO Grader, PageSpeed Insights v13.4.0</p>
+            
+            <div class="qr-container" style="margin-top: 1.5rem;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://toydogcat.github.io/public-announcement/announcements/t5x9d2k4.html" alt="QR Code" style="background: white; padding: 8px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <p style="font-size: 0.7rem; opacity: 0.3; margin-top: 0.5rem;">掃描分享此公告網址</p>
+            </div>
+        </header>
+
+        <nav>
+            <a href="../index.html">首頁</a>
+            <a href="../search.html">搜尋公告</a>
+        </nav>
+
+        <!-- 核心摘要卡片 -->
+        <div class="summary-card">
+            <h2 style="font-size: 1.3rem; font-weight: 700; color: #ffffff; margin-bottom: 1rem; border-left: 4px solid var(--accent-color); padding-left: 0.8rem;">
+                報告簡介與核心診斷結論
+            </h2>
+            <p style="font-size: 0.98rem; line-height: 1.8; opacity: 0.9;">
+                交通部運輸資料流通服務（TDX）做為台灣智慧交通的數位基礎建設，扮演著整合全國動靜態運輸資料（公車、軌道、自行車、停車等）的核心開放 API 入口。
+                本報告針對第三方平台的評測數據，深度解構其在 <strong>AEO（人工智慧搜尋引擎最佳化）</strong> 的表現，以及 <strong>PageSpeed Insights（網頁載入體驗）</strong> 的效能缺口。
+                我們發現，TDX 的資料權威性與政府背書極高，但在面對 <strong>LLM 語意檢索</strong> 以及 <strong>行動端效能指標 (Core Web Vitals)</strong> 時，仍存在高度可優化的技術壁壘（如結構化標記缺失與桌面端高達 0.401 的 CLS 版面位移問題）。
+            </p>
+
+            <div class="summary-grid">
+                <div class="metric-box">
+                    <div class="metric-value value-aeo">88<span style="font-size: 1.2rem;">/100</span></div>
+                    <div class="metric-label">AEO 品牌感知總分</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value value-speed-desktop">75<span style="font-size: 1.2rem;">/100</span></div>
+                    <div class="metric-label">PageSpeed 電腦端效能</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value value-speed-mobile">52<span style="font-size: 1.2rem;">/100</span></div>
+                    <div class="metric-label">PageSpeed 手機端效能</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 警告：核心指標失敗 -->
+        <div class="info-danger">
+            <div class="info-danger-title">
+                <span>🚨</span> 網站體驗核心指標 (Core Web Vitals) 評估結果：失敗 (Fail)
+            </div>
+            <div class="info-danger-content" style="font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.85);">
+                <strong>核心失敗原因：</strong><br>
+                1. <strong>手機端 LCP (最大內容算繪時間)</strong> 模擬評測高達 <strong>5.8 秒</strong>（標準應 &lt; 2.5 秒），導致行動端效能評分落入橙色警戒區（52分）。<br>
+                2. <strong>電腦端 CLS (累積版面配置位移)</strong> 實測值高達 <strong>0.35 - 0.401</strong>（標準應 &lt; 0.10），這代表電腦使用者載入網頁時，頁面元素發生劇烈跳動，極易造成使用者誤觸，屬於<strong>嚴重體驗缺陷</strong>。
+            </div>
+        </div>
+
+        <!-- 分類切換區 -->
+        <div class="tabs-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-aeo')">AEO 智慧檢索分析</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-speed')">PageSpeed 效能診斷</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-raw')">原始數據與代碼</button>
+            </div>
+
+            <!-- Tab 1: AEO 分析 -->
+            <div id="tab-aeo" class="tab-content active">
+                <div class="chart-row">
+                    <div class="chart-card">
+                        <div class="chart-title">AEO 品牌感知維度評分 (100分制)</div>
+                        <!-- SVG 條形圖展示 -->
+                        <svg width="280" height="200" viewBox="0 0 280 200">
+                            <!-- Authority -->
+                            <text x="10" y="30" fill="#fff" font-size="12" font-weight="bold">權威度 (Authority)</text>
+                            <rect x="10" y="40" width="220" height="15" fill="rgba(255,255,255,0.05)" rx="3" />
+                            <rect x="10" y="40" width="198" height="15" fill="url(#grad-aeo)" rx="3" />
+                            <text x="215" y="52" fill="#00f2ff" font-size="12" font-weight="bold">90</text>
+
+                            <!-- Clarity -->
+                            <text x="10" y="75" fill="#fff" font-size="12" font-weight="bold">目的清晰度 (Clarity)</text>
+                            <rect x="10" y="85" width="220" height="15" fill="rgba(255,255,255,0.05)" rx="3" />
+                            <rect x="10" y="85" width="209" height="15" fill="url(#grad-aeo)" rx="3" />
+                            <text x="215" y="97" fill="#00f2ff" font-size="12" font-weight="bold">95</text>
+
+                            <!-- Technical -->
+                            <text x="10" y="120" fill="#fff" font-size="12" font-weight="bold">技術對接度 (Technical)</text>
+                            <rect x="10" y="130" width="220" height="15" fill="rgba(255,255,255,0.05)" rx="3" />
+                            <rect x="10" y="130" width="187" height="15" fill="url(#grad-aeo)" rx="3" />
+                            <text x="215" y="142" fill="#00f2ff" font-size="12" font-weight="bold">85</text>
+
+                            <!-- Sentiment -->
+                            <text x="10" y="165" fill="#fff" font-size="12" font-weight="bold">品牌情感值 (Sentiment)</text>
+                            <rect x="10" y="175" width="220" height="15" fill="rgba(255,255,255,0.05)" rx="3" />
+                            <rect x="10" y="175" width="176" height="15" fill="url(#grad-aeo)" rx="3" />
+                            <text x="215" y="187" fill="#00f2ff" font-size="12" font-weight="bold">80</text>
+
+                            <defs>
+                                <linearGradient id="grad-aeo" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#7000ff" />
+                                    <stop offset="100%" stop-color="#00f2ff" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-title">四大主流 AI 引擎對 TDX 的感知梯隊</div>
+                        <div style="width: 100%; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 0.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0, 180, 130, 0.08); border: 1px solid rgba(0, 180, 130, 0.3); padding: 0.8rem 1.2rem; border-radius: 12px;">
+                                <div>
+                                    <strong style="color: #ffffff; font-size: 0.95rem;">Claude (Anthropic)</strong>
+                                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.1rem;">具備直接的整合工具與 MCP 協定對接能力</p>
+                                </div>
+                                <span class="tag" style="background: #00b482; color: #0a0a0c;">第一梯隊 (Top)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(231, 166, 26, 0.08); border: 1px solid rgba(231, 166, 26, 0.3); padding: 0.8rem 1.2rem; border-radius: 12px;">
+                                <div>
+                                    <strong style="color: #ffffff; font-size: 0.95rem;">ChatGPT (OpenAI)</strong>
+                                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.1rem;">資訊可搜尋，但缺乏語意結構化資料供 LLM 深度理解</p>
+                                </div>
+                                <span class="tag" style="background: #e7a61a; color: #0a0a0c;">第二梯隊 (Mid)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(231, 166, 26, 0.08); border: 1px solid rgba(231, 166, 26, 0.3); padding: 0.8rem 1.2rem; border-radius: 12px;">
+                                <div>
+                                    <strong style="color: #ffffff; font-size: 0.95rem;">Perplexity (AI 搜尋)</strong>
+                                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.1rem;">過度依賴非結構網頁文本，難以精確合成 API 用法</p>
+                                </div>
+                                <span class="tag" style="background: #e7a61a; color: #0a0a0c;">第二梯隊 (Mid)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(231, 166, 26, 0.08); border: 1px solid rgba(231, 166, 26, 0.3); padding: 0.8rem 1.2rem; border-radius: 12px;">
+                                <div>
+                                    <strong style="color: #ffffff; font-size: 0.95rem;">Gemini (Google)</strong>
+                                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.1rem;">搜尋可見度強，但對開發文檔整合仍需明確 Schema</p>
+                                </div>
+                                <span class="tag" style="background: #e7a61a; color: #0a0a0c;">第二梯隊 (Mid)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analysis-section">
+                    <h3 class="analysis-heading">
+                        <span class="icon">🔍</span> AEO 深度解析：為什麼 AI 搜尋時代必須做 Schema.org 標記？
+                    </h3>
+                    <ul class="analysis-list">
+                        <li class="analysis-item">
+                            <div class="analysis-item-title">傳統 SEO 已死，AEO (AI 搜尋引擎優化) 成為新戰場</div>
+                            <div class="analysis-item-desc">
+                                當使用者詢問「TDX 提供哪些公車 API？」或「如何呼叫台北市公車即時預估到站時間 API？」時，AI 搜尋引擎（如 SearchGPT, Perplexity）不會只拋出連結，而是直接提供程式碼和 API 詳細參數。若 TDX 官網缺乏 Schema 結構化資料，AI 無法高效提取其 OData 與 WebAPI 規格，將導致 AI 直接引用非官方的二手資料，甚至產生幻覺。
+                            </div>
+                        </li>
+                        <li class="analysis-item">
+                            <div class="analysis-item-title">關鍵缺口：缺乏 Dataset 與 WebAPI 的 JSON-LD 標記</div>
+                            <div class="analysis-item-desc">
+                                評測顯示 TDX 網站雖然有 Swagger 開發文件，但在網頁前端的 HTML 中，並未鋪設 Schema.org 的 <code>Dataset</code>（數據集）與 <code>WebAPI</code>（網路接口）結構化腳本。這使得搜尋引擎爬蟲和 LLM 只能以普通網頁文字形式閱讀文件，大幅降低了在 Knowledge Graph（知識圖譜）中的實體關聯權重。
+                            </div>
+                        </li>
+                        <li class="analysis-item">
+                            <div class="analysis-item-title">優化方案：在 API 詳情頁面埋入 JSON-LD</div>
+                            <div class="analysis-item-desc">
+                                TDX 應在所有主要的 API 產品頁面上，動態生成並注入符合 Schema.org 標準的結構化資訊，讓 AI 能立刻辨識該 API 的傳入參數、回傳欄位、授權方式與服務提供者（交通部）。（可在「原始數據與代碼」分頁中複製完整範例代碼）
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab 2: PageSpeed 分析 -->
+            <div id="tab-speed" class="tab-content">
+                <h2 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent-color);">📊 PageSpeed Insights 指標橫向對比</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>效能指標項目</th>
+                                <th>手機端 (Mobile)</th>
+                                <th>電腦端 (Desktop)</th>
+                                <th>標準閾值</th>
+                                <th>診斷含意與影響</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>整體效能得分 (Performance)</strong></td>
+                                <td style="color: #ff4c4c; font-weight: 700;">52 / 100 (橙色)</td>
+                                <td style="color: #e7a61a; font-weight: 700;">75 / 100 (黃色)</td>
+                                <td>90 - 100 (綠色)</td>
+                                <td>手機載入慢，流失率可能增加；電腦端尚可但有改進空間。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>最大內容算繪 (LCP)</strong></td>
+                                <td style="color: #ff4c4c; font-weight: 700;">5.8 秒</td>
+                                <td style="color: #00b482; font-weight: 700;">1.4 秒</td>
+                                <td>&le; 2.5 秒</td>
+                                <td>行動裝置渲染主要橫幅或大區塊過慢，主要是因為渲染阻斷資源。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>累計版面配置位移 (CLS)</strong></td>
+                                <td style="color: #e7a61a; font-weight: 700;">0.247</td>
+                                <td style="color: #ff4c4c; font-weight: 700;">0.401</td>
+                                <td>&le; 0.10</td>
+                                <td><strong>極差！</strong> 桌面端版面位移高達 0.401，代表元素載入時會抖動，嚴重傷害體驗。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>首次內容算繪 (FCP)</strong></td>
+                                <td style="color: #ff4c4c; font-weight: 700;">4.1 秒</td>
+                                <td style="color: #00b482; font-weight: 700;">0.8 秒</td>
+                                <td>&le; 1.8 秒</td>
+                                <td>白屏時間。手機端高達 4.1 秒，代表用戶要等很久才看得到第一個元件。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>總阻塞時間 (TBT)</strong></td>
+                                <td style="color: #00b482; font-weight: 700;">190 毫秒</td>
+                                <td style="color: #00b482; font-weight: 700;">40 毫秒</td>
+                                <td>&le; 200 毫秒</td>
+                                <td>主執行緒被 JS 阻塞時間。表現尚屬良好。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>互動到下一次算繪 (INP)</strong></td>
+                                <td style="color: #00b482; font-weight: 700;">112 毫秒</td>
+                                <td style="color: #00b482; font-weight: 700;">60 毫秒</td>
+                                <td>&le; 200 毫秒</td>
+                                <td>使用者互動後的響應速度，兩端均符合綠色安全標準。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="analysis-section">
+                    <h3 class="analysis-heading">
+                        <span class="icon">⚡</span> 網頁效能瓶頸重點診斷與優化解方
+                    </h3>
+                    <ul class="analysis-list">
+                        <li class="analysis-item">
+                            <div class="analysis-item-title">嚴重警報：消除會阻斷算繪的資源 (預估可省下 2,130 毫秒)</div>
+                            <div class="analysis-item-desc">
+                                網頁在 <code>&lt;head&gt;</code> 中同步載入了大型的 CSS 與 JavaScript 檔案，導致瀏覽器必須先下載並解析完這些資源才開始畫頁面。
+                                <strong>建議：</strong> 將非核心的 JS 加上 <code>defer</code> 或 <code>async</code>，並將關鍵 CSS 內聯 (Critical CSS)，其餘 CSS 異步載入，以大幅降低手機端的 FCP 與 LCP。
+                            </div>
+                        </li>
+                        <li class="analysis-item">
+                            <div class="analysis-item-title">體驗地雷：桌面端 CLS 版面配置偏移 (0.401) 的根源</div>
+                            <div class="analysis-item-desc">
+                                Lighthouse 指出，桌面端最大的位移源自於 <strong>強制自動重排 (Forced Reflow)</strong> 以及 <strong>圖片元素沒有明確定義 width 與 height</strong>。當圖片或動態地圖區塊載入完成後，其高度突然從 0 撐開，導致下方所有選單與文字被瞬間往下擠。
+                                <strong>建議：</strong> 在所有圖片與圖表 SVG 的 HTML 標籤上明確標記寬高比，或使用 CSS 的 <code>aspect-ratio</code> 屬性預留版面空間。
+                            </div>
+                        </li>
+                        <li class="analysis-item">
+                            <div class="analysis-item-title">效能低碳：字型顯示與快取生命週期 (Cache Policy)</div>
+                            <div class="analysis-item-desc">
+                                評測顯示網頁字型載入時未設定 <code>font-display: swap</code>，導致字型下載完成前網頁文字會隱形（白屏的一部分）。另外，快取生命週期設定過短（預估可省下 308-528 KiB 的重複資料傳輸）。
+                                <strong>建議：</strong> 在 <code>@font-face</code> 中加入 <code>font-display: swap</code>。並在服務器端將靜態資源（CSS, JS, 圖片）的 <code>Cache-Control</code> 設為一年。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab 3: 原始數據與代碼 -->
+            <div id="tab-raw" class="tab-content">
+                <h2 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent-color);">📁 原始分析報告與修復代碼結構</h2>
+                <p style="margin-bottom: 1.5rem; opacity: 0.8;">以下為 PDF 分析報告中的原始數據與建議修復腳本。您可以點擊標題展開或摺疊以閱讀細節。</p>
+
+                <!-- AEO 原始 JSON-LD 範例 -->
+                <details>
+                    <summary>🛠️ 建議部署：TDX API 專用 Dataset 結構化資料代碼 (JSON-LD)</summary>
+                    <div class="details-content">
+                        <p>將以下腳本放置於 TDX API 詳情頁（例如 <code>/data-service/api-detail/...</code>）的 <code>&lt;head&gt;</code> 中，可使 LLM 搜尋引擎精確理解 API 資料規格：</p>
+                        <pre>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "公共運輸-公車-v3 (Public Transport - Bus - v3)",
+  "description": "提供全國尺度之公路客運與市區公車路線、站位、時刻表、班次等動靜態資料，以及即時車輛位置、預估到站時間資料",
+  "url": "https://tdx.transportdata.tw/data-service/api-detail/PUB_BUS_v3",
+  "keywords": ["公共運輸", "公車", "即時", "時刻表", "API", "交通", "開放資料"],
+  "provider": {
+    "@type": "Organization",
+    "name": "交通部運輸資料流通服務"
+  },
+  "spatialCoverage": "Taiwan",
+  "temporalCoverage": "2018-01-01T00:00:00Z/",
+  "variableMeasured": ["BusRoute", "BusStop", "RealtimePosition", "EstimatedArrivalTime"],
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "API Access (OData)",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://tdx.transportdata.tw/api/basic/v2/Bus/RealTimeNearStop/City/Taipei"
+    }
+  ],
+  "isAccessibleForFree": "False"
+}
+&lt;/script&gt;</pre>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>🛠️ 建議部署：WebAPI 端點結構化標記範例</summary>
+                    <div class="details-content">
+                        <p>為個別 API 查詢路徑（如 <code>/Bus/Route/City/{City}</code>）埋設 WebAPI Schema，有利於 AI 代理或代碼生成工具（如 Copilot, Cursor）自動呼叫：</p>
+                        <pre>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "WebAPI",
+  "name": "公共運輸-公車-v3 路線API",
+  "description": "提供查詢指定縣市之公車路線資料 (Provides bus route data for specified cities)",
+  "documentation": "https://tdx.transportdata.tw/api-service/swagger/basic/eb87998f",
+  "url": "https://tdx.transportdata.tw/api/basic/v3/Bus/Route/City/{City}",
+  "encodingFormat": "application/json",
+  "httpMethod": "GET",
+  "input": {
+    "@type": "EntryPoint",
+    "name": "City",
+    "parameter": "string (e.g., 'Taipei')",
+    "required": true
+  },
+  "output": {
+    "@type": "EntryPoint",
+    "name": "BusRoute",
+    "description": "公車路線資料陣列 (Array of bus route data)"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "交通部運輸資料流通服務"
+  }
+}
+&lt;/script&gt;</pre>
+                    </div>
+                </details>
+
+                <!-- SEO 錯誤原始數據 -->
+                <details>
+                    <summary>🔍 SEO 與 AI 代理存取稽核報告細節 (robots.txt &amp; llms.txt)</summary>
+                    <div class="details-content">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border-color);">
+                                    <th style="padding: 8px; text-align: left;">稽核細項</th>
+                                    <th style="padding: 8px; text-align: left;">發現錯誤與狀態</th>
+                                    <th style="padding: 8px; text-align: left;">解決建議</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 8px;"><strong>robots.txt</strong></td>
+                                    <td style="color: #ff4c4c; padding: 8px;">無效：發現 10 項語法錯誤</td>
+                                    <td style="padding: 8px;">修正 robots.txt 的 Disallow 及 User-agent 宣告結構，避免爬蟲因格式損壞放棄檢索。</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 8px;"><strong>llms.txt</strong></td>
+                                    <td style="color: #ffaa00; padding: 8px;">不符合建議規格</td>
+                                    <td style="padding: 8px;">於根目錄部署標準化的 <code>llms.txt</code> 文件，以極簡 Markdown 列出 API 基本調用引導，利於 LLM 直接提取。</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 8px;"><strong>無障礙樹狀結構</strong></td>
+                                    <td style="color: #ff4c4c; padding: 8px;">格式不正確 (阻礙 AI 代理)</td>
+                                    <td style="padding: 8px;">補齊對話框的 <code>aria-label</code>，並修復 DOM 巢狀深度以利螢幕閱讀器與 AI Agent 網頁自動化瀏覽。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+
+                <!-- PageSpeed Lighthouse 模擬細節數據 -->
+                <details>
+                    <summary>📱 Lighthouse 行動端模擬實驗室原始數據 (Moto G Power)</summary>
+                    <div class="details-content">
+                        <p><strong>評測環境：</strong> Lighthouse 13.4.0, 模擬慢速 4G 連線 (Simulated 4G, 節流模式)</p>
+                        <ul>
+                            <li><strong>First Contentful Paint (FCP):</strong> 4.1 秒</li>
+                            <li><strong>Largest Contentful Paint (LCP):</strong> 5.8 秒</li>
+                            <li><strong>Speed Index:</strong> 5.2 秒</li>
+                            <li><strong>Total Blocking Time (TBT):</strong> 190 毫秒</li>
+                            <li><strong>Cumulative Layout Shift (CLS):</strong> 0.247</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- 互動診斷計算器 -->
+        <div class="calc-card">
+            <h3 class="calc-title">🛠️ TDX 效能診斷與優化優先級計算器</h3>
+            <p class="calc-subtitle">勾選您預計實施的優化項目，系統將即時試算 PageSpeed 分數升幅、AEO 提升度以及推薦的修復優先順序！</p>
+            
+            <div class="calc-flex">
+                <!-- Checklist -->
+                <div class="calc-checklist">
+                    <label class="calc-item">
+                        <input type="checkbox" id="opt-render" onchange="calculateMetrics()" checked>
+                        <div class="calc-item-details">
+                            <span class="calc-item-title">消除阻斷算繪的資源</span>
+                            <span class="calc-item-desc">手機端 FCP 預估可減少 2,130 毫秒，LCP 縮短 35%</span>
+                            <div class="calc-item-tags">
+                                <span class="tag tag-perf">效能</span>
+                                <span class="tag tag-seo">困難度: 中</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="calc-item">
+                        <input type="checkbox" id="opt-cls" onchange="calculateMetrics()" checked>
+                        <div class="calc-item-details">
+                            <span class="calc-item-title">為圖片與地圖定義 width/height</span>
+                            <span class="calc-item-desc">修復桌面端 CLS 抖動，CLS 指標預估減少 0.300+</span>
+                            <div class="calc-item-tags">
+                                <span class="tag tag-perf">效能</span>
+                                <span class="tag tag-seo">困難度: 易</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="calc-item">
+                        <input type="checkbox" id="opt-schema" onchange="calculateMetrics()" checked>
+                        <div class="calc-item-details">
+                            <span class="calc-item-title">部署 Dataset &amp; WebAPI JSON-LD</span>
+                            <span class="calc-item-desc">解決 AEO 最核心技術缺口，提升 ChatGPT/Gemini 感知度</span>
+                            <div class="calc-item-tags">
+                                <span class="tag tag-aeo">AEO</span>
+                                <span class="tag tag-seo">困難度: 中</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="calc-item">
+                        <input type="checkbox" id="opt-cache" onchange="calculateMetrics()">
+                        <div class="calc-item-details">
+                            <span class="calc-item-title">優化快取原則與圖片壓縮</span>
+                            <span class="calc-item-desc">快取生命週期延長，網路節省 308 - 528 KiB 傳輸量</span>
+                            <div class="calc-item-tags">
+                                <span class="tag tag-perf">效能</span>
+                                <span class="tag tag-seo">困難度: 易</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="calc-item">
+                        <input type="checkbox" id="opt-robots" onchange="calculateMetrics()">
+                        <div class="calc-item-details">
+                            <span class="calc-item-title">修復 robots.txt 的 10 項錯誤</span>
+                            <span class="calc-item-desc">打通 Google/Bing 爬蟲檢索瓶頸，提升 SEO 基礎分數</span>
+                            <div class="calc-item-tags">
+                                <span class="tag tag-seo">SEO</span>
+                                <span class="tag tag-seo">困難度: 易</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="calc-item">
+                        <input type="checkbox" id="opt-agent" onchange="calculateMetrics()">
+                        <div class="calc-item-details">
+                            <span class="calc-item-title">修復無障礙樹狀結構與 llms.txt</span>
+                            <span class="calc-item-desc">打通 AI Agent 代理瀏覽評分，從 0/3 升至 3/3 滿分</span>
+                            <div class="calc-item-tags">
+                                <span class="tag tag-aeo">AEO</span>
+                                <span class="tag tag-seo">困難度: 易</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Simulation Results -->
+                <div class="calc-results-box">
+                    <div>
+                        <h4 style="font-size: 1.1rem; font-weight: 700; color: #ffffff; margin-bottom: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.8rem;">
+                            優化後預期成效模擬
+                        </h4>
+                        
+                        <div class="calc-score-wrapper">
+                            <div class="calc-score-block">
+                                <div class="calc-score-num level-low" id="res-speed">52</div>
+                                <div class="calc-score-title">手機端效能分數</div>
+                            </div>
+                            <div class="calc-score-block">
+                                <div class="calc-score-num level-mid" id="res-aeo">88</div>
+                                <div class="calc-score-title">AEO 感知評分</div>
+                            </div>
+                        </div>
+
+                        <div class="calc-savings-list">
+                            <div class="calc-saving-row">
+                                <span class="calc-saving-label">預估載入白屏節省：</span>
+                                <span class="calc-saving-val" id="res-time">0 ms</span>
+                            </div>
+                            <div class="calc-saving-row">
+                                <span class="calc-saving-label">累積佈局位移預期：</span>
+                                <span class="calc-saving-val" id="res-cls">0.247 (尚待改進)</span>
+                            </div>
+                            <div class="calc-saving-row">
+                                <span class="calc-saving-label">AI Agent 可存取度：</span>
+                                <span class="calc-saving-val" id="res-agent">0 / 3 (未啟用)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="priority-indicator">
+                        <div class="priority-title">💡 系統建議之優化執行順序：</div>
+                        <div class="priority-steps" id="res-priority">
+                            請在左側勾選項目以獲得調優路徑建議。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 建議與結論卡片 -->
+        <div class="card" style="border-color: rgba(0, 242, 255, 0.3); margin-top: 3rem;">
+            <h3 style="margin-bottom: 1.2rem; color: #ffffff; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="color: #00f2ff;">🎯</span> TDX 平台未來優化路線圖 (Roadmap)
+            </h3>
+            <ul style="margin-left: 1.5rem; line-height: 1.8; opacity: 0.9; display: flex; flex-direction: column; gap: 0.8rem;">
+                <li>
+                    <strong>第一步：改善桌面端體驗 (立即實施)</strong><br>
+                    修正 CSS 佈局與圖片 <code>width</code>/<code>height</code> 以解決高達 0.401 的 CLS 版面偏移。這是對使用者干擾最大、也是最容易修復的效能項目。
+                </li>
+                <li>
+                    <strong>第二步：AEO 資料集語意鋪設 (中期發展)</strong><br>
+                    在網站 API 詳情頁中，全面嵌入自動生成的 JSON-LD 結構化代碼，並在根目錄建立 <code>llms.txt</code>。這將極大化 TDX 在 ChatGPT, Claude 等新一代 AI 檢索入口的精確曝光度。
+                </li>
+                <li>
+                    <strong>第三步：重構首頁載入資源 (長期重構)</strong><br>
+                    移除首頁中非必要的第三方 JavaScript 程式庫，重整快取生命週期，將核心效能指標拉升至 90 分以上的綠色安全區間，提供最極致快速的開發者瀏覽體驗。
+                </li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 4rem; opacity: 0.3; font-size: 0.8rem; padding-bottom: 2rem;">
+            © 2026 Luna AI 資訊公告平台 | 本報告數據已依據 2026-07-12 最新 PDF 分析檔案完成核實
+        </footer>
+    </div>
+
+    <script>
+        // Tab 切換邏輯
+        function switchTab(evt, tabId) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabButtons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // 互動診斷計算器邏輯
+        function calculateMetrics() {
+            // 基礎數值 (未做任何優化的手機端/AEO初始數值)
+            let baseSpeed = 52;
+            let baseAeo = 88;
+            let baseCLS = 0.247;
+            
+            let timeSaved = 0;
+            let aeoBonus = 0;
+            let speedBonus = 0;
+            
+            let hasRenderOpt = document.getElementById('opt-render').checked;
+            let hasClsOpt = document.getElementById('opt-cls').checked;
+            let hasSchemaOpt = document.getElementById('opt-schema').checked;
+            let hasCacheOpt = document.getElementById('opt-cache').checked;
+            let hasRobotsOpt = document.getElementById('opt-robots').checked;
+            let hasAgentOpt = document.getElementById('opt-agent').checked;
+            
+            // 計算
+            if (hasRenderOpt) {
+                timeSaved += 2130;
+                speedBonus += 15;
+            }
+            if (hasClsOpt) {
+                baseCLS -= 0.18; // CLS 優化
+                speedBonus += 10;
+            }
+            if (hasSchemaOpt) {
+                aeoBonus += 6;
+            }
+            if (hasCacheOpt) {
+                speedBonus += 6;
+            }
+            if (hasRobotsOpt) {
+                // robots.txt 主要影響 SEO，但給予效能與AEO少許回饋
+                aeoBonus += 2;
+            }
+            if (hasAgentOpt) {
+                aeoBonus += 4;
+            }
+            
+            // 計算最終分數 (上限99分)
+            let finalSpeed = Math.min(99, baseSpeed + speedBonus);
+            let finalAeo = Math.min(99, baseAeo + aeoBonus);
+            
+            // 更新 UI 分數與顏色等級
+            const speedEl = document.getElementById('res-speed');
+            speedEl.innerText = finalSpeed;
+            speedEl.className = 'calc-score-num';
+            if (finalSpeed < 50) speedEl.classList.add('level-low');
+            else if (finalSpeed < 90) speedEl.classList.add('level-mid');
+            else speedEl.classList.add('level-high');
+
+            const aeoEl = document.getElementById('res-aeo');
+            aeoEl.innerText = finalAeo;
+            aeoEl.className = 'calc-score-num';
+            if (finalAeo < 50) aeoEl.classList.add('level-low');
+            else if (finalAeo < 90) aeoEl.classList.add('level-mid');
+            else aeoEl.classList.add('level-high');
+            
+            // 更新詳細數字
+            document.getElementById('res-time').innerText = timeSaved + ' ms';
+            
+            const clsText = baseCLS.toFixed(3);
+            document.getElementById('res-cls').innerText = clsText + (baseCLS <= 0.1 ? ' (良好)' : ' (尚待改進)');
+            
+            document.getElementById('res-agent').innerText = hasAgentOpt ? '3 / 3 (滿分)' : '0 / 3 (未啟用)';
+            
+            // 優化順序排序演算法
+            let priorities = [];
+            if (!hasClsOpt) priorities.push({ name: '定義圖片與地圖寬高 (CLS)', priority: '最高 (影響使用者點擊體驗，修復極易)' });
+            if (!hasRenderOpt) priorities.push({ name: '消除阻斷算繪資源', priority: '高 (解決白屏 2.1s 問題)' });
+            if (!hasSchemaOpt) priorities.push({ name: '部署 API JSON-LD 結構化標記', priority: '中 (打通 AI 搜尋與 LLM 的感知能力)' });
+            if (!hasAgentOpt) priorities.push({ name: '部署 llms.txt 並修復無障礙樹', priority: '中 (讓 AI Agent 能自動瀏覽)' });
+            if (!hasCacheOpt) priorities.push({ name: '調整快取控制與圖片優化', priority: '低 (減少重複流量傳輸)' });
+            if (!hasRobotsOpt) priorities.push({ name: '修正 robots.txt 的 10 項錯誤', priority: '低 (健全基本 SEO 爬蟲規範)' });
+            
+            const priorityEl = document.getElementById('res-priority');
+            if (priorities.length === 0) {
+                priorityEl.innerHTML = '<span style="color: #00b482; font-weight: bold;">🎉 所有優化項目已全部選中！TDX 平台將迎來完美效能與 AEO 頂尖評分。</span>';
+            } else {
+                let html = '';
+                priorities.forEach((p, idx) => {
+                    html += `<div>${idx + 1}. <strong>${p.name}</strong> - 優先級: ${p.priority}</div>`;
+                });
+                priorityEl.innerHTML = html;
+            }
+        }
+        
+        // 初始載入執行一次
+        calculateMetrics();
+    </script>
+</body>
+</html>
