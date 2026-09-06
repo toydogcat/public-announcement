@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "面試「體面拒絕」話術全解析：破解 HR 無敵閉環與潛台詞解碼指南",
+        date: "2026-09-06",
+        path: "announcements/lu960vll.html",
+        preview: "深度解析台灣職場 HR 拒絕求職者的經典體面話術、兩大無敵閉環（新人 vs 老手）與潛台詞公式。內附 14 句致命話術解碼器、閉環攻防模擬器及危險雷達檢測工具。"
+    },
+    {
         title: "TDX 運輸資料流通服務：AEO 搜尋與 PageSpeed 網頁效能深度分析報告",
         date: "2026-07-12",
         path: "announcements/t5x9d2k4.html",

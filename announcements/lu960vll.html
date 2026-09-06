@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面試「體面拒絕」話術全解析：破解 HR 無敵閉環與潛台詞解碼指南</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: rgba(88, 166, 255, 0.25);
+            --danger-glow: rgba(255, 77, 79, 0.2);
+            --warning-glow: rgba(250, 173, 20, 0.2);
+            --success-glow: rgba(82, 196, 26, 0.2);
+            --purple-accent: #9d4edd;
+            --tag-bg: rgba(88, 166, 255, 0.1);
+            --bubble-hr: #21262d;
+            --bubble-candidate: #1f3a5f;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0b0f17;
+            color: #d8e2ec;
+            line-height: 1.7;
+        }
+
+        /* 頂部標籤與資訊 */
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.15) 0%, rgba(157, 78, 221, 0.2) 100%);
+            border: 1px solid rgba(88, 166, 255, 0.35);
+            color: #79b8ff;
+            padding: 0.4rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .header-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 20%, #a5c7ff 80%, #d8b4fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
+            margin-bottom: 0.8rem;
+        }
+
+        .header-desc {
+            font-size: 1.05rem;
+            color: #8b949e;
+            max-width: 800px;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.6;
+        }
+
+        /* 核心摘要卡片與指標 */
+        .hero-banner-card {
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 24px;
+            padding: 2.2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        .hero-banner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #58a6ff, #9d4edd, #ff4d4f);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.8rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1.4rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(88, 166, 255, 0.4);
+            background: rgba(88, 166, 255, 0.05);
+        }
+
+        .stat-number {
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-number.blue { color: #58a6ff; }
+        .stat-number.purple { color: #d8b4fe; }
+        .stat-number.red { color: #ff7875; }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #8b949e;
+            font-weight: 500;
+        }
+
+        /* 區塊標題 */
+        .section-header {
+            margin: 3rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.8rem;
+        }
+
+        .section-title {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-badge {
+            font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.2rem 0.7rem;
+            border-radius: 6px;
+            color: #8b949e;
+            font-weight: 600;
+        }
+
+        /* 閉環卡片展示 */
+        .loop-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin: 1.8rem 0;
+        }
+
+        .loop-card {
+            background: rgba(22, 27, 34, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .loop-card.young {
+            border-top: 4px solid #58a6ff;
+        }
+
+        .loop-card.senior {
+            border-top: 4px solid #9d4edd;
+        }
+
+        .loop-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            margin-bottom: 0.8rem;
+            width: fit-content;
+        }
+
+        .loop-card.young .loop-tag { background: rgba(88, 166, 255, 0.15); color: #58a6ff; }
+        .loop-card.senior .loop-tag { background: rgba(157, 78, 221, 0.15); color: #d8b4fe; }
+
+        .loop-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1.2rem;
+        }
+
+        .dialogue-box {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .dialogue-row {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+            font-size: 0.95rem;
+        }
+
+        .speaker-badge {
+            flex-shrink: 0;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            min-width: 55px;
+            text-align: center;
+        }
+
+        .speaker-hr {
+            background: #ff4d4f;
+            color: #ffffff;
+        }
+
+        .speaker-cand {
+            background: #58a6ff;
+            color: #ffffff;
+        }
+
+        .loop-chain {
+            background: rgba(255, 77, 79, 0.08);
+            border: 1px dashed rgba(255, 77, 79, 0.35);
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #ffaa9b;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* 公式區塊 */
+        .formula-card {
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.06) 0%, rgba(157, 78, 221, 0.08) 100%);
+            border: 1px solid rgba(88, 166, 255, 0.25);
+            border-radius: 20px;
+            padding: 2.2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .formula-equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+
+        .formula-part {
+            background: rgba(22, 27, 34, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 1.4rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .formula-part.highlight {
+            border-color: #58a6ff;
+            color: #79b8ff;
+        }
+
+        .formula-plus {
+            color: #8b949e;
+            font-size: 1.4rem;
+        }
+
+        .formula-equal {
+            color: #ff7875;
+            font-size: 1.5rem;
+        }
+
+        .formula-result {
+            background: rgba(255, 77, 79, 0.15);
+            border: 1px solid rgba(255, 77, 79, 0.4);
+            color: #ff9c9e;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 900;
+        }
+
+        /* 互動篩選器與話術解碼器 */
+        .filter-nav {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .filter-btn {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #c9d1d9;
+            padding: 0.55rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: #58a6ff;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: #58a6ff;
+            color: #0b0f17;
+            border-color: #58a6ff;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.35);
+        }
+
+        /* 解碼器卡片網格 */
+        .cards-masonry {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .decoder-card {
+            background: rgba(22, 27, 34, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.8rem;
+            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .decoder-card:hover {
+            border-color: rgba(88, 166, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-top-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .category-chip {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(88, 166, 255, 0.1);
+            color: #58a6ff;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+
+        .number-tag {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #6e7681;
+        }
+
+        .hr-quote-box {
+            background: rgba(0, 0, 0, 0.35);
+            border-left: 4px solid #58a6ff;
+            border-radius: 0 12px 12px 0;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .hr-quote-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #8b949e;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .hr-quote-text {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.5;
+        }
+
+        /* 展開切換按鈕 */
+        .toggle-os-btn {
+            background: rgba(255, 77, 79, 0.12);
+            border: 1px solid rgba(255, 77, 79, 0.3);
+            color: #ff9c9e;
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.25s ease;
+            margin-top: auto;
+        }
+
+        .toggle-os-btn:hover {
+            background: rgba(255, 77, 79, 0.22);
+            border-color: #ff7875;
+            color: #ffffff;
+        }
+
+        .os-revealed-box {
+            display: none;
+            background: rgba(255, 77, 79, 0.05);
+            border: 1px solid rgba(255, 77, 79, 0.2);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .os-item {
+            margin-bottom: 0.9rem;
+        }
+
+        .os-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .os-label {
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .os-label.danger { color: #ff7875; }
+        .os-label.warning { color: #d8b4fe; }
+        .os-label.success { color: #7ee787; }
+
+        .os-text {
+            font-size: 0.92rem;
+            color: #e6edf3;
+            line-height: 1.55;
+        }
+
+        /* 互動閉環攻防模擬器 */
+        .simulator-container {
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            border-radius: 24px;
+            padding: 2.2rem;
+            margin: 2.5rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .sim-header {
+            margin-bottom: 1.8rem;
+            text-align: center;
+        }
+
+        .sim-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .scenario-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: #c9d1d9;
+        }
+
+        .scenario-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #9d4edd;
+        }
+
+        .scenario-btn.active {
+            background: rgba(157, 78, 221, 0.15);
+            border-color: #9d4edd;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.2);
+        }
+
+        .scenario-btn-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+        }
+
+        .scenario-btn-desc {
+            font-size: 0.8rem;
+            color: #8b949e;
+        }
+
+        .sim-chat-window {
+            background: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.8rem;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 1rem 1.4rem;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .chat-bubble.hr {
+            align-self: flex-start;
+            background: var(--bubble-hr);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #e6edf3;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-bubble.cand {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #1f4068 0%, #162447 100%);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            color: #ffffff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-author {
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .chat-bubble.hr .chat-author { color: #ff7875; }
+        .chat-bubble.cand .chat-author { color: #58a6ff; }
+
+        .sim-verdict-box {
+            background: rgba(255, 77, 79, 0.08);
+            border: 1px solid rgba(255, 77, 79, 0.25);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .sim-verdict-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #ff7875;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-verdict-text {
+            font-size: 0.9rem;
+            color: #e6edf3;
+            line-height: 1.6;
+        }
+
+        /* 危險信號雷達檢測器 */
+        .radar-quiz-container {
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.95) 0%, rgba(20, 24, 33, 0.95) 100%);
+            border: 1px solid rgba(88, 166, 255, 0.25);
+            border-radius: 24px;
+            padding: 2.2rem;
+            margin: 2.5rem 0;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.8rem 0;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(88, 166, 255, 0.3);
+        }
+
+        .quiz-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: #58a6ff;
+            cursor: pointer;
+        }
+
+        .quiz-label {
+            font-size: 0.92rem;
+            color: #d8e2ec;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .radar-result-card {
+            background: rgba(13, 17, 23, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.6rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 0.5rem 0;
+            line-height: 1;
+        }
+
+        .score-status {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
+
+        .score-desc {
+            font-size: 0.95rem;
+            color: #8b949e;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* 幕後心理學與法規原因 */
+        .reason-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+        }
+
+        .reason-card {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .reason-card:hover {
+            border-color: rgba(88, 166, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .reason-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .reason-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+        }
+
+        .reason-desc {
+            font-size: 0.9rem;
+            color: #8b949e;
+            line-height: 1.6;
+        }
+
+        /* 求職者應對手冊 */
+        .playbook-card {
+            background: linear-gradient(135deg, rgba(35, 134, 54, 0.1) 0%, rgba(22, 27, 34, 0.95) 100%);
+            border: 1px solid rgba(46, 160, 67, 0.3);
+            border-radius: 20px;
+            padding: 2.2rem;
+            margin: 2.5rem 0;
+        }
+
+        .copy-script-box {
+            background: #0d1117;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.4rem;
+            margin: 1.2rem 0;
+            position: relative;
+        }
+
+        .script-quote {
+            font-size: 1.05rem;
+            color: #7ee787;
+            font-weight: 600;
+            line-height: 1.7;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(46, 160, 67, 0.2);
+            border: 1px solid rgba(46, 160, 67, 0.4);
+            color: #7ee787;
+            padding: 0.35rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #238636;
+            color: #ffffff;
+        }
+
+        .keyword-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1rem;
+        }
+
+        .keyword-pill {
+            background: rgba(255, 77, 79, 0.1);
+            border: 1px solid rgba(255, 77, 79, 0.25);
+            color: #ff9c9e;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* 頁尾 QR 樣式 */
+        .qr-section {
+            background: rgba(22, 27, 34, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-title { font-size: 1.65rem; }
+            .hero-banner-card { padding: 1.5rem; }
+            .stat-number { font-size: 2rem; }
+            .cards-masonry { grid-template-columns: 1fr; }
+            .formula-equation { flex-direction: column; gap: 0.6rem; }
+            .copy-btn { position: static; margin-top: 1rem; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 頂部資訊與導航 -->
+        <header style="text-align: center; margin-bottom: 2rem;">
+            <div class="page-badge">
+                <span>🛡️</span> 職場洞察 • HR 話術解碼專題
+            </div>
+            <h1 class="header-title">面試「體面拒絕」話術全解析</h1>
+            <p class="header-desc">
+                你有聽過不想用人的話術嗎？既能拒絕你，又能讓雙方保持體面。<br>
+                深度破解 HR 界的兩大無敵閉環、十句致命客氣話與背後的真實內心 OS，助你優雅收工，拒絕精神內耗！
+            </p>
+            <p style="opacity: 0.45; font-size: 0.85rem;">發布日期：2026-09-06 • 閱讀時間約 7 分鐘</p>
+        </header>
+
+        <nav>
+            <a href="../index.html">首頁 Home</a>
+            <a href="../search.html">公告檢索 Search</a>
+        </nav>
+
+        <!-- 核心洞察卡片 -->
+        <div class="hero-banner-card">
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: #ffffff; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>🎯</span> 核心殘酷真相：結論早已確定，過程全是演技
+            </h2>
+            <p style="color: #a5c7ff; font-size: 1rem; line-height: 1.7;">
+                面試結束後，你是否常陷入自我懷疑？明明與主管相談甚歡，最後卻音訊全無？<br>
+                請記住：<strong>重點往往不是你到底優不優秀，而是結論早就定下了——「不要」。</strong> 但為了職場倫理與公司形象，過程一定要包裝成「客觀限制」或「為你著想」，讓你覺得是體面的遺憾，而非能力的否定。
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number blue">98%</div>
+                    <div class="stat-label">體面話術率<br><span style="font-size: 0.75rem; opacity: 0.7;">（公司鮮少直接說「不要」）</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number purple">100%</div>
+                    <div class="stat-label">邏輯閉環率<br><span style="font-size: 0.75rem; opacity: 0.7;">（你反駁反而顯得不合常理）</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number red">0%</div>
+                    <div class="stat-label">無謂等待率<br><span style="font-size: 0.75rem; opacity: 0.7;">（看懂潛台詞立刻投下一家）</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HR 界的兩大無敵閉環 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🔄</span> HR 界的兩大「無敵閉環」
+            </div>
+            <div class="section-badge">經典困局解析</div>
+        </div>
+
+        <p style="color: #8b949e; margin-bottom: 1.5rem;">
+            在招聘市場上，這兩個案例被譽為 HR 的經典防禦盾牌。不管面試者如何爭取，永遠走不出面試官設定的莫比烏斯環：
+        </p>
+
+        <div class="loop-container">
+            <!-- 閉環 1：新人 -->
+            <div class="loop-card young">
+                <div>
+                    <div class="loop-tag">Case 1 • 初出茅廬</div>
+                    <div class="loop-title">小白新人的「經驗悖論」</div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-row">
+                            <span class="speaker-badge speaker-hr">HR 面試官</span>
+                            <div>「你是新人，我們目前這個職缺需要有即戰力與相關經驗的。」</div>
+                        </div>
+                        <div class="dialogue-row">
+                            <span class="speaker-badge speaker-cand">面試者</span>
+                            <div>「可是你不給我工作機會，我就永遠沒辦法累積經驗啊？」</div>
+                        </div>
+                        <div class="dialogue-row">
+                            <span class="speaker-badge speaker-hr">HR 面試官</span>
+                            <div>「那你可以先去其他地方獲得經驗，等你能勝任了，我們隨時歡迎你！」</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="loop-chain">
+                    <span>🔁</span>
+                    <div><strong>新人閉環：</strong>沒經驗所以不能給你工作 ➔ 因為沒工作所以永遠沒經驗。</div>
+                </div>
+            </div>
+
+            <!-- 閉環 2：老手 -->
+            <div class="loop-card senior">
+                <div>
+                    <div class="loop-tag">Case 2 • 資深老手</div>
+                    <div class="loop-title">資深戰將的「穩定度陷阱」</div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-row">
+                            <span class="speaker-badge speaker-hr">HR 面試官</span>
+                            <div>「你的經驗非常豐富，但我們這崗位預算有限，給不了你那麼多。」</div>
+                        </div>
+                        <div class="dialogue-row">
+                            <span class="speaker-badge speaker-cand">面試者</span>
+                            <div>「沒關係，我很看好貴公司潛力，我個人願意降薪加入！」</div>
+                        </div>
+                        <div class="dialogue-row">
+                            <span class="speaker-badge speaker-hr">HR 面試官</span>
+                            <div>「那不行啊！降薪委屈你一定待不久，我們希望找能長期穩定的人選。」</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="loop-chain">
+                    <span>🔁</span>
+                    <div><strong>老手閉環：</strong>太有經驗所以給不起 ➔ 願意降薪反而被認定心態不平衡待不久。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 萬能拒絕公式 -->
+        <div class="formula-card">
+            <h3 style="color: #ffffff; font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">
+                📐 高明體面拒絕的「萬能話術公式」
+            </h3>
+            <p style="color: #8b949e; font-size: 0.95rem;">
+                只要掌握這條公式，你就能一秒拆解所有 HR 客氣話的骨架：
+            </p>
+
+            <div class="formula-equation">
+                <div class="formula-part highlight">① 肯定讚美你<br><span style="font-size: 0.8rem; font-weight: 500; opacity: 0.8;">（卸下你的心防）</span></div>
+                <div class="formula-plus">+</div>
+                <div class="formula-part">② 貶低自己 / 推給客觀<br><span style="font-size: 0.8rem; font-weight: 500; opacity: 0.8;">（非戰之罪，公司太小太窮）</span></div>
+                <div class="formula-plus">+</div>
+                <div class="formula-part">③ 給你一個虛無未來<br><span style="font-size: 0.8rem; font-weight: 500; opacity: 0.8;">（人才庫／以後有缺再約）</span></div>
+                <div class="formula-equal">=</div>
+                <div class="formula-result">❌ 結論：絕對不要你</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; text-align: left; margin-top: 1.5rem;">
+                <div style="background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 10px;">
+                    <div style="color: #58a6ff; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.3rem;">1. 讚美在前</div>
+                    <div style="font-size: 0.85rem; color: #8b949e;">先誇獎你的能力、態度或學經歷，讓你獲得自尊補償，不好意思當場發作。</div>
+                </div>
+                <div style="background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 10px;">
+                    <div style="color: #9d4edd; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.3rem;">2. 歸咎外部</div>
+                    <div style="font-size: 0.85rem; color: #8b949e;">歸因於公司規模、組織調整、預算時程等客觀不可抗力，讓面試官看似無辜。</div>
+                </div>
+                <div style="background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 10px;">
+                    <div style="color: #ff7875; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.3rem;">3. 邏輯閉環</div>
+                    <div style="font-size: 0.85rem; color: #8b949e;">構築「你越爭取，反而越證明對方顧慮是對的」之死穴，封死所有申辯空間。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 互動體驗工具 1：HR 話術即時解碼器 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🔍</span> 互動體驗：台灣職場 10 大必死體面話解碼器
+            </div>
+            <div class="section-badge">點擊卡片解密 OS</div>
+        </div>
+
+        <p style="color: #8b949e; margin-bottom: 1rem;">
+            面試官的話要「反著聽」。點擊下方標籤快速切換分類，並點擊每張卡片的「揭曉真實 OS」查看面試官真正的心聲與封死邏輯：
+        </p>
+
+        <!-- 分類導航 -->
+        <div class="filter-nav">
+            <button class="filter-btn active" onclick="filterDecoder('all', this)">全部話術 (14)</button>
+            <button class="filter-btn" onclick="filterDecoder('praise', this)">抬高捧殺型</button>
+            <button class="filter-btn" onclick="filterDecoder('objective', this)">客觀限制型</button>
+            <button class="filter-btn" onclick="filterDecoder('culture', this)">玄學契合型</button>
+            <button class="filter-btn" onclick="filterDecoder('future', this)">未來支票型</button>
+            <button class="filter-btn" onclick="filterDecoder('detail', this)">微瑕即戰型</button>
+        </div>
+
+        <!-- 話術卡片清單 -->
+        <div class="cards-masonry" id="decoderGrid">
+            <!-- 1 -->
+            <div class="decoder-card" data-category="praise">
+                <div class="card-top-meta">
+                    <span class="category-chip">抬高捧殺型</span>
+                    <span class="number-tag">#01</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「你真的很優秀，這個職位太委屈你了，我們廟太小，怕耽誤你的前途。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">你能力太強、資歷太深，我們這小主管根本管不住你，也不想為了你重新整頓組織架構。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">如果你回答「我不介意委屈」，對方可接：「但身為管理者，讓人才屈就無法發揮是我們的失職，我們會有極大心理壓力。」</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">大方微笑感謝，不必降格自貶。你的戰場在更大的舞台，不需要為小池子委屈自己。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="decoder-card" data-category="praise">
+                <div class="card-top-meta">
+                    <span class="category-chip">抬高捧殺型</span>
+                    <span class="number-tag">#02</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「我們擔心這個常規工作內容，可能沒辦法讓你有足夠的成就感。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">依你的經歷，做這些瑣碎雜事保證三個月內就會厭煩離職，到時候 HR 又要重新擦屁股招募一次。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">這是 Case 2 老手閉環的變形：就算你說「我喜歡把簡單的事做到極致」，面試官只會覺得你現在只是想找避難所。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">認清這份職位價值上限確實過低，別把時間耗在無法認可你深度的崗位上。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="decoder-card" data-category="objective">
+                <div class="card-top-meta">
+                    <span class="category-chip">客觀限制型</span>
+                    <span class="number-tag">#03</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「你的期望薪資我們目前核不下來，真的不想委屈你的身價。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">我們只想花香蕉請猴子。即便你值得這個薪水，我們也寧願找個低薪堪用的新手。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">就算你當場說「薪水可談、可以打折」，面試官依然會用「降薪入職員工離職率最高、心態會不平衡」直接婉拒。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">千萬不要主動大跳水削價競爭，市場上自會有懂得為專業付費的雇主。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="decoder-card" data-category="objective">
+                <div class="card-top-meta">
+                    <span class="category-chip">客觀限制型</span>
+                    <span class="number-tag">#04</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「這個職缺高層剛好決定先凍結 / 內部團隊策略最近在大幅度調整。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">我們已經內定了某人，或者找到了更便宜、更聽話的人選，但不能當場得罪你。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">推給高層決策與不可抗力，面試官自己也假裝無奈，直接封死你現場任何爭取挽回的可能。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">客氣道謝，轉身就走。不要傻等「解凍」，因為解凍的那天也不會聯絡你。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="decoder-card" data-category="objective">
+                <div class="card-top-meta">
+                    <span class="category-chip">客觀限制型</span>
+                    <span class="number-tag">#05</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「我們目前迫切需要即戰力，比較長的培養與適應期我們現在暫時沒資源。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">這就是 Case 1 新人閉環的體面版。我們不想出培訓成本，只想摘現成的果子。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">若回答「我願意無薪加班自學」，對方會回：「專案節奏以天為單位，無法承擔學習曲線造成的延誤風險。」</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">轉向願意培育人才、或專案架構相對成熟的中大型組織投遞。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="decoder-card" data-category="culture">
+                <div class="card-top-meta">
+                    <span class="category-chip">玄學契合型</span>
+                    <span class="number-tag">#06</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「我們覺得你個人的調性與風格跟現有團隊不太一樣，怕你進來會不適應。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">主管單純主觀上對你不來電、氣場不合，但不能直接說討厭你，所以用「文化契合度」當無敵萬能卡。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">文化與調性極度主觀無法量化，你無法證明自己「明天就能改變性格融入團隊」。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">氣場不合進去也是痛苦，感謝對方的不娶之恩，避免未來的職場霸凌或被孤立。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="decoder-card" data-category="culture">
+                <div class="card-top-meta">
+                    <span class="category-chip">玄學契合型</span>
+                    <span class="number-tag">#07</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「主管覺得你比較適合去更大、更制度化、更有資源的舞台發展。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">你看起來很有自己的想法與主見，我們這裡需要的是聽話照做、不要挑戰主管權威的工具人。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">反駁代表你果然很有主見、不聽指揮，正好坐實了面試官對你「難以馴服」的擔憂。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">把這句話當作實質的讚美，帶著你的專業主見去尋找真正懂得授權開明的主管。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="decoder-card" data-category="future">
+                <div class="card-top-meta">
+                    <span class="category-chip">未來支票型</span>
+                    <span class="number-tag">#08</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「你的履歷我們會收進高階人才庫，未來有適合的專案一定第一時間聯絡你。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">高階人才庫 = 公司的已讀不回回收桶。感謝惠顧，你可以走了，此生大概不會再聯絡。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">用「你很優秀只是目前沒缺」來給足你面子，讓你帶著被肯定的心情離開，不好意思現場追問。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">走出大門那一刻，立刻把這家公司從你的追蹤清單中劃掉，專注於下一個面試。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9 -->
+            <div class="decoder-card" data-category="future">
+                <div class="card-top-meta">
+                    <span class="category-chip">未來支票型</span>
+                    <span class="number-tag">#09</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「今天跟你聊得非常愉快！我們內部還要綜合評估其他候選人，有消息再通知你。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">聊得愉快只代表面試官有職業素養，不代表會錄取。「有消息再通知」= 99% 的無聲卡或系統感謝信。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">如果真正想要你，通常會積極確認你可以上班的時間、甚至當場約定二面日期，而不是用模糊的「有消息再說」。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">當天寄一封感謝信即可，接著繼續面試下一家，絕不要坐在家裡苦等電話。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="decoder-card" data-category="detail">
+                <div class="card-top-meta">
+                    <span class="category-chip">微瑕即戰型</span>
+                    <span class="number-tag">#10</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說：</div>
+                    <div class="hr-quote-text">「你的能力很全面，但我們專案需要對某個極細微流程 100% 熟悉、明天就能產出的人。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">隨機挑一個你剛好沒碰過的小工具當藉口。若真的想錄取你，這點小學習曲線根本微不足道。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">你說「我兩天內就能自學上手」，對方會說「進度壓力大，連兩天摸索的時間都不允許浪費」。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">不要過度苛責自己，欲加之罪何患無辭，這只是借題發揮的託辭。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11 -->
+            <div class="decoder-card" data-category="praise">
+                <div class="card-top-meta">
+                    <span class="category-chip">抬高捧殺型</span>
+                    <span class="number-tag">#11</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說（舞台太小法）：</div>
+                    <div class="hr-quote-text">「你的能力與經歷真的非常出色，但我們公司目前的規模與舞台太小，很怕限制你的發揮空間。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">我們養不起你、管不動你，或者覺得你這尊大佛待不久，隨時會騎驢找馬跳槽。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">如果你回應「我不介意委屈」，對方可順勢接：「但作為管理者，讓人才無法發揮是我們的失職，我們會有道德壓力。」</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">坦然收下對你實力的極高評價，優雅道謝退場，將心力轉向真正能容納你野心的頭部企業。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12 -->
+            <div class="decoder-card" data-category="culture">
+                <div class="card-top-meta">
+                    <span class="category-chip">玄學契合型</span>
+                    <span class="number-tag">#12</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說（團隊互補法）：</div>
+                    <div class="hr-quote-text">「你的專業技術完全沒問題，但我們現有團隊風格偏向保守執行，這次想找能在性格上『互補』的人選。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">我們不喜歡你的性格或氣場，但不能直接說你不好，所以歸咎於玄妙的「團隊氣氛搭配」。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">性格與團隊氣氛是極度主觀且無法量化的指標，你無法向對方證明自己「可以立刻改變天生性格來互補」。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">強扭的瓜不甜。不需要壓抑真實性格去討好不合拍的團隊，做自己的光，去吸引真正懂你的同袍。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13 -->
+            <div class="decoder-card" data-category="objective">
+                <div class="card-top-meta">
+                    <span class="category-chip">客觀限制型</span>
+                    <span class="number-tag">#13</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說（組織策略調整法）：</div>
+                    <div class="hr-quote-text">「你今天的表現非常好，但非常不巧，我們部門這兩天剛好在進行組織架構與策略調整，職缺需暫緩招募。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">不是你不行，是我們不想要你，甚至拿虛擬的「組織調整」當作最無懈可擊的免責擋箭牌。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">把責任推給「公司高層決策與不可抗力」，面試官自己也裝作很無奈，直接切斷你現場任何爭取的機會。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">體面回應「祝福貴公司組織重組順利」，轉身立刻忘掉這家公司，不留戀、不糾結。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 14 -->
+            <div class="decoder-card" data-category="future">
+                <div class="card-top-meta">
+                    <span class="category-chip">未來支票型</span>
+                    <span class="number-tag">#14</span>
+                </div>
+                <div class="hr-quote-box">
+                    <div class="hr-quote-title">🗣️ 面試官說（高階人才庫法）：</div>
+                    <div class="hr-quote-text">「這次招募名額只有一個，幾位候選人討論得非常掙扎，我們會將你納入高階人才庫，未來有新缺一定先聯絡。」</div>
+                </div>
+                <button class="toggle-os-btn" onclick="toggleOS(this)">
+                    <span>⚡ 揭曉真實 OS 潛台詞</span>
+                </button>
+                <div class="os-revealed-box">
+                    <div class="os-item">
+                        <div class="os-label danger">💬 真實潛台詞 OS</div>
+                        <div class="os-text">客氣的逐客令，履歷大概率直接進回收桶。別等電話了，這輩子都不會再聯絡。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label warning">🔒 死穴封死邏輯</div>
+                        <div class="os-text">用「你很優秀只是名額太少競爭太激烈」維護自尊，讓你帶著被肯定（但被刷掉）的心情離開，不好意思發作。</div>
+                    </div>
+                    <div class="os-item">
+                        <div class="os-label success">💡 求職者應對</div>
+                        <div class="os-text">客氣禮貌地回覆感謝信，隨即將這張空頭支票拋諸腦後，全力以赴下一場戰役。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 互動體驗工具 2：無敵閉環攻防模擬器 -->
+        <div class="simulator-container">
+            <div class="sim-header">
+                <div style="font-size: 0.85rem; font-weight: 800; color: #d8b4fe; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem;">
+                    🎮 互動演練
+                </div>
+                <h3>面試閉環攻防模擬器</h3>
+                <p style="color: #8b949e; font-size: 0.95rem;">
+                    選擇不同面試情境，看看無論你如何理性辯解，HR 如何用話術將你逼入死角：
+                </p>
+            </div>
+
+            <div class="scenario-selector">
+                <div class="scenario-btn active" onclick="selectScenario('junior', this)">
+                    <div class="scenario-btn-title">👶 困境 A：新人無經驗</div>
+                    <div class="scenario-btn-desc">「沒工作哪來的經驗？」</div>
+                </div>
+                <div class="scenario-btn" onclick="selectScenario('senior', this)">
+                    <div class="scenario-btn-title">🦁 困境 B：老手願降薪</div>
+                    <div class="scenario-btn-desc">「我都退讓了還挑剔？」</div>
+                </div>
+                <div class="scenario-btn" onclick="selectScenario('culture', this)">
+                    <div class="scenario-btn-title">🎭 困境 C：團隊文化不合</div>
+                    <div class="scenario-btn-desc">「玄學調性無法自證」</div>
+                </div>
+                <div class="scenario-btn" onclick="selectScenario('freeze', this)">
+                    <div class="scenario-btn-title">🧊 困境 D：組織架構調整</div>
+                    <div class="scenario-btn-desc">「推給不可抗力高層」</div>
+                </div>
+            </div>
+
+            <div class="sim-chat-window" id="simChatWindow">
+                <!-- 對話內容由 JS 注入 -->
+            </div>
+
+            <div class="sim-verdict-box" id="simVerdictBox">
+                <!-- 結論由 JS 注入 -->
+            </div>
+        </div>
+
+        <!-- 互動體驗工具 3：危險信號雷達檢測器 -->
+        <div class="radar-quiz-container">
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <div style="font-size: 0.85rem; font-weight: 800; color: #58a6ff; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem;">
+                    📡 自測小工具
+                </div>
+                <h3 style="font-size: 1.5rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">
+                    面試「體面發卡率」即時雷達檢測
+                </h3>
+                <p style="color: #8b949e; font-size: 0.95rem;">
+                    勾選你在這場面試中聽到的關鍵字，即時計算你收到「無聲卡 / 感謝信」的機率：
+                </p>
+            </div>
+
+            <div class="quiz-grid">
+                <label class="quiz-option">
+                    <input type="checkbox" class="quiz-checkbox" value="18" onchange="calculateRadar()">
+                    <span class="quiz-label">「你真的很優秀，這職位太委屈你了」</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="checkbox" class="quiz-checkbox" value="15" onchange="calculateRadar()">
+                    <span class="quiz-label">「期望薪資目前核不下來，怕耽誤你」</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="checkbox" class="quiz-checkbox" value="18" onchange="calculateRadar()">
+                    <span class="quiz-label">「我們需要今天進來、明天就能上手的即戰力」</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="checkbox" class="quiz-checkbox" value="16" onchange="calculateRadar()">
+                    <span class="quiz-label">「你個人的調性與風格跟團隊不太一樣」</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="checkbox" class="quiz-checkbox" value="15" onchange="calculateRadar()">
+                    <span class="quiz-label">「高層正在進行組織架構調整 / 職缺暫緩」</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="checkbox" class="quiz-checkbox" value="20" onchange="calculateRadar()">
+                    <span class="quiz-label">「履歷先收進人才庫，有適合缺會主動聯絡」</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="checkbox" class="quiz-checkbox" value="18" onchange="calculateRadar()">
+                    <span class="quiz-label">「今天聊得很愉快，內部評估後有消息再通知」</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="checkbox" class="quiz-checkbox" value="12" onchange="calculateRadar()">
+                    <span class="quiz-label">「覺得你適合去更大更有制度的公司發揮」</span>
+                </label>
+            </div>
+
+            <div class="radar-result-card">
+                <div style="font-size: 0.85rem; color: #8b949e; text-transform: uppercase; font-weight: 700;">體面被拒指數評估</div>
+                <div class="score-display" id="radarScore" style="color: #58a6ff;">0%</div>
+                <div class="score-status" id="radarStatus" style="color: #7ee787;">尚未檢測到危險關鍵信號</div>
+                <div class="score-desc" id="radarDesc">請勾選面試官說過的客氣關鍵字，系統將分析其背後的潛台詞濃度。</div>
+            </div>
+        </div>
+
+        <!-- 幕後心理學：為什麼 HR 不能直接說「我就是不要你」？ -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🎭</span> 深度剖析：為什麼 HR 絕不能直接說「我就是不要你」？
+            </div>
+            <div class="section-badge">職場法規與心理</div>
+        </div>
+
+        <p style="color: #8b949e; margin-bottom: 1.5rem;">
+            許多人會問：既然不要，為什麼不痛快直接說？非要繞一大圈？這背後其實有三個極度現實的考量：
+        </p>
+
+        <div class="reason-grid">
+            <div class="reason-card">
+                <div class="reason-icon">💥</div>
+                <div class="reason-title">1. 避免現場衝突與情緒失控</div>
+                <div class="reason-desc">
+                    面試是高度緊張的社交情境。如果當場指出求職者的缺點或直接否定能力，極容易引發當場激烈的爭執、拍桌抗議甚至人身衝突。包裝成「客觀不可抗力」，讓彼此都能平和地走出會議室。
+                </div>
+            </div>
+
+            <div class="reason-card">
+                <div class="reason-icon">⚖️</div>
+                <div class="reason-title">2. 規避就業歧視與法律風險</div>
+                <div class="reason-desc">
+                    依據《就業服務法》，雇主不得因年齡、性別、婚姻、容貌等歧視求職者。若誠實說出不適用的真實原因（例如覺得年齡偏大、女性可能即將生育），極易被告上勞動局吃上高額罰單。「能力太強太委屈」是最安全的免責金牌。
+                </div>
+            </div>
+
+            <div class="reason-card">
+                <div class="reason-icon">⭐</div>
+                <div class="reason-title">3. 維護企業雇主品牌 (Employer Branding)</div>
+                <div class="reason-desc">
+                    在社群透明的時代，一個憤怒的面試者隨時可以在 Dcard、PTT、LinkedIn 或面試趣留下負評避雷文，大幅增加企業未來的招聘成本。給求職者留足面子與尊嚴，是性價比最高的公關保護。
+                </div>
+            </div>
+        </div>
+
+        <!-- 求職者生存手冊：優雅下台階 -->
+        <div class="playbook-card">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+                <span style="font-size: 1.8rem;">🥋</span>
+                <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffffff; margin: 0;">
+                    求職者生存指南：優雅下台階與回敬金句
+                </h3>
+            </div>
+            <p style="color: #c9d1d9; font-size: 0.95rem; line-height: 1.6;">
+                既然識破了對方的體面話術，我們也不必當場戳破或死纏爛打。最成熟、最有段位的做法是：<strong>用更高的體面優雅地回敬對方</strong>，既展現格局，又迅速收工轉向下一個機會！
+            </p>
+
+            <div class="copy-script-box">
+                <button class="copy-btn" onclick="copyResponseScript(this)">📋 一鍵複製金句</button>
+                <div style="font-size: 0.8rem; color: #8b949e; text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">
+                    💡 面試現場高情商體面退場範本：
+                </div>
+                <div class="script-quote" id="responseScriptText">
+                    「了解，非常感謝您與團隊今天的寶貴時間，也謝謝您如此坦誠的回饋與交流。未來若有更契合的機會，期待能再有合作的可能，祝公司業務蒸蒸日上！」
+                </div>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                <div style="font-size: 0.9rem; font-weight: 800; color: #ffffff; margin-bottom: 0.6rem;">
+                    🚨 聽到請立刻在心裡收工的 7 大高危關鍵字雷達：
+                </div>
+                <div class="keyword-pills">
+                    <span class="keyword-pill">委屈你了</span>
+                    <span class="keyword-pill">怕耽誤你</span>
+                    <span class="keyword-pill">怕你待不久</span>
+                    <span class="keyword-pill">文化契合度</span>
+                    <span class="keyword-pill">收進人才庫</span>
+                    <span class="keyword-pill">有消息再通知</span>
+                    <span class="keyword-pill">組織架構調整</span>
+                </div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 1.2rem; margin-top: 1.5rem; font-size: 0.9rem; color: #8b949e; line-height: 1.6;">
+                <strong>心態升級叮嚀：</strong> 面試本質是一場雙向的「商務合夥交易」，而不是一場「個人價值考試」。被拒絕只代表當下彼此的需求不匹配，絕不代表你不夠優秀。看破話術、優雅道謝、立刻轉移重心，才是職場高手的核心競爭力！
+            </div>
+        </div>
+
+        <!-- 分享 QR Code 與版權宣告 -->
+        <div class="qr-section">
+            <h4 style="font-size: 1.1rem; color: #ffffff; margin-bottom: 0.4rem;">📱 分享給正在面試找工作的朋友</h4>
+            <p style="font-size: 0.85rem; color: #8b949e; margin-bottom: 1.2rem;">
+                掃描 QR Code 隨時查閱話術解碼手冊，拒絕被面試官的客套話精神內耗
+            </p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=https://toydogcat.github.io/public-announcement/announcements/lu960vll.html" alt="Announcement QR Code" style="background: white; padding: 8px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+            <p style="font-size: 0.75rem; color: #6e7681; margin-top: 0.8rem;">檔案編號：LU960VLL • 公告發布系統</p>
+        </div>
+
+        <footer style="text-align: center; margin-top: 3.5rem; color: #484f58; font-size: 0.85rem; padding-bottom: 2rem;">
+            © 2026 Luna AI 公告情報庫 • 職場面試文化深度觀察報告
+        </footer>
+    </div>
+
+    <!-- 頁面互動 JavaScript -->
+    <script>
+        // 1. 話術分類篩選
+        function filterDecoder(category, btnElement) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const cards = document.querySelectorAll('.decoder-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 2. 展開 / 收合 OS 潛台詞
+        function toggleOS(btn) {
+            const osBox = btn.nextElementSibling;
+            if (!osBox) return;
+
+            if (osBox.style.display === 'block') {
+                osBox.style.display = 'none';
+                btn.innerHTML = '<span>⚡ 揭曉真實 OS 潛台詞</span>';
+                btn.style.background = 'rgba(255, 77, 79, 0.12)';
+            } else {
+                osBox.style.display = 'block';
+                btn.innerHTML = '<span>▲ 收合潛台詞解析</span>';
+                btn.style.background = 'rgba(255, 255, 255, 0.08)';
+            }
+        }
+
+        // 3. 閉環攻防模擬數據
+        const scenarios = {
+            junior: {
+                dialogues: [
+                    { speaker: 'hr', text: '「你是新人，我們目前這個專案節奏快，需要有即戰力與商業專案經驗的人選。」' },
+                    { speaker: 'cand', text: '「可是面試官，如果所有公司都不給新人機會，新人要怎麼累積第一份經驗呢？」' },
+                    { speaker: 'hr', text: '「這的確是求職市場的痛點，所以我們建議您可以先去中小型公司或實習累積實戰，等您具備完整經驗，我們隨時非常歡迎您再次應徵！」' }
+                ],
+                verdict: {
+                    title: '🎯 閉環死穴：將培育責任推給整個社會',
+                    desc: '面試官巧妙地把「公司不願承擔新人試錯成本」的自私考量，昇華為「對你個人的職業建議」。你越是爭取，越顯得你把自身的學習成本強加給公司，因此永遠反駁不贏。'
+                }
+            },
+            senior: {
+                dialogues: [
+                    { speaker: 'hr', text: '「您在業界已經有 8 年資歷，經歷非常卓越，但我們這個職務的薪資預算恐怕給不到您的期望身價。」' },
+                    { speaker: 'cand', text: '「沒問題的，我很看好貴公司未來的產品前景，我願意降薪 25% 加入團隊一起打拼！」' },
+                    { speaker: 'hr', text: '「哎呀，這萬萬不行！讓如此資深的人才降薪，不僅對您不公平，我們也擔心您做一段時間會產生心理落差而離職，我們需要穩定人選。」' }
+                ],
+                verdict: {
+                    title: '🎯 閉環死穴：用「為你著想」鎖死降薪退路',
+                    desc: '你退讓降薪，對方就用「心理不平衡易離職」堵你；你堅持原薪，對方就用「廟小預算不夠」推拖。結論只有一個：他們就是不想要一尊太貴或太有主見的資深大神。'
+                }
+            },
+            culture: {
+                dialogues: [
+                    { speaker: 'hr', text: '「您的專業技能毫無疑問非常頂尖，但我們評估後覺得，您個人的做事節奏與調性，可能跟我們現有團隊不是那麼互補。」' },
+                    { speaker: 'cand', text: '「我適應力非常強，過去在各種不同風格的跨國團隊中都能完美融入，請給我一個月的時間證明！」' },
+                    { speaker: 'hr', text: '「我們相信您的適應力，但團隊默契是種長期的化學反應，勉強您改變自己來迎合團隊，對您個人也是一種壓抑，我們真的捨不得。」' }
+                ],
+                verdict: {
+                    title: '🎯 閉環死穴：無法量化的主觀玄學壁壘',
+                    desc: '「文化契合」本質上就是「主管主觀上看不順眼」。因為沒有客觀量化指標，你提出任何過去的輝煌戰績，對方都能以「每個團隊化學反應不同」輕描淡寫駁回。'
+                }
+            },
+            freeze: {
+                dialogues: [
+                    { speaker: 'hr', text: '「非常感謝您今天專程前來，但非常遺憾，高層今天上午剛下達指令，這條業務線組織架構正在重新審視，職缺需暫緩招募。」' },
+                    { speaker: 'cand', text: '「那請問大概什麼時候組織調整會確定呢？我可以先等待貴公司的後續通知！」' },
+                    { speaker: 'hr', text: '「這牽涉到跨國總部的年度策略布局，時程具有高度不確定性，我們真的不敢耽誤您尋找其他大好機會的時間！」' }
+                ],
+                verdict: {
+                    title: '🎯 閉環死穴：推給虛無縹緲的「不可抗力」',
+                    desc: '面試官把自己降格為「跟你一樣無辜的基層執行者」，藉此抹殺所有反駁對象。你總不可能跟遠在天邊的「跨國總部」辯論吧？直接斷掉你的所有指望。'
+                }
+            }
+        };
+
+        function selectScenario(key, btnElement) {
+            const buttons = document.querySelectorAll('.scenario-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            const data = scenarios[key];
+            const chatWindow = document.getElementById('simChatWindow');
+            const verdictBox = document.getElementById('simVerdictBox');
+
+            // 渲染對話
+            let chatHTML = '';
+            data.dialogues.forEach(d => {
+                const isHr = d.speaker === 'hr';
+                chatHTML += `
+                    <div class="chat-bubble ${isHr ? 'hr' : 'cand'}">
+                        <div class="chat-author">${isHr ? '👔 HR 面試官' : '💼 求職者'}</div>
+                        <div>${d.text}</div>
+                    </div>
+                `;
+            });
+            chatWindow.innerHTML = chatHTML;
+
+            // 渲染結論
+            verdictBox.innerHTML = `
+                <div class="sim-verdict-title">${data.verdict.title}</div>
+                <div class="sim-verdict-text">${data.verdict.desc}</div>
+            `;
+        }
+
+        // 初始化模擬器預設為 junior
+        selectScenario('junior', null);
+
+        // 4. 危險雷達即時計算
+        function calculateRadar() {
+            const checkboxes = document.querySelectorAll('.quiz-checkbox');
+            let total = 0;
+            let count = 0;
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    total += parseInt(cb.value, 10);
+                    count++;
+                }
+            });
+
+            // 上限 100%
+            const score = Math.min(100, total);
+            const scoreEl = document.getElementById('radarScore');
+            const statusEl = document.getElementById('radarStatus');
+            const descEl = document.getElementById('radarDesc');
+
+            scoreEl.innerText = score + '%';
+
+            if (score === 0) {
+                scoreEl.style.color = '#58a6ff';
+                statusEl.style.color = '#7ee787';
+                statusEl.innerText = '尚未檢測到危險關鍵信號';
+                descEl.innerText = '請勾選面試官說過的客氣關鍵字，系統將分析其背後的潛台詞濃度。';
+            } else if (score <= 35) {
+                scoreEl.style.color = '#7ee787';
+                statusEl.style.color = '#7ee787';
+                statusEl.innerText = '🟡 輕微客套信號（尚在常規觀察區）';
+                descEl.innerText = '對方可能只是常規性的自我保護發言，建議寄送 Follow-up 感謝信並持續觀察 3-5 個工作天。';
+            } else if (score <= 65) {
+                scoreEl.style.color = '#faad14';
+                statusEl.style.color = '#faad14';
+                statusEl.innerText = '🟠 濃厚體面婉拒信號（高機率陪榜）';
+                descEl.innerText = '對方已經在有意識地為拒絕你做邏輯鋪墊與下台階。請不要停止投遞其他職缺，切勿單戀這家！';
+            } else {
+                scoreEl.style.color = '#ff4d4f';
+                statusEl.style.color = '#ff4d4f';
+                statusEl.innerText = '🔴 100% 必死體面閉環（感謝信警告已觸發）';
+                descEl.innerText = '請立刻優雅收工！對方已經啟動了最頂級的無敵話術閉環，無聲卡或系統感謝信已在路上。把力氣留給下一個舞台！';
+            }
+        }
+
+        // 5. 一鍵複製退場金句
+        function copyResponseScript(btn) {
+            const text = document.getElementById('responseScriptText').innerText.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = '✅ 已複製到剪貼簿！';
+                btn.style.background = '#2ea043';
+                btn.style.color = '#ffffff';
+                setTimeout(() => {
+                    btn.innerText = orig;
+                    btn.style.background = 'rgba(46, 160, 67, 0.2)';
+                    btn.style.color = '#7ee787';
+                }, 2000);
+            }).catch(() => {
+                alert('複製失敗，請手動複製文字。');
+            });
+        }
+    </script>
+</body>
+</html>
