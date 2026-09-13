@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "資料庫正規化完全指南：從 1NF 到 BCNF 的視覺化拆解與實戰心法",
+        date: "2026-09-13",
+        path: "announcements/n8f4k2w7.html",
+        preview: "「一個事實只存一次，存在它該在的地方。」以選課系統為例拆解更新、新增、刪除三大異常，逐步圖解 1NF、2NF、3NF 到 BCNF，內含三大異常互動實驗室、正規化健檢診所與反正規化取捨思維。"
+    },
+    {
         title: "面試「體面拒絕」話術全解析：破解 HR 無敵閉環與潛台詞解碼指南",
         date: "2026-09-06",
         path: "announcements/lu960vll.html",
