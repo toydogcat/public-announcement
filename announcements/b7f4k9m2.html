@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工程師的第一堂密碼學課：對稱、非對稱與現代安全架構</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: rgba(0, 242, 255, 0.2);
+            --secondary-glow: rgba(112, 0, 255, 0.25);
+            --danger-glow: rgba(255, 77, 79, 0.25);
+            --warning-glow: rgba(250, 173, 20, 0.2);
+            --success-glow: rgba(82, 196, 26, 0.2);
+            --cyber-blue: #00f2ff;
+            --cyber-purple: #9d4edd;
+            --cyber-violet: #7000ff;
+            --cyber-amber: #faad14;
+            --cyber-red: #ff4d4f;
+            --cyber-green: #52c41a;
+            --alice-color: #38bdf8;
+            --bob-color: #a78bfa;
+            --eve-color: #f87171;
+            --card-bg-subtle: rgba(18, 24, 38, 0.85);
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #080b12;
+            color: #dbe4ee;
+            line-height: 1.75;
+            background-image: 
+                radial-gradient(circle at 12% 18%, rgba(112, 0, 255, 0.09) 0%, transparent 42%),
+                radial-gradient(circle at 88% 72%, rgba(0, 242, 255, 0.08) 0%, transparent 46%);
+            background-attachment: fixed;
+        }
+
+        code, pre, .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 頂部徽章與標題 */
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.12) 0%, rgba(112, 0, 255, 0.2) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.35);
+            color: var(--cyber-blue);
+            padding: 0.4rem 1.25rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+        }
+
+        .header-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 15%, #9feaff 60%, #d8b4fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
+            margin-bottom: 0.9rem;
+        }
+
+        .header-desc {
+            font-size: 1.08rem;
+            color: #94a3b8;
+            max-width: 820px;
+            margin: 0 auto 1.4rem auto;
+            line-height: 1.7;
+        }
+
+        /* 核心摘要卡片 */
+        .hero-banner-card {
+            background: linear-gradient(135deg, rgba(16, 23, 38, 0.95) 0%, rgba(13, 17, 27, 0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.22);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-banner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple), var(--cyber-amber));
+        }
+
+        .golden-rule-quote {
+            background: rgba(0, 242, 255, 0.06);
+            border-left: 4px solid var(--cyber-blue);
+            border-radius: 0 16px 16px 0;
+            padding: 1.25rem 1.6rem;
+            margin: 1.2rem 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.8rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            padding: 1.3rem 1rem;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 242, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-number.blue { color: var(--cyber-blue); text-shadow: 0 0 16px var(--primary-glow); }
+        .stat-number.purple { color: #b77eff; text-shadow: 0 0 16px var(--secondary-glow); }
+        .stat-number.amber { color: var(--cyber-amber); text-shadow: 0 0 16px var(--warning-glow); }
+        .stat-number.green { color: var(--cyber-green); text-shadow: 0 0 16px var(--success-glow); }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        /* 區塊通用樣式 */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3.5rem 0 1.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .section-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-badge {
+            background: rgba(112, 0, 255, 0.15);
+            border: 1px solid rgba(112, 0, 255, 0.3);
+            color: #c084fc;
+            padding: 0.25rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        /* ================= 雙人傳訊互動實驗室 ================= */
+        .lab-container {
+            background: linear-gradient(135deg, rgba(20, 28, 48, 0.88) 0%, rgba(13, 18, 30, 0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.28);
+            border-radius: 24px;
+            padding: 2.2rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+        }
+
+        .lab-mode-tabs {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-tab-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 0.75rem 1.4rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-tab-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--cyber-blue);
+            color: #ffffff;
+        }
+
+        .mode-tab-btn.active {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.15) 0%, rgba(112, 0, 255, 0.2) 100%);
+            border-color: var(--cyber-blue);
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+        }
+
+        /* 傳訊演練舞台 */
+        .stage-box {
+            background: rgba(10, 13, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .actors-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 820px) {
+            .actors-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+        }
+
+        .actor-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .actor-card.alice {
+            border-top: 4px solid var(--alice-color);
+        }
+
+        .actor-card.bob {
+            border-top: 4px solid var(--bob-color);
+        }
+
+        .actor-card.eve {
+            border: 1px dashed rgba(248, 113, 113, 0.4);
+            background: rgba(248, 113, 113, 0.04);
+            border-radius: 14px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .actor-avatar {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .actor-name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        .actor-role {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .actor-keyring {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            padding: 0.6rem;
+            font-size: 0.8rem;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .key-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .key-tag.shared { background: rgba(250, 173, 20, 0.2); color: #ffd666; border: 1px solid rgba(250, 173, 20, 0.4); }
+        .key-tag.public { background: rgba(0, 242, 255, 0.15); color: #7fe8ff; border: 1px solid rgba(0, 242, 255, 0.35); }
+        .key-tag.private { background: rgba(255, 77, 79, 0.2); color: #ffa39e; border: 1px solid rgba(255, 77, 79, 0.4); }
+
+        /* 中間傳輸通道 */
+        .channel-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .channel-pipe {
+            width: 100%;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .packet-bubble {
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .packet-bubble.plain {
+            background: rgba(56, 189, 248, 0.25);
+            border: 1px solid var(--alice-color);
+            color: #e0f2fe;
+        }
+
+        .packet-bubble.cipher {
+            background: rgba(157, 78, 221, 0.3);
+            border: 1px solid var(--cyber-purple);
+            color: #f3e8ff;
+        }
+
+        .packet-bubble.signed {
+            background: rgba(82, 196, 26, 0.25);
+            border: 1px solid var(--cyber-green);
+            color: #dcfce7;
+        }
+
+        /* 步驟控制欄 */
+        .step-controller {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 14px;
+            padding: 1.2rem 1.6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .step-info-text {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .step-info-text strong {
+            color: var(--cyber-blue);
+        }
+
+        .action-btns-group {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn-step {
+            background: linear-gradient(135deg, var(--cyber-blue) 0%, #0099ff 100%);
+            color: #080b12;
+            font-weight: 800;
+            border: none;
+            padding: 0.65rem 1.3rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 242, 255, 0.3);
+        }
+
+        .btn-step:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 242, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.65rem 1.1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .btn-attack {
+            background: rgba(255, 77, 79, 0.18);
+            border: 1px solid var(--cyber-red);
+            color: #ffa39e;
+            padding: 0.65rem 1.1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-attack:hover {
+            background: rgba(255, 77, 79, 0.3);
+            color: #ffffff;
+        }
+
+        /* 動態反饋 Alert */
+        .stage-alert {
+            margin-top: 1.2rem;
+            padding: 1rem 1.4rem;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .stage-alert.info {
+            background: rgba(0, 242, 255, 0.08);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            color: #9feaff;
+        }
+
+        .stage-alert.danger {
+            background: rgba(255, 77, 79, 0.15);
+            border: 1px solid rgba(255, 77, 79, 0.4);
+            color: #ffa39e;
+        }
+
+        .stage-alert.success {
+            background: rgba(82, 196, 26, 0.15);
+            border: 1px solid rgba(82, 196, 26, 0.4);
+            color: #b7eb8f;
+        }
+
+        /* 規則與觀念卡片 */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.4rem;
+            margin: 1.8rem 0;
+        }
+
+        .concept-card {
+            background: var(--card-bg-subtle);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--cyber-blue);
+        }
+
+        .concept-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .concept-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .concept-desc {
+            font-size: 0.92rem;
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+
+        /* 核心機制比對表格 */
+        .comp-table-card {
+            background: var(--card-bg-subtle);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table.comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        table.comp-table th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+            padding: 1rem 1.2rem;
+            font-weight: 800;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+        }
+
+        table.comp-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            white-space: nowrap;
+        }
+
+        table.comp-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .tag-pill.speed { background: rgba(82, 196, 26, 0.2); color: #95de64; }
+        .tag-pill.slow { background: rgba(250, 173, 20, 0.2); color: #ffd666; }
+
+        /* HTTPS 混合加密三部曲 */
+        .https-flow-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.4rem;
+            margin: 2rem 0;
+        }
+
+        .https-step-card {
+            background: rgba(16, 24, 38, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.8rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .https-step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            right: 1.5rem;
+            height: 3px;
+            background: var(--cyber-blue);
+            opacity: 0.7;
+        }
+
+        .https-step-badge {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--cyber-blue);
+            margin-bottom: 0.6rem;
+        }
+
+        .https-step-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+        }
+
+        .https-step-desc {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+
+        /* Passkey & Challenge-Response 模擬器 */
+        .passkey-container {
+            background: linear-gradient(135deg, rgba(26, 18, 42, 0.85) 0%, rgba(13, 17, 30, 0.92) 100%);
+            border: 1px solid rgba(157, 78, 221, 0.35);
+            border-radius: 24px;
+            padding: 2.2rem;
+            margin: 2.5rem 0;
+        }
+
+        .passkey-flow-stepper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.8rem 0;
+        }
+
+        .pk-step-node {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.2rem;
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+
+        .pk-step-node.active {
+            border-color: var(--cyber-purple);
+            background: rgba(157, 78, 221, 0.15);
+            box-shadow: 0 0 18px rgba(157, 78, 221, 0.25);
+        }
+
+        .pk-step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pk-step-node.active .pk-step-num {
+            background: var(--cyber-purple);
+        }
+
+        .pk-step-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+        }
+
+        .pk-step-desc {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* 心智模型速記卡 */
+        .mental-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .mental-card {
+            background: rgba(15, 22, 36, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .mental-card:hover {
+            border-color: var(--cyber-blue);
+            transform: translateY(-4px);
+        }
+
+        .mental-card-num {
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: var(--cyber-blue);
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .mental-card-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .mental-card-desc {
+            font-size: 0.88rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* 現場互動按鈕與動畫 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse-border {
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
+            100% { box-shadow: 0 0 25px rgba(0, 242, 255, 0.6); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 頂部資訊與導航 -->
+        <header style="text-align: center; margin-bottom: 2rem;">
+            <div class="page-badge">
+                <span>🔐</span> 密碼學核心心智模型 • 現代安全架構
+            </div>
+            <h1 class="header-title">工程師的第一堂密碼學課</h1>
+            <p class="header-desc">
+                對稱、非對稱與現代安全架構深度剖析。<br>
+                打通 <strong>Public / Private Key</strong>、<strong>數位簽章</strong>、<strong>HTTPS 混合加密</strong> 與 <strong>Passkey 認證</strong> 的底層邏輯，建立紮實工程思維！
+            </p>
+            <p style="opacity: 0.5; font-size: 0.85rem;">發布日期：2026-09-16 • 閱讀時間約 9 分鐘 • 雙人傳訊互動演練版</p>
+        </header>
+
+        <nav>
+            <a href="../index.html">首頁 Home</a>
+            <a href="../search.html">公告檢索 Search</a>
+        </nav>
+
+        <!-- 核心心智模型總覽卡片 -->
+        <div class="hero-banner-card">
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>💡</span> 現代密碼學的核心靈魂
+            </h2>
+            <p style="color: #cbd5e1; font-size: 1.02rem; line-height: 1.8;">
+                許多工程師把加解密當成「黑魔法」，死記 API 卻不知其所以然。<br>
+                其實現代密碼學所有複雜協議（HTTPS、SSH、JWT、區塊鏈、WebAuthn），本質上都在玩兩件事：<strong>「開鎖（保密）」</strong> 與 <strong>「蓋章（防偽）」</strong>！
+            </p>
+
+            <div class="golden-rule-quote">
+                <span style="font-size: 1.6rem; filter: drop-shadow(0 0 8px var(--cyber-blue));">✨</span>
+                <div>
+                    密碼學工程師必備第一定律：<br>
+                    <strong style="color: var(--cyber-blue); font-size: 1.25rem;">「想傳秘密給誰，就用誰的公鑰鎖門；想證明是我發的，就用自己的私鑰蓋章。」</strong>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number blue">2 把</div>
+                    <div class="stat-label">非對稱神奇金鑰<br><span style="font-size: 0.75rem; opacity: 0.7;">（公鑰鎖門、私鑰開門）</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number purple">3 大</div>
+                    <div class="stat-label">數位簽章保證<br><span style="font-size: 0.75rem; opacity: 0.7;">（身分不可冒用、內容不可竄改、不可否認）</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number amber">Hybrid</div>
+                    <div class="stat-label">HTTPS 混合架構<br><span style="font-size: 0.75rem; opacity: 0.7;">（非對稱換金鑰 + 對稱式飆速度）</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number green">0 洩漏</div>
+                    <div class="stat-label">Passkey 本地晶片<br><span style="font-size: 0.75rem; opacity: 0.7;">（私鑰不出機、生物特徵不聯網）</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 雙人傳訊互動實驗室 ================= -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🧪</span> Alice 與 Bob 的加密傳訊實驗室
+            </div>
+            <div class="section-badge">一步一步視覺化體驗</div>
+        </div>
+
+        <p style="color: #94a3b8; margin-bottom: 1.2rem;">
+            密碼學最經典的兩位主角：<strong>Alice（發送端）</strong> 與 <strong>Bob（接收端）</strong>，以及潛伏在不安全網路上的竊聽者 <strong>Eve（駭客）</strong>。<br>
+            請切換下方 3 種模式，親自點擊「下一步」觀察訊息與金鑰如何在兩人之間流轉：
+        </p>
+
+        <div class="lab-container">
+            <!-- 模式切換按鈕 -->
+            <div class="lab-mode-tabs">
+                <button class="mode-tab-btn active" id="tabSymmetric" onclick="setLabMode('symmetric')">
+                    🔑 模式一：對稱式加密 (Symmetric)
+                </button>
+                <button class="mode-tab-btn" id="tabAsymEnc" onclick="setLabMode('asymEnc')">
+                    📫 模式二：非對稱加密・資料保密 (公鑰鎖門)
+                </button>
+                <button class="mode-tab-btn" id="tabAsymSign" onclick="setLabMode('asymSign')">
+                    ✍️ 模式三：非對稱加密・數位簽章 (私鑰蓋章)
+                </button>
+            </div>
+
+            <!-- 演練舞台 -->
+            <div class="stage-box">
+                <div class="actors-grid">
+                    <!-- Alice 卡片 -->
+                    <div class="actor-card alice" id="actorAlice">
+                        <div class="actor-avatar">👩‍💻</div>
+                        <div class="actor-name" style="color: var(--alice-color);">Alice (發送端)</div>
+                        <div class="actor-role">想送訊息給 Bob</div>
+                        <div class="actor-keyring" id="aliceKeyring">
+                            <span style="color: #94a3b8;">金鑰庫：</span>
+                            <span class="key-tag shared" id="aliceSharedKey">🔑 共享金鑰 K</span>
+                        </div>
+                        <div style="margin-top: 1rem; text-align: left; font-size: 0.85rem;">
+                            <span style="color: #94a3b8;">傳送內容：</span>
+                            <div id="aliceMessageText" style="background: rgba(0,0,0,0.3); padding: 0.4rem 0.6rem; border-radius: 6px; font-weight: 700; color: #ffffff; margin-top: 0.2rem;">
+                                "中午吃火鍋"
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 中間傳輸通道與 Eve -->
+                    <div class="channel-zone">
+                        <div style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 0.4rem;">🌐 不安全的公開網際網路 (Public Internet)</div>
+                        <div class="channel-pipe" id="channelPipe">
+                            <div class="packet-bubble plain" id="packetBubble">
+                                <span>✉️ 明文: 中午吃火鍋</span>
+                            </div>
+                        </div>
+
+                        <!-- 竊聽者 Eve -->
+                        <div class="actor-card eve" id="actorEve" style="width: 100%;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span style="font-size: 1.3rem;">🕵️‍♀️</span>
+                                <span style="font-weight: 800; color: var(--eve-color); font-size: 0.92rem;">Eve (中間人 / 網路監聽者)</span>
+                            </div>
+                            <div id="eveStatusText" style="font-size: 0.8rem; color: #fca5a5; margin-top: 0.3rem;">
+                                監聽狀態：已攔截到傳輸封包！
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bob 卡片 -->
+                    <div class="actor-card bob" id="actorBob">
+                        <div class="actor-avatar">👨‍💻</div>
+                        <div class="actor-name" style="color: var(--bob-color);">Bob (接收端)</div>
+                        <div class="actor-role">準備接收訊息</div>
+                        <div class="actor-keyring" id="bobKeyring">
+                            <span style="color: #94a3b8;">金鑰庫：</span>
+                            <span class="key-tag shared" id="bobSharedKey">🔑 共享金鑰 K</span>
+                        </div>
+                        <div style="margin-top: 1rem; text-align: left; font-size: 0.85rem;">
+                            <span style="color: #94a3b8;">Bob 解密解讀：</span>
+                            <div id="bobReceivedText" style="background: rgba(0,0,0,0.3); padding: 0.4rem 0.6rem; border-radius: 6px; font-weight: 700; color: #94a3b8; margin-top: 0.2rem;">
+                                (尚未收到)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 步驟解說與控制按鈕 -->
+                <div class="step-controller">
+                    <div class="step-info-text" id="stepExplanation">
+                        👉 請點擊「下一步」，開始體驗訊息傳送流程！
+                    </div>
+                    <div class="action-btns-group">
+                        <button class="btn-step" id="btnNextStep" onclick="handleNextStep()">下一步 ➔</button>
+                        <button class="btn-secondary" onclick="resetLab()">重置流程</button>
+                        <button class="btn-attack" id="btnAttackTest" onclick="handleAttackTest()" style="display: none;">💥 模擬攻擊</button>
+                    </div>
+                </div>
+
+                <!-- 動態提示 -->
+                <div id="stageAlertBox" class="stage-alert info" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 零、對稱式加密與其致命難題 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>0️⃣</span> 對稱式加密 (Symmetric)：效能王者與致命死穴
+            </div>
+            <div class="section-badge">經典但有痛點</div>
+        </div>
+
+        <div class="concept-grid">
+            <div class="concept-card">
+                <div class="concept-icon">⚡</div>
+                <div class="concept-title">運算極快 (硬體加速)</div>
+                <div class="concept-desc">
+                    加解密使用<strong>同一把金鑰 K</strong>。就像用同一把實體鑰匙鎖上門箱，收件人也必須拿同一把鑰匙開箱。<br>
+                    <strong>優勢：</strong> 運算效能極高，CPU 有專屬 AES-NI 硬體指令集，適合傳送海量串流、硬碟磁碟機加密 (BitLocker)、ZIP 壓縮檔加密。
+                </div>
+            </div>
+
+            <div class="concept-card" style="border-color: rgba(255, 77, 79, 0.3);">
+                <div class="concept-icon">💥</div>
+                <div class="concept-title" style="color: #ff7875;">痛點一：金鑰分發困境</div>
+                <div class="concept-desc">
+                    雙方通訊前，必須先共享這把金鑰。<br>
+                    但問題來了：<strong>在充滿駭客監聽的公開網路上，你怎麼把第一把金鑰安全寄給對方？</strong> 若把金鑰直接傳過去被截獲，後續加密全數形同虛設！
+                </div>
+            </div>
+
+            <div class="concept-card" style="border-color: rgba(250, 173, 20, 0.3);">
+                <div class="concept-icon">📈</div>
+                <div class="concept-title" style="color: #ffd666;">痛點二：管理成本爆炸</div>
+                <div class="concept-desc">
+                    若系統中有 $N$ 個人彼此要獨立安全通訊，總共需要維護：<br>
+                    <code style="color: var(--cyber-blue); font-size: 1.1rem;">N × (N - 1) ÷ 2</code> 把獨立金鑰。<br>
+                    全公司如果有 1,000 人，就需要維護 <strong>499,500 把金鑰</strong>，金鑰管理成本直接失控爆炸！
+                </div>
+            </div>
+        </div>
+
+        <!-- 一、非對稱加密的魔法：成對雙金鑰 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>1️⃣</span> 非對稱加密 (Asymmetric)：成對雙金鑰的魔法
+            </div>
+            <div class="section-badge">數學劃時代突破</div>
+        </div>
+
+        <p style="color: #cbd5e1;">
+            非對稱加密徹底解決了金鑰分發難題。它使用一對數學上緊密綁定、功能互補的<strong>雙金鑰（Public Key & Private Key）</strong>：
+        </p>
+
+        <div class="concept-grid">
+            <div class="concept-card" style="border-top: 4px solid var(--cyber-blue);">
+                <div class="concept-icon">🌐</div>
+                <div class="concept-title" style="color: var(--cyber-blue);">Public Key (公鑰)</div>
+                <div class="concept-desc">
+                    <strong>公開給全世界：</strong> 任何人都可以自由取得並儲存你的公鑰，就像印在名片上的電子郵件或統編一樣，完全無需保密！<br><br>
+                    <strong>扮演的兩大角色：</strong>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; line-height: 1.8;">
+                        <li><strong>公開的鎖頭：</strong> 想寄悄悄話給你的人，用它把訊息鎖起來。</li>
+                        <li><strong>公開的驗章機：</strong> 任何人都能拿它驗證你的簽名是否真確。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="concept-card" style="border-top: 4px solid var(--cyber-red);">
+                <div class="concept-icon">🔒</div>
+                <div class="concept-title" style="color: #ff7875;">Private Key (私鑰)</div>
+                <div class="concept-desc">
+                    <strong>嚴格保密，僅限本人：</strong> 存放於伺服器嚴格隔離區或手機安全晶片 (Secure Enclave)，<strong>誓死不可外洩</strong>！<br><br>
+                    <strong>扮演的兩大角色：</strong>
+                    <ul style="padding-left: 1.2rem; margin-top: 0.5rem; line-height: 1.8;">
+                        <li><strong>唯一的開鎖鑰匙：</strong> 只有你能解開別人用你公鑰加密的密文。</li>
+                        <li><strong>專屬防偽印章：</strong> 只有你能蓋出對應公鑰可驗證的數位簽章。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心機制一與二對比 -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0;">
+            <div style="background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.25); border-radius: 16px; padding: 1.6rem;">
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--cyber-blue); margin-bottom: 0.6rem;">
+                    🎯 核心機制一：資料保密 (Encryption)
+                </h3>
+                <div style="font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">口訣：公鑰鎖門，私鑰開門</div>
+                <p style="font-size: 0.9rem; color: #94a3b8; line-height: 1.7;">
+                    <strong>情境：</strong> 你想傳「秘密密碼」給小美。<br>
+                    <strong>流程：</strong> 向小美索取她的 Public Key，在自己電腦把明文鎖成亂碼送出。小美收到後，用她手上的 Private Key 開鎖還原。<br>
+                    <strong>關鍵：</strong> 想傳給誰看，就用<strong>誰的公鑰鎖門</strong>！路上即使封包被竊聽，沒有小美的私鑰就只是無解天書。
+                </p>
+            </div>
+
+            <div style="background: rgba(112, 0, 255, 0.05); border: 1px solid rgba(112, 0, 255, 0.25); border-radius: 16px; padding: 1.6rem;">
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: #d8b4fe; margin-bottom: 0.6rem;">
+                    🔏 核心機制二：身分證明 (Digital Signature)
+                </h3>
+                <div style="font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">口訣：私鑰蓋章，公鑰驗章</div>
+                <p style="font-size: 0.9rem; color: #94a3b8; line-height: 1.7;">
+                    <strong>目的：</strong> 證明「這段話真的是我發的，且中途未被篡改」。<br>
+                    <strong>三大保證：</strong>
+                    <ol style="padding-left: 1.2rem; margin-top: 0.4rem; line-height: 1.6;">
+                        <li><strong>身分不可冒用：</strong> 全世界只有你有私鑰，唯你能產出合法簽章。</li>
+                        <li><strong>內容不可竄改：</strong> 傳輸中改動一個字元，公鑰驗證必然失敗。</li>
+                        <li><strong>事後不可否認 (Non-repudiation)：</strong> 無法狡辯「訊息不是我發的」。</li>
+                    </ol>
+                </p>
+            </div>
+        </div>
+
+        <!-- 三種密碼學機制核心特徵比對表 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>📊</span> 三種密碼學機制核心特徵比對表
+            </div>
+            <div class="section-badge">工程面試精華</div>
+        </div>
+
+        <div class="comp-table-card">
+            <div class="table-responsive">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th>機制維度</th>
+                            <th>對稱式加密</th>
+                            <th>非對稱加密（保密）</th>
+                            <th>非對稱加密（數位簽章）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>金鑰配置</strong></td>
+                            <td>單一共享金鑰（1 把）</td>
+                            <td>公鑰 + 私鑰（2 把）</td>
+                            <td>公鑰 + 私鑰（2 把）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>主要目的</strong></td>
+                            <td>大量資料保密傳輸</td>
+                            <td>解決金鑰交換與保密</td>
+                            <td>驗證身分真實性與防竄改</td>
+                        </tr>
+                        <tr>
+                            <td><strong>發送端動作</strong></td>
+                            <td>用共享金鑰加密</td>
+                            <td>用<strong>接收方公鑰</strong>加密</td>
+                            <td>用<strong>發送方私鑰</strong>蓋章</td>
+                        </tr>
+                        <tr>
+                            <td><strong>接收端動作</strong></td>
+                            <td>用同把金鑰解密</td>
+                            <td>用<strong>接收方私鑰</strong>解密</td>
+                            <td>用<strong>發送方公鑰</strong>驗證</td>
+                        </tr>
+                        <tr>
+                            <td><strong>運算效能</strong></td>
+                            <td><span class="tag-pill speed">極快 (硬體加速)</span></td>
+                            <td><span class="tag-pill slow">慢 (約慢千倍)</span></td>
+                            <td><span class="tag-pill slow">慢 (實務先算 Hash)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>記憶口訣</strong></td>
+                            <td>同一把鑰匙鎖門開門</td>
+                            <td><strong style="color: var(--cyber-blue);">公鑰鎖門、私鑰開門</strong></td>
+                            <td><strong style="color: #c084fc;">私鑰蓋章、公鑰驗章</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 現代 HTTPS 的智慧：混合加密架構 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🌐</span> 現代 HTTPS 的智慧：混合加密架構 (Hybrid)
+            </div>
+            <div class="section-badge">兩全其美設計</div>
+        </div>
+
+        <p style="color: #cbd5e1;">
+            對稱加密極快但難換金鑰；非對稱加密能安全換金鑰但運算慢千倍。那現代網際網路（HTTPS、TLS 1.3）怎麼做？<br>
+            答案是：<strong>成年人不做選擇，全都要！這就是「混合加密架構」：</strong>
+        </p>
+
+        <div class="https-flow-container">
+            <div class="https-step-card">
+                <div class="https-step-badge">STAGE 1 • 簽章防偽</div>
+                <div class="https-step-title">1. 驗證身分 (數位簽章)</div>
+                <div class="https-step-desc">
+                    瀏覽器連線到伺服器時，伺服器出示由權威 <strong>CA 憑證機構私鑰簽署</strong> 的 SSL 憑證。<br>
+                    瀏覽器用內建的 CA 公鑰驗證簽章，百分之百確認：「我連到的是真正的 google.com，不是中間人釣魚伺服器！」
+                </div>
+            </div>
+
+            <div class="https-step-card">
+                <div class="https-step-badge">STAGE 2 • 非對稱破局</div>
+                <div class="https-step-title">2. 交換金鑰 (非對稱)</div>
+                <div class="https-step-desc">
+                    雙方利用非對稱加密（或 Diffie-Hellman 橢圓曲線金鑰協商 ECDHE），在處處被監聽的公開網路上，安全協商出一組臨時且隨機的 <strong>「Session Key 對稱金鑰」</strong>！
+                </div>
+            </div>
+
+            <div class="https-step-card">
+                <div class="https-step-badge">STAGE 3 • 對稱式狂飆</div>
+                <div class="https-step-title">3. 高速傳輸 (對稱加密)</div>
+                <div class="https-step-desc">
+                    連線安全建立後，後續龐大的 HTML、圖片、影音串流及 JSON API 傳輸，全數改用 <strong>AES-GCM / ChaCha20 對稱加密</strong> 狂飆，兼顧資安防護與毫秒級超低延遲！
+                </div>
+            </div>
+        </div>
+
+        <!-- Passkey / Face ID 到底在驗證什麼？ -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🔑</span> Passkey / Face ID 到底在驗證什麼？
+            </div>
+            <div class="section-badge">WebAuthn 革命</div>
+        </div>
+
+        <div class="passkey-container">
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-bottom: 0.6rem;">
+                🚨 大眾常見誤解：「Face ID 把我的臉部照片傳給伺服器進行比對？」
+            </h3>
+            <p style="color: #ff7875; font-size: 1.1rem; font-weight: 900; margin-bottom: 1.2rem;">
+                👉 絕對不是！伺服器連你一根睫毛的資料都沒拿到！
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-bottom: 2rem;">
+                <div style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border-left: 3px solid var(--cyber-blue);">
+                    <div style="font-weight: 800; color: #ffffff; margin-bottom: 0.3rem;">1. 生物辨識僅限本地：</div>
+                    <p style="font-size: 0.88rem; color: #94a3b8;">Face ID / 指紋只用於在手機本地解鎖專屬硬體安全晶片 (Secure Enclave)。</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border-left: 3px solid var(--cyber-purple);">
+                    <div style="font-weight: 800; color: #ffffff; margin-bottom: 0.3rem;">2. 私鑰永不出機：</div>
+                    <p style="font-size: 0.88rem; color: #94a3b8;">解鎖後，安全晶片動用儲存於晶片內的 Private Key 對伺服器的挑戰題目進行簽署。</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border-left: 3px solid var(--cyber-green);">
+                    <div style="font-weight: 800; color: #ffffff; margin-bottom: 0.3rem;">3. 零個資洩漏風險：</div>
+                    <p style="font-size: 0.88rem; color: #94a3b8;">伺服器只保管你註冊時上傳的 Public Key，驗章通過即登入。就算伺服器被駭客拖庫，也偷不到你的生物特徵！</p>
+                </div>
+            </div>
+
+            <!-- Challenge-Response 模擬器 -->
+            <div style="background: rgba(10, 13, 20, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 1.8rem;">
+                <h4 style="color: var(--cyber-purple); font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem;">
+                    🛡️ Challenge-Response（挑戰-應答）：徹底防範重播攻擊 (Replay Attack)
+                </h4>
+                <p style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 1.2rem;">
+                    如果駭客在網路上把你登入時傳送的「簽章封包」錄下來，直接重發一遍（重播攻擊），能不能偷偷登入？<br>
+                    <strong>答案是：絕不可能！因為伺服器每一次出的題目（Nonce）都是隨機且單次有效的！</strong>
+                </p>
+
+                <div class="passkey-flow-stepper">
+                    <div class="pk-step-node" id="pkNode1">
+                        <div class="pk-step-num">1</div>
+                        <div class="pk-step-title">用戶發起請求</div>
+                        <div class="pk-step-desc">「我是王大明，想登入帳戶」</div>
+                    </div>
+                    <div class="pk-step-node" id="pkNode2">
+                        <div class="pk-step-num">2</div>
+                        <div class="pk-step-title">隨機挑戰題目</div>
+                        <div class="pk-step-desc">伺服器發送單次隨機亂數 Nonce: <code style="color: var(--cyber-blue);" id="dispNonce">ABC-9812</code></div>
+                    </div>
+                    <div class="pk-step-node" id="pkNode3">
+                        <div class="pk-step-num">3</div>
+                        <div class="pk-step-title">本地私鑰簽章</div>
+                        <div class="pk-step-desc">Face ID 解鎖晶片，以 Private Key 對 Nonce 計算 Signature</div>
+                    </div>
+                    <div class="pk-step-node" id="pkNode4">
+                        <div class="pk-step-num">4</div>
+                        <div class="pk-step-title">公鑰驗證放行</div>
+                        <div class="pk-step-desc">伺服器拿 Public Key 驗章通過，銷毀 Nonce</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1rem;">
+                    <button class="btn-step" onclick="runPasskeySimulation()">▶ 執行一次完整的 Passkey 登入</button>
+                    <button class="btn-attack" onclick="simulateReplayAttack()">💥 駭客嘗試重播剛才的封包</button>
+                </div>
+                <div id="pkAlertBox" class="stage-alert" style="display: none; margin-top: 1rem;"></div>
+            </div>
+        </div>
+
+        <!-- 工程師必背的五句密碼學心智模型 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🧠</span> 工程師必背的五句密碼學心智模型
+            </div>
+            <div class="section-badge">一輩子受用架構記憶</div>
+        </div>
+
+        <div class="mental-grid">
+            <div class="mental-card">
+                <div class="mental-card-num">MODEL 01</div>
+                <div class="mental-card-title" style="color: var(--cyber-blue);">對稱加密效能王者</div>
+                <div class="mental-card-desc">同一把鑰匙鎖門開門，適合海量資料傳輸，但必須解決鑰匙怎麼給對方的致命難題。</div>
+            </div>
+
+            <div class="mental-card">
+                <div class="mental-card-num">MODEL 02</div>
+                <div class="mental-card-title" style="color: #ff7875;">公鑰可公諸於世，私鑰誓死自己留</div>
+                <div class="mental-card-desc">私鑰只要離開設備或被儲存到雲端資料庫，整個密碼學信任鏈立刻瓦解。</div>
+            </div>
+
+            <div class="mental-card">
+                <div class="mental-card-num">MODEL 03</div>
+                <div class="mental-card-title" style="color: var(--cyber-amber);">公鑰鎖門 (加密)，私鑰開門 (解密)</div>
+                <div class="mental-card-desc">想傳秘密給誰，就拿誰的 Public Key 鎖門，全世界只有擁有該私鑰的本人打得開。</div>
+            </div>
+
+            <div class="mental-card">
+                <div class="mental-card-num">MODEL 04</div>
+                <div class="mental-card-title" style="color: #d8b4fe;">私鑰蓋章 (簽名)，公鑰驗章 (驗身分)</div>
+                <div class="mental-card-desc">想向全世界證明是我發出的指令，就拿自己的 Private Key 蓋章，任何人都能用公鑰驗證真偽。</div>
+            </div>
+
+            <div class="mental-card">
+                <div class="mental-card-num">MODEL 05</div>
+                <div class="mental-card-title" style="color: var(--cyber-green);">實戰永遠是混合架構 (Hybrid)</div>
+                <div class="mental-card-desc">HTTPS 與 SSH 先用非對稱驗證身分與安全換金鑰，再用對稱加密狂飆速度傳輸。</div>
+            </div>
+        </div>
+
+        <!-- 建立穩健的系統資安視野 -->
+        <div style="background: linear-gradient(135deg, rgba(0, 242, 255, 0.08) 0%, rgba(112, 0, 255, 0.12) 100%); border: 1px solid rgba(0, 242, 255, 0.3); border-radius: 20px; padding: 2.2rem; text-align: center; margin: 3rem 0;">
+            <h2 style="font-size: 1.6rem; font-weight: 900; color: #ffffff; margin-bottom: 0.6rem;">
+                🛡️ 建立穩健的系統資安視野
+            </h2>
+            <p style="color: #cbd5e1; max-width: 700px; margin: 0 auto 1.5rem auto; line-height: 1.8;">
+                掌握公私鑰的兩大超能力（<strong>開鎖與蓋章</strong>），現代密碼學所有核心技術與協定都將迎刃而解：
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <span class="key-tag public" style="font-size: 0.9rem; padding: 0.4rem 1rem;">🛡️ Identity & Auth (身分與驗證)</span>
+                <span class="key-tag shared" style="font-size: 0.9rem; padding: 0.4rem 1rem;">🔒 Data Confidentiality (資料保密)</span>
+                <span class="key-tag private" style="font-size: 0.9rem; padding: 0.4rem 1rem;">✔️ Non-Repudiation (不可否認性)</span>
+            </div>
+            <p style="margin-top: 1.2rem; font-size: 0.88rem; color: #94a3b8;">
+                無論是設定 <code>~/.ssh/id_rsa.pub</code>、驗證 JWT RS256 簽名、還是開發 WebAuthn Passkey，底層全都是這套永恆不變的優雅邏輯！
+            </p>
+        </div>
+    </div>
+
+    <!-- 腳本邏輯 -->
+    <script>
+        // 實驗室狀態
+        const labState = {
+            mode: 'symmetric', // 'symmetric', 'asymEnc', 'asymSign'
+            step: 0,
+            tampered: false,
+            keyStolen: false
+        };
+
+        function setLabMode(mode) {
+            labState.mode = mode;
+            labState.step = 0;
+            labState.tampered = false;
+            labState.keyStolen = false;
+
+            // 更新按鈕樣式
+            document.querySelectorAll('.mode-tab-btn').forEach(btn => btn.classList.remove('active'));
+            if (mode === 'symmetric') document.getElementById('tabSymmetric').classList.add('active');
+            if (mode === 'asymEnc') document.getElementById('tabAsymEnc').classList.add('active');
+            if (mode === 'asymSign') document.getElementById('tabAsymSign').classList.add('active');
+
+            // 更新介面元素
+            updateLabUI();
+        }
+
+        function updateLabUI() {
+            const aliceKeyring = document.getElementById('aliceKeyring');
+            const bobKeyring = document.getElementById('bobKeyring');
+            const btnAttack = document.getElementById('btnAttackTest');
+            const alertBox = document.getElementById('stageAlertBox');
+            alertBox.style.display = 'none';
+
+            if (labState.mode === 'symmetric') {
+                aliceKeyring.innerHTML = `
+                    <span style="color: #94a3b8;">金鑰庫：</span>
+                    <span class="key-tag shared">🔑 共享金鑰 K</span>
+                `;
+                bobKeyring.innerHTML = `
+                    <span style="color: #94a3b8;">金鑰庫：</span>
+                    <span class="key-tag shared">🔑 共享金鑰 K</span>
+                `;
+                btnAttack.style.display = 'inline-block';
+                btnAttack.innerText = '💥 模擬駭客在網路上截獲金鑰 K';
+            } else if (labState.mode === 'asymEnc') {
+                aliceKeyring.innerHTML = `
+                    <span style="color: #94a3b8;">金鑰庫：</span>
+                    <span class="key-tag public">🌐 Bob 的公鑰 (鎖門用)</span>
+                `;
+                bobKeyring.innerHTML = `
+                    <span style="color: #94a3b8;">金鑰庫：</span>
+                    <span class="key-tag public">🌐 Bob 的公鑰 (公開)</span>
+                    <span class="key-tag private">🔒 Bob 的私鑰 (開鎖用)</span>
+                `;
+                btnAttack.style.display = 'none';
+            } else if (labState.mode === 'asymSign') {
+                aliceKeyring.innerHTML = `
+                    <span style="color: #94a3b8;">金鑰庫：</span>
+                    <span class="key-tag private">🔒 Alice 的私鑰 (蓋章用)</span>
+                    <span class="key-tag public">🌐 Alice 的公鑰 (公開)</span>
+                `;
+                bobKeyring.innerHTML = `
+                    <span style="color: #94a3b8;">金鑰庫：</span>
+                    <span class="key-tag public">🌐 Alice 的公鑰 (驗章用)</span>
+                `;
+                btnAttack.style.display = 'inline-block';
+                btnAttack.innerText = '💥 模擬駭客竄改公文內容';
+            }
+
+            renderStep();
+        }
+
+        function renderStep() {
+            const exp = document.getElementById('stepExplanation');
+            const bubble = document.getElementById('packetBubble');
+            const eveText = document.getElementById('eveStatusText');
+            const bobRec = document.getElementById('bobReceivedText');
+            const alertBox = document.getElementById('stageAlertBox');
+
+            if (labState.mode === 'symmetric') {
+                if (labState.step === 0) {
+                    exp.innerHTML = `👉 <strong>步驟 1/4</strong>：Alice 想傳送「中午吃火鍋」給 Bob。雙方手中必須已經擁有一模一樣的 <strong>共享金鑰 K</strong>。`;
+                    bubble.className = 'packet-bubble plain';
+                    bubble.innerHTML = `<span>✉️ 明文: 中午吃火鍋</span>`;
+                    eveText.innerText = `監聽狀態：等待封包通過網際網路...`;
+                    bobRec.innerText = `(等待接收)`;
+                } else if (labState.step === 1) {
+                    exp.innerHTML = `👉 <strong>步驟 2/4</strong>：Alice 用金鑰 K 把訊息鎖進密文保險箱（AES-256 加密完成）。明文轉化為不可讀之十六進位亂碼！`;
+                    bubble.className = 'packet-bubble cipher';
+                    bubble.innerHTML = `<span>🔒 密文: 7a8f9c...</span>`;
+                    eveText.innerText = `監聽狀態：攔截到亂碼 [7a8f9c...]，無金鑰完全看不懂！`;
+                    bobRec.innerText = `(等待接收)`;
+                } else if (labState.step === 2) {
+                    exp.innerHTML = `👉 <strong>步驟 3/4</strong>：密文封包在公開網路上傳播，抵達 Bob 的主機！`;
+                    bubble.className = 'packet-bubble cipher pulse-border';
+                    bubble.innerHTML = `<span>🔒 抵達 Bob 終端: 7a8f9c...</span>`;
+                    eveText.innerText = `監聽狀態：封包已通往 Bob，若沒偷到金鑰 K，Eve 只能乾瞪眼。`;
+                    bobRec.innerText = `[已收到密文 7a8f9c...]`;
+                } else if (labState.step === 3) {
+                    exp.innerHTML = `🎉 <strong>步驟 4/4 完成</strong>：Bob 拿出手中同一把金鑰 K，成功解密開門，完美還原明文！`;
+                    bubble.className = 'packet-bubble plain';
+                    bubble.innerHTML = `<span>🔓 解密還原: 中午吃火鍋</span>`;
+                    bobRec.innerText = `"中午吃火鍋" (解密成功！)`;
+                    bobRec.style.color = '#52c41a';
+                }
+            } else if (labState.mode === 'asymEnc') {
+                if (labState.step === 0) {
+                    exp.innerHTML = `👉 <strong>步驟 1/4</strong>：Bob 生成成對雙金鑰，並將 <strong>Bob 公鑰</strong> 堂堂正正公佈在網站上，Alice 自由取得該公鑰。`;
+                    bubble.className = 'packet-bubble plain';
+                    bubble.innerHTML = `<span>✉️ 明文合約: 轉帳 100 萬</span>`;
+                    eveText.innerText = `監聽狀態：Eve 也能輕易取得 Bob 的公鑰，但公鑰只能鎖門，不能開門！`;
+                    bobRec.innerText = `(等待接收)`;
+                } else if (labState.step === 1) {
+                    exp.innerHTML = `👉 <strong>步驟 2/4</strong>：Alice 想傳機密給 Bob，因此拿起 <strong>Bob 的公鑰</strong> 鎖門，將訊息加密為亂碼！`;
+                    bubble.className = 'packet-bubble cipher';
+                    bubble.innerHTML = `<span>🔒 經 Bob 公鑰鎖門: d41d8c...</span>`;
+                    eveText.innerText = `監聽狀態：攔截到密文，但 Eve 手中沒有 Bob 私鑰，就算有公鑰也解不開！`;
+                } else if (labState.step === 2) {
+                    exp.innerHTML = `👉 <strong>步驟 3/4</strong>：密文穿過網際網路抵達 Bob 手中。即使路上任何人抄走封包，也只是一堆無解亂數。`;
+                    bubble.className = 'packet-bubble cipher pulse-border';
+                    bobRec.innerText = `[已收到密文 d41d8c...]`;
+                } else if (labState.step === 3) {
+                    exp.innerHTML = `🎉 <strong>步驟 4/4 完成</strong>：Bob 動用全世界唯一藏在自己硬體安全晶片中的 <strong>Bob 私鑰</strong> 轉動開鎖，還原明文！`;
+                    bubble.className = 'packet-bubble plain';
+                    bubble.innerHTML = `<span>🔓 經 Bob 私鑰解開: 轉帳 100 萬</span>`;
+                    bobRec.innerText = `"轉帳 100 萬" (解密成功！)`;
+                    bobRec.style.color = '#52c41a';
+                }
+            } else if (labState.mode === 'asymSign') {
+                if (labState.step === 0) {
+                    exp.innerHTML = `👉 <strong>步驟 1/4</strong>：Alice 打算向全校發布官方公文「明天全校放假」。Alice 必須證明這是校長親簽，絕非偽造！`;
+                    bubble.className = 'packet-bubble plain';
+                    bubble.innerHTML = `<span>📜 公文: 明天全校放假</span>`;
+                    eveText.innerText = `監聽狀態：公文不需要保密，但需要防偽防竄改。`;
+                    bobRec.innerText = `(等待公文)`;
+                } else if (labState.step === 1) {
+                    exp.innerHTML = `👉 <strong>步驟 2/4</strong>：Alice 用自己誓死保密的 <strong>Alice 私鑰</strong>，對公文計算出專屬防偽印章（數位簽章 Signature: <code>0x9F3A...</code>）。`;
+                    bubble.className = 'packet-bubble signed';
+                    bubble.innerHTML = `<span>📜 公文 + 🔏 私鑰數位簽章</span>`;
+                    eveText.innerText = `監聽狀態：看到公文內容與簽章。此時 Eve 可嘗試竄改公文內容！`;
+                } else if (labState.step === 2) {
+                    exp.innerHTML = `👉 <strong>步驟 3/4</strong>：「原始公文 + 數位簽章」一同發送到公開網路上，傳遞給 Bob。`;
+                    bubble.className = 'packet-bubble signed pulse-border';
+                    bobRec.innerText = `[已收到公文與簽章，待驗章]`;
+                } else if (labState.step === 3) {
+                    if (labState.tampered) {
+                        exp.innerHTML = `🚨 <strong>步驟 4/4 警報</strong>：Bob 拿出公開的 <strong>Alice 公鑰</strong> 進行數學逆向驗算，發現簽章與內容完全對不上！`;
+                        bubble.className = 'packet-bubble plain';
+                        bubble.style.border = '2px solid #ff4d4f';
+                        bubble.innerHTML = `<span>❌ 內容遭竄改！數學驗證失敗！</span>`;
+                        bobRec.innerText = `驗證失敗：拒絕採信！`;
+                        bobRec.style.color = '#ff4d4f';
+                        alertBox.className = 'stage-alert danger';
+                        alertBox.innerHTML = `💥 <strong>抓到了！</strong> 數位簽章具備「內容不可竄改性」，哪怕駭客只竄改了一個逗號或數字，公鑰數學驗證立刻爆出異常！`;
+                        alertBox.style.display = 'block';
+                    } else {
+                        exp.innerHTML = `🎉 <strong>步驟 4/4 驗章通過</strong>：Bob 拿出 <strong>Alice 公鑰</strong> 驗章，完美吻合！百分之百確信是 Alice 本人親簽且中途一字未改！`;
+                        bubble.className = 'packet-bubble signed';
+                        bubble.innerHTML = `<span>✔️ 驗章成功！身分屬實無誤</span>`;
+                        bobRec.innerText = `"明天全校放假" (正版公文驗證通過)`;
+                        bobRec.style.color = '#52c41a';
+                        alertBox.className = 'stage-alert success';
+                        alertBox.innerHTML = `🏆 <strong>達成密碼學三大保證：</strong> 身分不可冒用、內容不可竄改、事後不可否認！`;
+                        alertBox.style.display = 'block';
+                    }
+                }
+            }
+        }
+
+        function handleNextStep() {
+            labState.step = (labState.step + 1) % 4;
+            renderStep();
+        }
+
+        function resetLab() {
+            labState.step = 0;
+            labState.tampered = false;
+            labState.keyStolen = false;
+            const bobRec = document.getElementById('bobReceivedText');
+            bobRec.style.color = '#94a3b8';
+            renderStep();
+        }
+
+        function handleAttackTest() {
+            const alertBox = document.getElementById('stageAlertBox');
+            if (labState.mode === 'symmetric') {
+                labState.keyStolen = true;
+                alertBox.className = 'stage-alert danger';
+                alertBox.innerHTML = `💥 <strong>金鑰分發災難發生！</strong> 駭客 Eve 在 Alice 第一次寄送金鑰 K 給 Bob 時攔截到了金鑰！現在 Eve 能同步解密後續所有密文，對稱加密防線徹底崩潰！這就是為什麼需要非對稱加密的原因！`;
+                alertBox.style.display = 'block';
+            } else if (labState.mode === 'asymSign') {
+                labState.tampered = true;
+                labState.step = 3;
+                document.getElementById('aliceMessageText').innerText = '"明天全校放假"';
+                document.getElementById('eveStatusText').innerHTML = `<span style="color: #ff4d4f; font-weight: 800;">Eve 偷偷把公文改成「明天早上期末考」！</span>`;
+                renderStep();
+            }
+        }
+
+        // Passkey 模擬邏輯
+        function runPasskeySimulation() {
+            const alertBox = document.getElementById('pkAlertBox');
+            const nodes = [
+                document.getElementById('pkNode1'),
+                document.getElementById('pkNode2'),
+                document.getElementById('pkNode3'),
+                document.getElementById('pkNode4')
+            ];
+
+            nodes.forEach(n => n.classList.remove('active'));
+
+            // 隨機產生 Nonce
+            const randomNonce = 'NONCE-' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('dispNonce').innerText = randomNonce;
+
+            nodes[0].classList.add('active');
+            setTimeout(() => {
+                nodes[1].classList.add('active');
+            }, 400);
+            setTimeout(() => {
+                nodes[2].classList.add('active');
+            }, 800);
+            setTimeout(() => {
+                nodes[3].classList.add('active');
+                alertBox.className = 'stage-alert success';
+                alertBox.innerHTML = `🎉 <strong>Passkey 登入成功！</strong><br>伺服器以公開的 Public Key 驗證了安全晶片對題目 [${randomNonce}] 的簽章，瞬間完成登入！伺服器未曾接收任何密碼或人臉特徵！`;
+                alertBox.style.display = 'block';
+            }, 1200);
+        }
+
+        function simulateReplayAttack() {
+            const alertBox = document.getElementById('pkAlertBox');
+            alertBox.className = 'stage-alert danger';
+            alertBox.innerHTML = `🚫 <strong>重播攻擊 (Replay Attack) 攔截失敗！</strong><br>伺服器回應：<code>HTTP 401 Unauthorized - Nonce expired / Invalid challenge</code>！<br>
+            因為伺服器每回合隨機出的題目用過即焚！駭客就算錄下了剛才的簽章封包重發一次，題目早已失效，駭客無法登入！`;
+            alertBox.style.display = 'block';
+        }
+
+        // 初始化
+        updateLabUI();
+    </script>
+</body>
+</html>

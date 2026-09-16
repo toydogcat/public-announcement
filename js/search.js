@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "工程師的第一堂密碼學課：對稱、非對稱與現代安全架構",
+        date: "2026-09-16",
+        path: "announcements/b7f4k9m2.html",
+        preview: "打通 Public/Private Key、數位簽章、HTTPS 混合加密與 Passkey 認證的底層邏輯。內附 Alice & Bob 雙人加密傳訊互動實驗室、HTTPS 握手解析與防重播挑戰應答模擬器。"
+    },
+    {
         title: "資料庫正規化完全指南：從 1NF 到 BCNF 的視覺化拆解與實戰心法",
         date: "2026-09-13",
         path: "announcements/n8f4k2w7.html",
