@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "把 LLM 當成 if/else 來用：TypeSafe AI (Jev) 與全新 System One 架構全解析",
+        date: "2026-09-17",
+        path: "announcements/j5v2k9r4.html",
+        preview: "ChatGPT 共同發明人打造的 System One 快思考 AI！零文字生成、零解析錯誤。深度解析 Noul/Choice/Score 3 個 AI Primitives、AI 客服監考官風控場景與 RAG 三層協同架構。"
+    },
+    {
         title: "工程師的第一堂密碼學課：對稱、非對稱與現代安全架構",
         date: "2026-09-16",
         path: "announcements/b7f4k9m2.html",

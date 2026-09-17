@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>把 LLM 當成 if/else 來用：TypeSafe AI (Jev) 與全新 System One 架構全解析</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: rgba(0, 242, 255, 0.22);
+            --secondary-glow: rgba(112, 0, 255, 0.25);
+            --danger-glow: rgba(255, 77, 79, 0.25);
+            --warning-glow: rgba(250, 173, 20, 0.2);
+            --success-glow: rgba(82, 196, 26, 0.2);
+            --cyber-blue: #00f2ff;
+            --cyber-purple: #9d4edd;
+            --cyber-violet: #7000ff;
+            --cyber-amber: #faad14;
+            --cyber-red: #ff4d4f;
+            --cyber-green: #52c41a;
+            --card-bg-subtle: rgba(18, 24, 38, 0.85);
+            --code-bg: #0d121d;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #080b12;
+            color: #dbe4ee;
+            line-height: 1.75;
+            background-image: 
+                radial-gradient(circle at 14% 16%, rgba(0, 242, 255, 0.08) 0%, transparent 42%),
+                radial-gradient(circle at 86% 68%, rgba(112, 0, 255, 0.09) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        code, pre, .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 頂部徽章與標題 */
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.14) 0%, rgba(112, 0, 255, 0.22) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.35);
+            color: var(--cyber-blue);
+            padding: 0.4rem 1.25rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+        }
+
+        .header-title {
+            font-size: 2.35rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 15%, #9feaff 60%, #cfabff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.3;
+            margin-bottom: 0.9rem;
+        }
+
+        .header-desc {
+            font-size: 1.08rem;
+            color: #94a3b8;
+            max-width: 820px;
+            margin: 0 auto 1.4rem auto;
+            line-height: 1.7;
+        }
+
+        /* 核心摘要卡片 */
+        .hero-banner-card {
+            background: linear-gradient(135deg, rgba(16, 23, 38, 0.95) 0%, rgba(13, 17, 27, 0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.22);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-banner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple), var(--cyber-green));
+        }
+
+        .golden-rule-quote {
+            background: rgba(0, 242, 255, 0.06);
+            border-left: 4px solid var(--cyber-blue);
+            border-radius: 0 16px 16px 0;
+            padding: 1.25rem 1.6rem;
+            margin: 1.2rem 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.8rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            padding: 1.3rem 1rem;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 242, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-number.blue { color: var(--cyber-blue); text-shadow: 0 0 16px var(--primary-glow); }
+        .stat-number.purple { color: #b77eff; text-shadow: 0 0 16px var(--secondary-glow); }
+        .stat-number.green { color: var(--cyber-green); text-shadow: 0 0 16px var(--success-glow); }
+        .stat-number.amber { color: var(--cyber-amber); text-shadow: 0 0 16px var(--warning-glow); }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        /* 區塊通用樣式 */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3.5rem 0 1.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .section-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-badge {
+            background: rgba(112, 0, 255, 0.15);
+            border: 1px solid rgba(112, 0, 255, 0.3);
+            color: #c084fc;
+            padding: 0.25rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        /* 雙軌並行對比器 (Traditional LLM vs Jev) */
+        .vs-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .vs-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vs-card {
+            background: var(--card-bg-subtle);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.8rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .vs-card.traditional {
+            border-top: 4px solid var(--cyber-red);
+        }
+
+        .vs-card.jev {
+            border-top: 4px solid var(--cyber-blue);
+            background: linear-gradient(135deg, rgba(16, 26, 42, 0.9) 0%, rgba(12, 18, 30, 0.95) 100%);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1);
+        }
+
+        .vs-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin: 1.2rem 0;
+        }
+
+        .pipeline-step {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.7rem 1rem;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .pipeline-step.bad {
+            border-color: rgba(255, 77, 79, 0.3);
+            color: #ffa39e;
+        }
+
+        .pipeline-step.good {
+            border-color: rgba(0, 242, 255, 0.3);
+            color: #9feaff;
+        }
+
+        /* 3 個 AI Primitive 互動試驗台 */
+        .primitive-lab-box {
+            background: linear-gradient(135deg, rgba(18, 26, 46, 0.9) 0%, rgba(12, 17, 28, 0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.28);
+            border-radius: 22px;
+            padding: 2.2rem;
+            margin: 2.2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .prim-nav-tabs {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.6rem;
+            flex-wrap: wrap;
+        }
+
+        .prim-tab-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 0.65rem 1.3rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+        }
+
+        .prim-tab-btn.active {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.16) 0%, rgba(112, 0, 255, 0.22) 100%);
+            border-color: var(--cyber-blue);
+            color: #ffffff;
+            box-shadow: 0 0 18px rgba(0, 242, 255, 0.25);
+        }
+
+        .prim-content-card {
+            background: rgba(10, 13, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.8rem;
+        }
+
+        .meter-bar-container {
+            width: 100%;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 9px;
+            overflow: hidden;
+            margin: 0.6rem 0;
+            position: relative;
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-green));
+            border-radius: 9px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 程式碼區塊 */
+        .code-snippet {
+            background: var(--code-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 1.4rem;
+            margin: 1.2rem 0;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            color: #f1f5f9;
+            line-height: 1.6;
+        }
+
+        .code-keyword { color: #c084fc; font-weight: 700; }
+        .code-string { color: #6ee7b7; }
+        .code-func { color: #38bdf8; }
+        .code-comment { color: #64748b; font-style: italic; }
+
+        /* AI 客服監考官模擬器 */
+        .inspector-box {
+            background: linear-gradient(135deg, rgba(26, 17, 36, 0.9) 0%, rgba(13, 17, 27, 0.95) 100%);
+            border: 1px solid rgba(255, 77, 79, 0.35);
+            border-radius: 22px;
+            padding: 2.2rem;
+            margin: 2.5rem 0;
+        }
+
+        .inspector-dialogue {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.4rem 0;
+        }
+
+        .chat-bubble {
+            padding: 1rem 1.4rem;
+            border-radius: 14px;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            max-width: 85%;
+        }
+
+        .chat-bubble.user {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            align-self: flex-start;
+        }
+
+        .chat-bubble.ai {
+            background: rgba(112, 0, 255, 0.12);
+            border: 1px solid rgba(112, 0, 255, 0.3);
+            align-self: flex-end;
+            color: #f3e8ff;
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        .verdict-badge.danger {
+            background: rgba(255, 77, 79, 0.2);
+            color: #ffa39e;
+            border: 1px solid rgba(255, 77, 79, 0.4);
+        }
+
+        .verdict-badge.success {
+            background: rgba(82, 196, 26, 0.2);
+            color: #b7eb8f;
+            border: 1px solid rgba(82, 196, 26, 0.4);
+        }
+
+        /* RAG 三層架構卡片 */
+        .layer-stack-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .layer-card {
+            background: rgba(15, 22, 36, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.6rem;
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 1.5rem;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .layer-card {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+        }
+
+        .layer-card:hover {
+            border-color: var(--cyber-blue);
+            transform: translateX(6px);
+        }
+
+        .layer-tag {
+            font-size: 1.15rem;
+            font-weight: 800;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .layer-role {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* 橫向對決比對表 (Jev vs Needle) */
+        .comp-table-card {
+            background: var(--card-bg-subtle);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table.comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        table.comp-table th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+            padding: 1rem 1.2rem;
+            font-weight: 800;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+        }
+
+        table.comp-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            white-space: nowrap;
+        }
+
+        table.comp-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* 按鈕樣式 */
+        .btn-action {
+            background: linear-gradient(135deg, var(--cyber-blue) 0%, #0099ff 100%);
+            color: #080b12;
+            font-weight: 800;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(0, 242, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 頂部資訊與導航 -->
+        <header style="text-align: center; margin-bottom: 2rem;">
+            <div class="page-badge">
+                <span>⚡</span> 前沿 AI 架構研究 • System One 範式革命
+            </div>
+            <h1 class="header-title">把 LLM 當成 if/else 來用</h1>
+            <p class="header-desc">
+                TypeSafe AI (Jev) 與全新 System One 程式架構全解。<br>
+                不用寫落落長 Prompt、不搞文字生成、零解析錯誤——<strong>直接拿有型別的結構化判定，打造毫秒級決策大腦！</strong>
+            </p>
+            <p style="opacity: 0.5; font-size: 0.85rem;">發布日期：2026-09-17 • 閱讀時間約 8 分鐘 • 深度互動研究筆記</p>
+        </header>
+
+        <nav>
+            <a href="../index.html">首頁 Home</a>
+            <a href="../search.html">公告檢索 Search</a>
+        </nav>
+
+        <!-- 核心摘要卡片 -->
+        <div class="hero-banner-card">
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #ffffff; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>💡</span> 什麼是 TypeSafe AI & Jev 模型？
+            </h2>
+            <p style="color: #cbd5e1; font-size: 1.02rem; line-height: 1.8;">
+                TypeSafe AI 是由前 OpenAI 研究員、ChatGPT 與 RLHF 共同發明人 <strong>Diogo Almeida</strong> 創立的頂尖 AI Lab（獲 DCVC 領投 $40M 種子輪）。<br>
+                其旗艦模型 <strong>Jev</strong> 是全球首個 <strong>「System One 快思考模型」</strong>——徹底打破了過去大語言模型生成廢話的窠臼！
+            </p>
+
+            <div class="golden-rule-quote">
+                <span style="font-size: 1.6rem; filter: drop-shadow(0 0 8px var(--cyber-blue));">⚡</span>
+                <div>
+                    一句話總結其核心靈魂：<br>
+                    <strong style="color: var(--cyber-blue); font-size: 1.35rem;">「把 LLM 當成軟體架構裡的 if / else 條件式來用！」</strong>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number blue">70~500ms</div>
+                    <div class="stat-label">極速推理延遲<br><span style="font-size: 0.75rem; opacity: 0.7;">（比 GPT-4 快 40~200 倍）</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number green">$0.042</div>
+                    <div class="stat-label">每 1M Input Tokens<br><span style="font-size: 0.75rem; opacity: 0.7;">（Output 完全免費！便宜 444 倍）</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number purple">3 個</div>
+                    <div class="stat-label">原子級 AI Primitives<br><span style="font-size: 0.75rem; opacity: 0.7;">（Noul、Choice、Score）</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number amber">0 次</div>
+                    <div class="stat-label">文字解析與幻覺<br><span style="font-size: 0.75rem; opacity: 0.7;">（No text generation, No parsing）</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 雙軌對決：傳統 LLM vs Jev System One -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🔄</span> 傳統 LLM vs Jev System One 雙軌架構對決
+            </div>
+            <div class="section-badge">範式轉移對照</div>
+        </div>
+
+        <div class="vs-container">
+            <!-- 傳統 LLM 卡片 -->
+            <div class="vs-card traditional">
+                <div class="vs-title">
+                    <span style="color: #ff7875;">🐢 傳統 LLM (System Two 慢思考)</span>
+                    <span style="font-size: 0.75rem; background: rgba(255,77,79,0.2); color: #ffa39e; padding: 0.2rem 0.5rem; border-radius: 4px;">痛苦繁瑣</span>
+                </div>
+                <p style="font-size: 0.88rem; color: #94a3b8;">
+                    為了做個分類或判斷，你必須寫落落長的 Prompt，祈禱它按照 JSON 格式吐出文字：
+                </p>
+                <div class="pipeline-flow">
+                    <div class="pipeline-step bad">
+                        <span>1. 寫複雜 Prompt：「你是一個客服助手，請務必只回傳合法 JSON...」</span>
+                    </div>
+                    <div class="pipeline-step bad">
+                        <span>2. 慢速生成：「好的！以下是您的分析結果：```json...」</span>
+                    </div>
+                    <div class="pipeline-step bad">
+                        <span>3. 程式端 Regex / JSON.parse() 暴力解析（常遇到 Markdown 或未閉合報錯）</span>
+                    </div>
+                    <div class="pipeline-step bad">
+                        <span>4. 延遲 2~4 秒、花費昂貴、高併發直接卡死</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jev 卡片 -->
+            <div class="vs-card jev">
+                <div class="vs-title">
+                    <span style="color: var(--cyber-blue);">⚡ Jev (System One 快思考)</span>
+                    <span style="font-size: 0.75rem; background: rgba(0,242,255,0.2); color: #9feaff; padding: 0.2rem 0.5rem; border-radius: 4px;">純粹結構化</span>
+                </div>
+                <p style="font-size: 0.88rem; color: #94a3b8;">
+                    直接丟 <code>state</code> (狀態/物件) + 有型別的 <code>questions</code> (原子問題)：
+                </p>
+                <div class="pipeline-flow">
+                    <div class="pipeline-step good">
+                        <span>1. 傳入 State (原始工單、JSON 或文章字串)</span>
+                    </div>
+                    <div class="pipeline-step good">
+                        <span>2. 提出有型別的原子問題 (Noul / Choice / Score)</span>
+                    </div>
+                    <div class="pipeline-step good">
+                        <span>3. 模型平行評估，直接回傳強型別機率與數值</span>
+                    </div>
+                    <div class="pipeline-step good">
+                        <span>4. 程式碼直接 <code>if response.noul > 0.8:</code> 完美呼叫！</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 個 AI Primitive 互動試驗台 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🧱</span> 核心原子：3 個 AI Primitive 互動實測
+            </div>
+            <div class="section-badge">可任意組合的基石</div>
+        </div>
+
+        <p style="color: #cbd5e1;">
+            Jev 拋棄了千變萬化的自由文本，專注於打造 3 個如基本型別（int, bool, enum）般穩健可靠的 <strong>AI Primitive</strong>。所有問題在模型內部完全平行評估，增加問題幾乎不增加延遲：
+        </p>
+
+        <div class="primitive-lab-box">
+            <div class="prim-nav-tabs">
+                <button class="prim-tab-btn active" onclick="switchPrimTab('noul')">1. Noul (真假機率)</button>
+                <button class="prim-tab-btn" onclick="switchPrimTab('choice')">2. Choice (列表單選)</button>
+                <button class="prim-tab-btn" onclick="switchPrimTab('score')">3. Score (量表打分)</button>
+            </div>
+
+            <!-- Noul 內容 -->
+            <div id="primNoul" class="prim-content-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--cyber-blue);">
+                        Noul：這句話是真的嗎？ (Yes / No 概率)
+                    </h3>
+                    <span style="font-size: 0.8rem; background: rgba(0,242,255,0.15); color: #9feaff; padding: 0.2rem 0.6rem; border-radius: 6px;">
+                        回傳 0.0 ~ 1.0 浮點數
+                    </span>
+                </div>
+                <p style="color: #94a3b8; font-size: 0.9rem;">
+                    不是生硬的 True/False，而是經由精準校準（Calibrated）的真實機率值。你可以根據業務風控嚴格度自訂門檻（如 <code>> 0.85</code> 判定為真）。
+                </p>
+
+                <div style="margin: 1.2rem 0; background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 12px;">
+                    <div style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 0.5rem;">
+                        <strong>實測情境：</strong> 客訴文字：「我被收了兩次錢，請盡快退款！」<br>
+                        <strong>問題設定：</strong> <code>Noul(instructions="這張工單是有關帳單計費 (Billing) 嗎？")</code>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #94a3b8;">
+                        <span>判定機率 (Probability)：</span>
+                        <strong style="color: var(--cyber-green); font-size: 1rem;" id="noulProb">0.982 (98.2% 為真)</strong>
+                    </div>
+                    <div class="meter-bar-container">
+                        <div class="meter-fill" style="width: 98.2%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Choice 內容 -->
+            <div id="primChoice" class="prim-content-card" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: #b77eff;">
+                        Choice：從列表中挑選最符合的項目
+                    </h3>
+                    <span style="font-size: 0.8rem; background: rgba(157,78,221,0.15); color: #d8b4fe; padding: 0.2rem 0.6rem; border-radius: 6px;">
+                        回傳 choice + probabilities + confidence
+                    </span>
+                </div>
+                <p style="color: #94a3b8; font-size: 0.9rem;">
+                    給予候選字典（Criteria），模型自動做語意比對與多分類判定，並附帶各選項的置信度。
+                </p>
+                <div style="margin: 1.2rem 0; background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 12px;">
+                    <div style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 0.5rem;">
+                        <strong>問題設定：</strong> <code>Choice(criteria={"calm": None, "frustrated": None, "angry": None})</code>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 0.8rem;">
+                        <span style="background: rgba(255,255,255,0.05); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem;">calm (冷靜): 2.1%</span>
+                        <span style="background: rgba(250,173,20,0.2); color: #ffd666; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; border: 1px solid rgba(250,173,20,0.4);">frustrated (沮喪焦急): 78.4% ★ 獲選</span>
+                        <span style="background: rgba(255,77,79,0.15); color: #ffa39e; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem;">angry (憤怒): 19.5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Score 內容 -->
+            <div id="primScore" class="prim-content-card" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--cyber-amber);">
+                        Score：在有序量表上打分評估
+                    </h3>
+                    <span style="font-size: 0.8rem; background: rgba(250,173,20,0.15); color: #ffe58f; padding: 0.2rem 0.6rem; border-radius: 6px;">
+                        回傳 score + distribution
+                    </span>
+                </div>
+                <p style="color: #94a3b8; font-size: 0.9rem;">
+                    適用於具有順序性或嚴重度梯度的場景（如：<code>can wait</code> ➔ <code>this week</code> ➔ <code>today</code>，或優先度 1~5 星）。
+                </p>
+                <div style="margin: 1.2rem 0; background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 12px;">
+                    <div style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 0.5rem;">
+                        <strong>問題設定：</strong> <code>Score(criteria=["can wait (可稍後處理)", "this week (本週內)", "today (今日急件)"])</code>
+                    </div>
+                    <div style="margin-top: 0.8rem;">
+                        <span style="color: #ffa39e; font-weight: 800; font-size: 1rem;">🔥 判定評分：today (今日急件)</span>
+                        <span style="font-size: 0.82rem; color: #94a3b8; margin-left: 0.5rem;">(信心度 Confidence: 91.5%)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Python SDK 快速上手範例 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🐍</span> Python SDK 快速上手
+            </div>
+            <div class="section-badge">極簡現代非同步 API</div>
+        </div>
+
+        <p style="color: #cbd5e1;">
+            安裝 <code>typesafe-sdk</code> 後，只需短短幾行即可平行呼叫多個問題，完全不需要寫任何解析代碼：
+        </p>
+
+        <div class="code-snippet">
+<span class="code-comment"># 安裝 SDK: pip install typesafe-sdk</span>
+<span class="code-keyword">from</span> typesafe_sdk <span class="code-keyword">import</span> AsyncTypeSafeClient, Noul, Choice, Score
+
+<span class="code-keyword">async def</span> <span class="code-func">evaluate_ticket</span>():
+    <span class="code-keyword">async with</span> AsyncTypeSafeClient() <span class="code-keyword">as</span> client:
+        response = <span class="code-keyword">await</span> client.system_one(
+            state = { 
+                <span class="code-string">"document"</span>: <span class="code-string">"I was charged twice. Please fix this ASAP."</span> 
+            },
+            questions = {
+                <span class="code-string">"is_billing"</span>: Noul(instructions=<span class="code-string">"Is this ticket about billing?"</span>),
+                <span class="code-string">"tone"</span>: Choice(
+                    instructions=<span class="code-string">"What is the customer's tone?"</span>,
+                    criteria={<span class="code-string">"calm"</span>: None, <span class="code-string">"frustrated"</span>: None, <span class="code-string">"angry"</span>: None},
+                ),
+                <span class="code-string">"urgency"</span>: Score(
+                    instructions=<span class="code-string">"How urgent is this ticket?"</span>,
+                    criteria=[<span class="code-string">"can wait"</span>, <span class="code-string">"this week"</span>, <span class="code-string">"today"</span>],
+                ),
+            },
+        )
+    
+    <span class="code-comment"># 程式直接以強型別欄位存取！零字串處理</span>
+    <span class="code-keyword">if</span> response.nouls[<span class="code-string">"is_billing"</span>].noul > <span class="code-string">0.8</span>:
+        route_to_finance_team()
+        
+    print(response.choices[<span class="code-string">"tone"</span>].choice)   <span class="code-comment"># 輸出: "frustrated"</span>
+    print(response.scores[<span class="code-string">"urgency"</span>].score)   <span class="code-comment"># 輸出: "today"</span>
+        </div>
+
+        <!-- Jev 才能做！經典場景：AI 客服的監考官 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🛡️</span> Jev 獨家甜蜜點：AI 客服的「風控監考官」
+            </div>
+            <div class="section-badge">企業級剛需</div>
+        </div>
+
+        <div class="inspector-box">
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">
+                情境：審核 AI 客服的回覆是否違反公司法規？
+            </h3>
+            <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.7;">
+                如果讓 AI 自由與客戶對談，最怕 AI 被客戶話術帶偏，私自向客戶承諾賠償。<br>
+                這個場景是<strong>傳統 Regex 程式碼做不到、端側小模型做不到、傳統 GPT-4 太貴太慢</strong>的絕佳例子：
+            </p>
+
+            <div class="inspector-dialogue">
+                <div class="chat-bubble user">
+                    <strong style="color: var(--cyber-blue);">👤 客戶來信：</strong><br>
+                    「我這個月被你們扣了兩次費用，請馬上處理，否則我立刻退訂並投訴消保官！」
+                </div>
+                <div class="chat-bubble ai">
+                    <strong style="color: #c084fc;">🤖 初階 AI 客服回覆：</strong><br>
+                    「非常抱歉造成您的困擾！我已經為您申請了全額退款，款項預計 3~5 個工作天退回您的原付款帳戶。」
+                </div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.35); border-radius: 14px; padding: 1.4rem; border: 1px solid rgba(255,255,255,0.08);">
+                <div style="font-weight: 800; color: var(--cyber-blue); margin-bottom: 0.6rem;">
+                    🔍 Jev 監考官毫秒級即時風控裁決：
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                    <div style="background: rgba(255,255,255,0.03); padding: 0.9rem; border-radius: 10px;">
+                        <div style="font-size: 0.82rem; color: #94a3b8;">promised_refund (AI 是否承諾退款？)</div>
+                        <div style="margin-top: 0.4rem;">
+                            <span class="verdict-badge danger">⚠️ 是 (Noul: 0.992)</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 0.9rem; border-radius: 10px;">
+                        <div style="font-size: 0.82rem; color: #94a3b8;">policy_violation (未經主管核准私自承諾退款)</div>
+                        <div style="margin-top: 0.4rem;">
+                            <span class="verdict-badge danger">🚨 嚴重違規！(Noul: 0.985)</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 0.9rem; border-radius: 10px;">
+                        <div style="font-size: 0.82rem; color: #94a3b8;">churn_risk (客戶流失風險評估)</div>
+                        <div style="margin-top: 0.4rem;">
+                            <span class="verdict-badge danger">🔥 極高 (Score: "高")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.2rem; font-size: 0.9rem; color: #ffd666; background: rgba(250,173,20,0.1); border: 1px solid rgba(250,173,20,0.3); padding: 0.9rem 1.2rem; border-radius: 10px;">
+                💡 <strong>為什麼其他方案都不行？</strong>
+                <ul style="padding-left: 1.2rem; margin-top: 0.4rem; line-height: 1.7;">
+                    <li><strong>傳統 Code 不行：</strong> 寫 <code>if "退款" in reply</code> 會誤殺「我們政策規定無法退款」的否定句。</li>
+                    <li><strong>端側小模型 (Needle) 不行：</strong> 45M 參數與有限長度無法進行跨語意合規邏輯推導。</li>
+                    <li><strong>GPT-4 不適合：</strong> 每天 10 萬封對話，用 GPT-4 複查每個月要花數千美元且每次延遲 2 秒；Jev 只要 $4 美元且 80ms 內完成阻截！</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 正確架構：RAG + Jev + Generative LLM 三層模式 -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>🏗️</span> 正確系統架構：RAG 三層協同模式
+            </div>
+            <div class="section-badge">Jev 扮演大腦主管</div>
+        </div>
+
+        <p style="color: #cbd5e1;">
+            許多人誤以為 Jev 可以當成客服本身——<strong>不行！Jev 不會說話、不會生成聊天文字。它是決策大腦與主管，而不是話筒。</strong><br>
+            現代最推薦的企業級架構是「檢索、決策、說話」三層分工：
+        </p>
+
+        <div class="layer-stack-container">
+            <!-- Layer 1 -->
+            <div class="layer-card">
+                <div class="layer-tag">
+                    <span style="color: var(--cyber-blue);">Layer 1</span>
+                    <span class="layer-role">感知與知識庫</span>
+                </div>
+                <div>
+                    <h4 style="color: #ffffff; margin-bottom: 0.3rem;">RAG (語意向量檢索)</h4>
+                    <p style="color: #94a3b8; font-size: 0.88rem;">
+                        當客戶詢問「我可以帶自己的飲料進場嗎？」，RAG 從企業數千頁規章中撈出最相關的 5 條規章（如：禁止外食、嬰兒食品例外、有蓋飲料規定）。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Layer 2 -->
+            <div class="layer-card" style="border-color: rgba(0,242,255,0.4); background: rgba(0,242,255,0.04);">
+                <div class="layer-tag">
+                    <span style="color: var(--cyber-green);">Layer 2 ★ 核心</span>
+                    <span class="layer-role">決策與風控大腦</span>
+                </div>
+                <div>
+                    <h4 style="color: #ffffff; margin-bottom: 0.3rem;">Jev (System One 裁決 API)</h4>
+                    <p style="color: #cbd5e1; font-size: 0.88rem;">
+                        將問題與 5 條規章作為 <code>state</code> 餵給 Jev：<br>
+                        - <code>Choice</code>：這 5 條中哪一條是精確準則？<br>
+                        - <code>Noul</code>：依此準則，客戶到底能不能帶？（回傳 0.94）<br>
+                        - <code>Noul</code>：這需要轉接人工主管嗎？（回傳 0.02）
+                    </p>
+                </div>
+            </div>
+
+            <!-- Layer 3 -->
+            <div class="layer-card">
+                <div class="layer-tag">
+                    <span style="color: #c084fc;">Layer 3</span>
+                    <span class="layer-role">對話話筒 (Voice)</span>
+                </div>
+                <div>
+                    <h4 style="color: #ffffff; margin-bottom: 0.3rem;">Generative LLM (GPT-4 / Claude)</h4>
+                    <p style="color: #94a3b8; font-size: 0.88rem;">
+                        只有當 Jev 裁決「可以帶」且「無需轉人工」時，才調用昂貴的生成模型，依據第 2 條規章生成親切體面的回覆語句。<strong>徹底消滅 AI 胡言亂語的風險！</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 橫向對決：TypeSafe Jev vs Needle -->
+        <div class="section-header">
+            <div class="section-title">
+                <span>⚔️</span> 橫向對決：TypeSafe Jev vs Needle (14MB 邊緣端小模型)
+            </div>
+            <div class="section-badge">端雲各司其職</div>
+        </div>
+
+        <p style="color: #cbd5e1;">
+            近期開源界另一個焦點是 <code style="color: var(--cyber-blue);">cactus-compute/needle</code>（14MB、45M 參數的單檔二進位模型）。兩者在現代 AI 體系中扮演完全互補的關鍵角色：
+        </p>
+
+        <div class="comp-table-card">
+            <div class="table-responsive">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th>比較維度</th>
+                            <th>TypeSafe Jev</th>
+                            <th>Needle 2 (Cactus)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>核心定位</strong></td>
+                            <td>雲端 Frontier 級強型別決策 API</td>
+                            <td>Edge 邊緣端離線 Tool-calling 模型</td>
+                        </tr>
+                        <tr>
+                            <td><strong>模型規模</strong></td>
+                            <td>Frontier 大模型 (閉源)</td>
+                            <td>極致微型 45M 參數 / 14MB 單檔</td>
+                        </tr>
+                        <tr>
+                            <td><strong>運行環境</strong></td>
+                            <td>高效能雲端 API</td>
+                            <td>手錶、手機、無人機、智慧家電（只需 28MB RAM）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>解決問題</strong></td>
+                            <td>取代傳統用 GPT-4 做昂貴繁瑣的分類與評分審核</td>
+                            <td>讓沒有聯網的微型 IoT 裝置具備工具調用能力</td>
+                        </tr>
+                        <tr>
+                            <td><strong>輸出型別</strong></td>
+                            <td>嚴格約束於 3 個 Primitive (Noul/Choice/Score)</td>
+                            <td>任意 Pydantic Schema / Function Calling JSON</td>
+                        </tr>
+                        <tr>
+                            <td><strong>微調彈性</strong></td>
+                            <td>API 即開即用，無法 fine-tune</td>
+                            <td>支援 LoRA 微調並打包為 <code>.cact</code> 離線檔</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- OCR 與車牌辨識迷思 -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.8rem; margin: 2rem 0;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">
+                🚗 Jev 能做 OCR 嗎？可以把車牌辨識改成 7 個選擇題嗎？
+            </h3>
+            <p style="color: #94a3b8; font-size: 0.92rem; line-height: 1.7;">
+                <strong>答案是：目前不行！</strong><br>
+                1. Jev 目前是純文字與結構化狀態，不支援多模態圖片輸入。<br>
+                2. 理論上若把台灣 7 碼車牌拆成 7 個 36 選 1 的 Choice，會產生 $36^7$ 組合爆炸，且無圖可看。<br>
+                <strong>正確 Pattern 是「雙層組合」：</strong> 先用 PaddleOCR 或 Vision LLM 識別出文字 <code>ABC-1234</code>，再由 Jev 秒速檢核「這是否符合台灣車牌編碼邏輯」與「信賴等級」！
+            </p>
+        </div>
+
+        <!-- 總結與測試資格說明 -->
+        <div style="background: linear-gradient(135deg, rgba(0, 242, 255, 0.08) 0%, rgba(112, 0, 255, 0.12) 100%); border: 1px solid rgba(0, 242, 255, 0.3); border-radius: 20px; padding: 2.2rem; text-align: center; margin: 3rem 0;">
+            <h2 style="font-size: 1.6rem; font-weight: 900; color: #ffffff; margin-bottom: 0.6rem;">
+                🚀 結語：軟體工程迎來了真正的「AI if/else」
+            </h2>
+            <p style="color: #cbd5e1; max-width: 720px; margin: 0 auto 1.5rem auto; line-height: 1.8; font-size: 0.95rem;">
+                過去幾年，工程師被迫在「生硬的 Regex」與「昂貴易幻覺的生成式 LLM」之間痛苦折衷。<br>
+                TypeSafe AI 的 Jev 為我們展示了全新的可能性——<strong>不需要大模型寫小作文，只需要大模型作為精準的判斷節點。</strong>
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.88rem; color: #94a3b8;">
+                <span>📅 發表時間：2026-09-15</span>
+                <span>🎟️ 當前狀態：Early Access (需排 Waitlist)</span>
+                <span>💰 費率：$0.042 / 1M Tokens (輸出免費)</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchPrimTab(tab) {
+            const tabs = ['noul', 'choice', 'score'];
+            tabs.forEach(t => {
+                const el = document.getElementById('prim' + t.charAt(0).toUpperCase() + t.slice(1));
+                if (el) el.style.display = 'none';
+            });
+
+            document.querySelectorAll('.prim-tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            if (tab === 'noul') {
+                document.getElementById('primNoul').style.display = 'block';
+                document.querySelectorAll('.prim-tab-btn')[0].classList.add('active');
+            } else if (tab === 'choice') {
+                document.getElementById('primChoice').style.display = 'block';
+                document.querySelectorAll('.prim-tab-btn')[1].classList.add('active');
+            } else if (tab === 'score') {
+                document.getElementById('primScore').style.display = 'block';
+                document.querySelectorAll('.prim-tab-btn')[2].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
