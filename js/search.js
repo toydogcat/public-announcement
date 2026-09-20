@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "告別混亂架構：UML 類別圖全圖解教學（以電商系統為例）",
+        date: "2026-09-20",
+        path: "announcements/u8m3k7v2.html",
+        preview: "從三層長方形鐵則、4 大關鍵關聯（一般化、關聯、聚合、組合）到多重性限制，以 10 大類別電商系統為例，深度拆解正規軟體架構藍圖與 5 大避坑地雷。"
+    },
+    {
         title: "把 LLM 當成 if/else 來用：TypeSafe AI (Jev) 與全新 System One 架構全解析",
         date: "2026-09-17",
         path: "announcements/j5v2k9r4.html",
