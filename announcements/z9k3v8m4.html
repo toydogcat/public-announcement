@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大師級紫微斗數全圖解教學：從底層邏輯看懂你的命盤人生攻略</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cosmic-cyan: #00f2ff;
+            --cosmic-purple: #9d4edd;
+            --cosmic-violet: #7000ff;
+            --cosmic-amber: #ffd166;
+            --cosmic-rose: #ff4d88;
+            --cosmic-emerald: #06d6a0;
+            --card-bg-glass: rgba(14, 20, 36, 0.88);
+            --card-border: rgba(0, 242, 255, 0.18);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --code-bg: #090e1a;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #060913;
+            color: var(--text-main);
+            line-height: 1.8;
+            background-image: 
+                radial-gradient(circle at 10% 12%, rgba(112, 0, 255, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 90% 40%, rgba(0, 242, 255, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(255, 77, 136, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 6rem;
+        }
+
+        nav {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin: 0 1.2rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.25s ease;
+        }
+
+        nav a:hover {
+            color: var(--cosmic-cyan);
+            border-color: rgba(0, 242, 255, 0.4);
+            background: rgba(0, 242, 255, 0.08);
+            box-shadow: 0 0 16px rgba(0, 242, 255, 0.2);
+        }
+
+        /* 標題與徽章 */
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.15) 0%, rgba(112, 0, 255, 0.25) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.4);
+            color: var(--cosmic-cyan);
+            padding: 0.45rem 1.4rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.18);
+        }
+
+        .header-title {
+            font-size: 2.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 10%, #a5f3fc 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.25;
+            margin-bottom: 1.1rem;
+            text-align: center;
+        }
+
+        .header-desc {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 860px;
+            margin: 0 auto 2.5rem auto;
+            text-align: center;
+            line-height: 1.75;
+        }
+
+        /* 核心摘要卡片 */
+        .hero-banner-card {
+            background: linear-gradient(135deg, rgba(17, 24, 43, 0.95) 0%, rgba(10, 15, 29, 0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.25);
+            border-radius: 24px;
+            padding: 2.6rem;
+            margin-bottom: 3.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(14px);
+        }
+
+        .hero-banner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--cosmic-cyan), var(--cosmic-purple), var(--cosmic-amber));
+        }
+
+        .mindset-quote {
+            background: rgba(0, 242, 255, 0.05);
+            border-left: 4px solid var(--cosmic-cyan);
+            border-radius: 0 16px 16px 0;
+            padding: 1.4rem 1.8rem;
+            margin: 1.5rem 0;
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.7;
+        }
+
+        /* 統計指標卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.4rem;
+            text-align: center;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--cosmic-cyan);
+        }
+
+        .stat-num {
+            font-size: 2.3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--cosmic-cyan), var(--cosmic-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            font-weight: 600;
+        }
+
+        /* 區塊容器 */
+        .section-box {
+            background: var(--card-bg-glass);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            padding: 2.5rem;
+            margin-bottom: 3.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 1.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.2rem;
+        }
+
+        .section-icon {
+            font-size: 1.8rem;
+            background: rgba(0, 242, 255, 0.12);
+            padding: 0.6rem;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        /* 三大迷思卡片 */
+        .myth-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+        }
+
+        .myth-card {
+            background: rgba(10, 15, 29, 0.8);
+            border: 1px solid rgba(255, 77, 79, 0.25);
+            border-radius: 18px;
+            padding: 1.8rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .myth-card:hover {
+            border-color: rgba(255, 77, 79, 0.5);
+            box-shadow: 0 10px 25px rgba(255, 77, 79, 0.12);
+        }
+
+        .myth-title {
+            color: #ff6b6b;
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .truth-content {
+            background: rgba(6, 214, 160, 0.08);
+            border-left: 3px solid var(--cosmic-emerald);
+            padding: 0.9rem 1.1rem;
+            border-radius: 0 10px 10px 0;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: #d1fae5;
+        }
+
+        /* 互動式十二宮星盤輪盤/網格 */
+        .chart-explorer-wrapper {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+            align-items: start;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 900px) {
+            .chart-explorer-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .palace-matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.6rem;
+            background: rgba(6, 9, 19, 0.9);
+            border: 1px solid rgba(0, 242, 255, 0.25);
+            border-radius: 20px;
+            padding: 1.2rem;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .palace-cell {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1rem 0.6rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .palace-cell:hover {
+            background: rgba(0, 242, 255, 0.12);
+            border-color: var(--cosmic-cyan);
+            transform: scale(1.03);
+        }
+
+        .palace-cell.selected {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.25) 0%, rgba(112, 0, 255, 0.35) 100%);
+            border: 2px solid var(--cosmic-cyan);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        .palace-cell.opposite-match {
+            border: 2px dashed var(--cosmic-rose) !important;
+            background: rgba(255, 77, 136, 0.15) !important;
+            box-shadow: 0 0 15px rgba(255, 77, 136, 0.3);
+        }
+
+        .palace-cell.tri-match {
+            border: 2px dashed var(--cosmic-amber) !important;
+            background: rgba(255, 209, 102, 0.12) !important;
+            box-shadow: 0 0 15px rgba(255, 209, 102, 0.25);
+        }
+
+        .cell-branch {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .cell-name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0.2rem 0;
+        }
+
+        .cell-archetype {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            line-height: 1.2;
+        }
+
+        /* 宮位詳解面板 */
+        .palace-detail-card {
+            background: linear-gradient(135deg, rgba(16, 23, 42, 0.95) 0%, rgba(11, 16, 31, 0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            min-height: 380px;
+        }
+
+        .badge-pill {
+            display: inline-block;
+            padding: 0.25rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-cyan { background: rgba(0, 242, 255, 0.15); color: var(--cosmic-cyan); border: 1px solid rgba(0, 242, 255, 0.4); }
+        .badge-rose { background: rgba(255, 77, 136, 0.15); color: var(--cosmic-rose); border: 1px solid rgba(255, 77, 136, 0.4); }
+        .badge-amber { background: rgba(255, 209, 102, 0.15); color: var(--cosmic-amber); border: 1px solid rgba(255, 209, 102, 0.4); }
+
+        /* 十四主星分頁系統 */
+        .star-tab-bar {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+        }
+
+        .star-tab-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            padding: 0.65rem 1.4rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .star-tab-btn:hover {
+            background: rgba(0, 242, 255, 0.1);
+            color: var(--cosmic-cyan);
+            border-color: rgba(0, 242, 255, 0.4);
+        }
+
+        .star-tab-btn.active {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.2) 0%, rgba(112, 0, 255, 0.3) 100%);
+            border-color: var(--cosmic-cyan);
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.25);
+        }
+
+        .star-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .star-card {
+            background: rgba(11, 16, 31, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 18px;
+            padding: 1.8rem;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+            position: relative;
+        }
+
+        .star-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 242, 255, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .star-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .star-name-badge {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .star-motto {
+            font-size: 0.88rem;
+            color: var(--cosmic-amber);
+            font-style: italic;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .star-field {
+            font-size: 0.92rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .star-field strong {
+            color: #93c5fd;
+        }
+
+        /* 四化能量流動視覺化 */
+        .si-hua-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .hua-card {
+            border-radius: 18px;
+            padding: 1.8rem;
+            background: rgba(10, 15, 28, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .hua-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hua-lu { border-color: rgba(6, 214, 160, 0.4); }
+        .hua-lu:hover { box-shadow: 0 0 25px rgba(6, 214, 160, 0.2); }
+        .hua-quan { border-color: rgba(255, 77, 79, 0.4); }
+        .hua-quan:hover { box-shadow: 0 0 25px rgba(255, 77, 79, 0.2); }
+        .hua-ke { border-color: rgba(0, 242, 255, 0.4); }
+        .hua-ke:hover { box-shadow: 0 0 25px rgba(0, 242, 255, 0.2); }
+        .hua-ji { border-color: rgba(168, 85, 247, 0.5); }
+        .hua-ji:hover { box-shadow: 0 0 25px rgba(168, 85, 247, 0.25); }
+
+        .hua-badge {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: 900;
+            padding: 0.3rem 0.9rem;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+        }
+
+        .badge-lu { background: rgba(6, 214, 160, 0.2); color: #06d6a0; }
+        .badge-quan { background: rgba(255, 77, 79, 0.2); color: #ff4d4f; }
+        .badge-ke { background: rgba(0, 242, 255, 0.2); color: #00f2ff; }
+        .badge-ji { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+
+        /* 實戰解盤診所手風琴/卡片 */
+        .clinic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0;
+        }
+
+        .clinic-card {
+            background: rgba(13, 19, 36, 0.9);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.2rem;
+            position: relative;
+        }
+
+        .clinic-tag {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: var(--cosmic-amber);
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .clinic-q {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .clinic-ans {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--cosmic-cyan);
+            border-radius: 0 12px 12px 0;
+            padding: 1.2rem;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        /* 互動測驗模組 */
+        .quiz-card {
+            background: rgba(13, 18, 34, 0.95);
+            border: 1px solid rgba(112, 0, 255, 0.35);
+            border-radius: 22px;
+            padding: 2.4rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .quiz-q-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .quiz-opt-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.1rem 1.4rem;
+            text-align: left;
+            color: #dbe4ee;
+            font-size: 0.98rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .quiz-opt-btn:hover {
+            background: rgba(0, 242, 255, 0.08);
+            border-color: rgba(0, 242, 255, 0.4);
+            transform: translateX(4px);
+        }
+
+        .quiz-feedback {
+            display: none;
+            margin-top: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .quiz-feedback.correct {
+            background: rgba(6, 214, 160, 0.12);
+            border: 1px solid rgba(6, 214, 160, 0.4);
+            color: #a7f3d0;
+        }
+
+        .quiz-feedback.wrong {
+            background: rgba(255, 77, 79, 0.12);
+            border: 1px solid rgba(255, 77, 79, 0.4);
+            color: #fecaca;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 腳本程式碼區塊 */
+        .step-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .step-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.15);
+            border-radius: 16px;
+            padding: 1.6rem;
+            position: relative;
+        }
+
+        .step-num {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: linear-gradient(135deg, var(--cosmic-cyan), var(--cosmic-purple));
+            color: #000000;
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 0.2rem 0.75rem;
+            border-radius: 999px;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+        }
+
+        .sop-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 0.4rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .sop-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 導航列 -->
+        <nav>
+            <a href="../index.html">← 返回首頁</a>
+            <a href="../search.html">🔍 搜尋公告</a>
+        </nav>
+
+        <!-- 頂部標題區 -->
+        <header>
+            <div class="page-badge">✦ ASTROLOGICAL PSYCHOLOGY TUTORIAL ✦</div>
+            <h1 class="header-title">大師級紫微斗數全圖解教學：<br>從底層邏輯看懂你的命盤人生攻略</h1>
+            <p class="header-desc">
+                打破算命迷信與死記硬背！以大耕老師《紫微攻略系列》為核心，融合現代心理學、決策模型與時空統計學：深度拆解 12 宮位現代真意、14 主星性格光譜、三方四正立體鏡面矩陣與四化能量引擎。
+            </p>
+        </header>
+
+        <!-- 核心心法 Hero Banner -->
+        <div class="hero-banner-card">
+            <h2 style="font-size: 1.85rem; font-weight: 900; color: #ffffff; margin-bottom: 0.8rem;">
+                🔮 命理不是定罪的「宿命論」，而是你的「人生出廠說明書」
+            </h2>
+            <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.8;">
+                很多人學紫微斗數，常常一開頭就死背「紫微是皇帝、七殺會孤單、天同沒出息、破軍會破產」，結果看盤越看越糊塗。
+                真正的紫微斗數，是千年華人透過<strong>「時間（天干）× 空間環境（宮位）× 性格動機（星曜）」</strong>建立的人生行為大數據模型。知命是為了<strong>不認命</strong>——看清自己的行為盲區，才能在關鍵流年做對決策！
+            </p>
+            <div class="mindset-quote">
+                💡 「所有的命理預測都圍繞著三個要素：人（性格特質）、時間（運限流轉）、空間（環境宮位）。一個人在特定時間與環境會產生的心理反應，進而導向不同的結果。」
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-num">12</div>
+                    <div class="stat-label">人生時空場景（十二宮位）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">14</div>
+                    <div class="stat-label">性格心理原型（十四主星）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">4</div>
+                    <div class="stat-label">動態能量流轉（祿權科忌四化）</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">3+1</div>
+                    <div class="stat-label">立體決策網絡（三方四正與對宮）</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模組 0：三大致命迷思粉碎 -->
+        <div class="section-box">
+            <div class="section-header">
+                <div class="section-icon">💥</div>
+                <div>
+                    <h2 class="section-title">新手入門第一課：粉碎三大致命算命迷思</h2>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">如果你還帶著傳統偏見看盤，只會自己嚇自己！</p>
+                </div>
+            </div>
+            <div class="myth-grid">
+                <div class="myth-card">
+                    <div class="myth-title">❌ 迷思一：夫妻宮代表未來的另一半長怎樣？</div>
+                    <p style="color: #cbd5e1; font-size: 0.92rem;">
+                        傳統算命常說「夫妻宮有紫微會嫁豪門、有天梁會娶年長者」。
+                    </p>
+                    <div class="truth-content">
+                        <strong>✅ 現代心理學真相：</strong> 夫妻宮是你<strong>「在親密關係中的心理投射與恐懼」</strong>！夫妻宮坐破軍不是對方會破壞，而是你渴望冒險刺激、無法忍受平淡無聊的親密關係模式。
+                    </div>
+                </div>
+                <div class="myth-card">
+                    <div class="myth-title">❌ 迷思二：財帛宮有祿就能躺著發大財？</div>
+                    <p style="color: #cbd5e1; font-size: 0.92rem;">
+                        以為財帛宮吉星高照就一輩子衣食無憂，見煞星就注定窮困潦倒。
+                    </p>
+                    <div class="truth-content">
+                        <strong>✅ 現代財務真相：</strong> 財帛宮只是<strong>「水龍頭」（進出金錢的方式）</strong>，<strong>田宅宮才是真正儲水的水庫</strong>！若財帛化祿但田宅破漏，代表賺多花更多，依然一場空。
+                    </div>
+                </div>
+                <div class="myth-card">
+                    <div class="myth-title">❌ 迷思三：化忌就是厄運、倒楣、大凶之兆？</div>
+                    <p style="color: #cbd5e1; font-size: 0.92rem;">
+                        見到「化忌」就嚇得不知所措，認為這一年一定生病破產婚變。
+                    </p>
+                    <div class="truth-content">
+                        <strong>✅ 大師級底層真相：</strong> 化忌代表<strong>「空缺、執念與最深層的渴望」</strong>！人因為感到不足才會奮力追求。化忌在哪個宮位，那裡就是你這輩子最強大的動能引擎！
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模組 1：十二宮位互動星盤模擬器 -->
+        <div class="section-box">
+            <div class="section-header">
+                <div class="section-icon">🧭</div>
+                <div>
+                    <h2 class="section-title">星盤骨架：十二宮位立體矩陣與「對宮照鏡」模擬器</h2>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">點擊左側任一宮位，即時啟動「對宮鏡像（粉框）」與「三方同盟（黃框）」高亮解析！</p>
+                </div>
+            </div>
+
+            <div class="chart-explorer-wrapper">
+                <!-- 左側：十二宮地支矩陣盤 -->
+                <div>
+                    <div style="text-align: center; margin-bottom: 0.8rem; font-size: 0.88rem; color: #94a3b8;">
+                        <span style="color: var(--cosmic-cyan);">■ 點選宮位</span> ｜ 
+                        <span style="color: var(--cosmic-rose);">╍╍ 對宮（鏡像/外在投射）</span> ｜ 
+                        <span style="color: var(--cosmic-amber);">╍╍ 三方同盟（事業金錢三角）</span>
+                    </div>
+                    <div class="palace-matrix" id="palaceMatrix">
+                        <!-- 巳 -->
+                        <div class="palace-cell" data-idx="5" onclick="selectPalace(5)">
+                            <div class="cell-branch">【巳】</div>
+                            <div class="cell-name">父母宮</div>
+                            <div class="cell-archetype">原生家庭·長輩階級</div>
+                        </div>
+                        <!-- 午 -->
+                        <div class="palace-cell" data-idx="6" onclick="selectPalace(6)">
+                            <div class="cell-branch">【午】</div>
+                            <div class="cell-name">福德宮</div>
+                            <div class="cell-archetype">精神靈魂·潛意識慾望</div>
+                        </div>
+                        <!-- 未 -->
+                        <div class="palace-cell" data-idx="7" onclick="selectPalace(7)">
+                            <div class="cell-branch">【未】</div>
+                            <div class="cell-name">田宅宮</div>
+                            <div class="cell-archetype">資產水庫·內心安全感</div>
+                        </div>
+                        <!-- 申 -->
+                        <div class="palace-cell" data-idx="8" onclick="selectPalace(8)">
+                            <div class="cell-branch">【申】</div>
+                            <div class="cell-name">官祿宮</div>
+                            <div class="cell-archetype">事業實現·價值追求</div>
+                        </div>
+
+                        <!-- 辰 -->
+                        <div class="palace-cell" data-idx="4" onclick="selectPalace(4)">
+                            <div class="cell-branch">【辰】</div>
+                            <div class="cell-name">命宮</div>
+                            <div class="cell-archetype">自我核心·個性出廠值</div>
+                        </div>
+                        <!-- 中間天井（紫微斗數中央） -->
+                        <div style="grid-column: span 2; grid-row: span 2; background: rgba(0, 242, 255, 0.03); border: 1px dashed rgba(0, 242, 255, 0.2); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center;">
+                            <div style="font-size: 1.8rem; margin-bottom: 0.4rem;">☯️</div>
+                            <div style="font-size: 1.15rem; font-weight: 900; color: #ffffff;">紫微十二宮盤</div>
+                            <div style="font-size: 0.8rem; color: var(--cosmic-cyan); margin-top: 0.2rem;">本宮看顯性 · 對宮看潛意識</div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">點擊周圍任一宮位體驗連動</div>
+                        </div>
+                        <!-- 酉 -->
+                        <div class="palace-cell" data-idx="9" onclick="selectPalace(9)">
+                            <div class="cell-branch">【酉】</div>
+                            <div class="cell-name">僕役宮</div>
+                            <div class="cell-archetype">人脈眾人·下屬社群</div>
+                        </div>
+
+                        <!-- 卯 -->
+                        <div class="palace-cell" data-idx="3" onclick="selectPalace(3)">
+                            <div class="cell-branch">【卯】</div>
+                            <div class="cell-name">兄弟宮</div>
+                            <div class="cell-archetype">同儕競爭·同階人脈</div>
+                        </div>
+                        <!-- 戌 -->
+                        <div class="palace-cell" data-idx="10" onclick="selectPalace(10)">
+                            <div class="cell-branch">【戌】</div>
+                            <div class="cell-name">遷移宮</div>
+                            <div class="cell-archetype">出外社交·社會面具</div>
+                        </div>
+
+                        <!-- 寅 -->
+                        <div class="palace-cell" data-idx="2" onclick="selectPalace(2)">
+                            <div class="cell-branch">【寅】</div>
+                            <div class="cell-name">夫妻宮</div>
+                            <div class="cell-archetype">親密投射·情感渴求</div>
+                        </div>
+                        <!-- 丑 -->
+                        <div class="palace-cell" data-idx="1" onclick="selectPalace(1)">
+                            <div class="cell-branch">【丑】</div>
+                            <div class="cell-name">子女宮</div>
+                            <div class="cell-archetype">傳承創造·性與後代</div>
+                        </div>
+                        <!-- 子 -->
+                        <div class="palace-cell" data-idx="0" onclick="selectPalace(0)">
+                            <div class="cell-branch">【子】</div>
+                            <div class="cell-name">財帛宮</div>
+                            <div class="cell-archetype">交易能力·現金流手段</div>
+                        </div>
+                        <!-- 亥 -->
+                        <div class="palace-cell" data-idx="11" onclick="selectPalace(11)">
+                            <div class="cell-branch">【亥】</div>
+                            <div class="cell-name">疾厄宮</div>
+                            <div class="cell-archetype">身體狀況·深層心理壓力</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：宮位深度解密卡 -->
+                <div class="palace-detail-card" id="palaceDetailCard">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 id="detailPalaceTitle" style="font-size: 1.6rem; font-weight: 900; color: #ffffff;">
+                            👑 命宮（The Self）
+                        </h3>
+                        <span class="badge-pill badge-cyan" id="detailPalaceTag">核心本我</span>
+                    </div>
+
+                    <div style="margin-bottom: 1.2rem;">
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem;">【現代心理學本質】</div>
+                        <p id="detailPalaceDesc" style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.7;">
+                            個人的出廠人格設定、思考本能與核心價值觀。代表你如何看待世界，以及在完全放鬆時最真實的自我樣貌。
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.35); border-radius: 12px; padding: 1rem; margin-bottom: 1.2rem;">
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--cosmic-rose); margin-bottom: 0.3rem;" id="detailOppositeTitle">
+                            🪞 對宮照鏡：遷移宮（The Mirror）
+                        </div>
+                        <div style="font-size: 0.9rem; color: #cbd5e1;" id="detailOppositeDesc">
+                            對宮是本宮的「投影布幕與外在反饋」。命宮（內在）與遷移宮（外在社交面具）互為表裡——出門在外別人如何看待你，正是你潛意識在社會環境中的延伸反應！
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.35); border-radius: 12px; padding: 1rem;">
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--cosmic-amber); margin-bottom: 0.3rem;" id="detailTriTitle">
+                            📐 三方同盟：財帛宮 ＋ 官祿宮
+                        </div>
+                        <div style="font-size: 0.9rem; color: #cbd5e1;" id="detailTriDesc">
+                            命宮、財帛宮（生存交易）、官祿宮（自我實踐）構成人生的「事業生活鐵三角」。你的個性（命宮）決定你的工作追求（官祿），進而決定你的進財手段（財帛）。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模組 2：十四主星四大家族性格光譜 -->
+        <div class="section-box">
+            <div class="section-header">
+                <div class="section-icon">🌟</div>
+                <div>
+                    <h2 class="section-title">人性原型：十四主星四大家族性格光譜</h2>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">點擊下方分類，探索開創、領導、支援、合作四大氣質的原型本質與攻略！</p>
+                </div>
+            </div>
+
+            <!-- 分頁按鈕 -->
+            <div class="star-tab-bar">
+                <button class="star-tab-btn active" onclick="switchStarTab('open')">🚀 開創型（殺破狼）</button>
+                <button class="star-tab-btn" onclick="switchStarTab('lead')">👑 領導型（紫府廉武相）</button>
+                <button class="star-tab-btn" onclick="switchStarTab('support')">💡 支援型（機巨陽）</button>
+                <button class="star-tab-btn" onclick="switchStarTab('coop')">🌸 合作型（同陰梁）</button>
+            </div>
+
+            <!-- 開創型容器 -->
+            <div class="star-cards-container" id="starGroupOpen">
+                <!-- 七殺 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">⚔️ 七殺星</div>
+                        <span class="badge-pill badge-rose">孤傲將軍</span>
+                    </div>
+                    <div class="star-motto">「我不是不想解釋，而是我只想用勝負結果說話。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 目標極度明確、不喜廢話、衝鋒陷陣、成敗一肩承擔。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 危機處理能力極強、絕境逆轉、敢於承擔巨大責任。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 缺乏耐心傾聽、給身邊人壓迫感、孤芳自賞容易犯小人。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合開疆闢土的獨立業務或高難度專案；在感情中切忌把另一半當下屬指揮。</div>
+                </div>
+                <!-- 破軍 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🌪️ 破軍星</div>
+                        <span class="badge-pill badge-rose">革命先鋒</span>
+                    </div>
+                    <div class="star-motto">「舊的不去新的不來，打爛重建才是新生命！」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 破壞與重組、痛恨官僚僵化、敢冒大險、顛覆傳統。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 破局創新、從零到一開創全新商業模式、極具突破性。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 喜新厭舊、三分鐘熱度、容易在局勢大好時親手毀掉成果。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合新創團隊與轉型改造案；感情需要不斷注入新鮮感，平淡最容易引發海嘯。</div>
+                </div>
+                <!-- 貪狼 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🎭 貪狼星</div>
+                        <span class="badge-pill badge-rose">慾望之王</span>
+                    </div>
+                    <div class="star-motto">「人生苦短，若不能盡情體驗世間精彩，活著有何意義？」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 八面玲瓏、學習力強、才華橫溢、慾望驅動、重視社交人情。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 頂級人際公關手腕、敏銳察覺他人需求、跨領域雜學大師。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 容易分心涉獵過雜、意志力搖擺、對誘惑防禦力較低。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合公關、商務拓展、娛樂行銷；感情上容易被誤會多情，需學會明確邊界感。</div>
+                </div>
+            </div>
+
+            <!-- 領導型容器 (預設隱藏) -->
+            <div class="star-cards-container" id="starGroupLead" style="display: none;">
+                <!-- 紫微 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">👑 紫微星</div>
+                        <span class="badge-pill badge-amber">帝王至尊</span>
+                    </div>
+                    <div class="star-motto">「我可以慈眉善目，但千萬別在我的疆域裡挑戰權威。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 貴氣尊嚴、掌控全局、注重體面、天生領袖氣質。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 高度大局觀、善於整合大資源、自帶讓人信服的威嚴。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 虛榮愛面子、耳根子軟聽信阿諛、無輔佐星曜時易成「孤君暴君」。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合擔任高層主管或具備品牌光環的事業；伴侶必須給足面子，不可當眾拆台。</div>
+                </div>
+                <!-- 天府 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🏰 天府星</div>
+                        <span class="badge-pill badge-amber">令主庫神</span>
+                    </div>
+                    <div class="star-motto">「坐擁金山銀山，安穩享受、細水長流才是真智慧。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 穩健保守、喜好美食享受、善守成、講求體面安逸。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 卓越的資產配置與守成能力、運籌帷幄、抗風險能力極強。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 缺乏衝勁與冒險魄力、容易固步自封、貪圖安逸不願改變。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合金融財會、資產管理、大型企業運營；對伴侶重視居家舒適度與品味。</div>
+                </div>
+                <!-- 武曲 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🪙 武曲星</div>
+                        <span class="badge-pill badge-amber">正財將軍</span>
+                    </div>
+                    <div class="star-motto">「標準作業程序（SOP）與冷冰冰的數字，是開啟我的唯一方式。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 剛毅果決、重視商業邏輯、不苟言笑、講求投入產出比（ROI）。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 對金錢金流極度敏銳、超強執行力、吃苦耐勞不找藉口。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 說話太直像刀子、不解風情、缺乏同理心與情緒價值。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合專案管理、科技工程、財務投資；在感情中別用「買東西送禮」代替陪伴。</div>
+                </div>
+                <!-- 天相 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">📜 天相星</div>
+                        <span class="badge-pill badge-amber">御前宰相</span>
+                    </div>
+                    <div class="star-motto">「熱腸古道、端莊得體，把每個人的關係協調到最舒服。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 斯文儒雅、重義氣、善折衝協調、講求門面與衣著打扮。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 卓越的秘書幕僚特質、居中撮合談判、極高人緣好感度。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 容易猶豫不決、粉飾太平、依賴強者做決定、難以承擔最後責任。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合幕僚長、人力資源、外交公關；感情中是溫柔體貼的好伴侶，但也容易受傷。</div>
+                </div>
+                <!-- 廉貞 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">⚖️ 廉貞星</div>
+                        <span class="badge-pill badge-amber">外交司法官</span>
+                    </div>
+                    <div class="star-motto">「面子是我的死穴，只要踩到我的底線，朋友也能變仇人。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 心思縝密、原則極強、帶有傲骨、次桃花星、擅長察言觀色。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 政治手腕高明、極具洞察力、兼具創意與紀律。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 疑心重、容易鑽牛角尖、死要面子活受罪、情緒起伏深沉。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合法務稽核、政治外交、高階談判；感情中佔有慾強，極度重視忠誠度。</div>
+                </div>
+            </div>
+
+            <!-- 支援型容器 (預設隱藏) -->
+            <div class="star-cards-container" id="starGroupSupport" style="display: none;">
+                <!-- 太陽 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">☀️ 太陽星</div>
+                        <span class="badge-pill badge-cyan">光明使者</span>
+                    </div>
+                    <div class="star-motto">「我希望照亮所有人，因為我天生渴望被看見與認同。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 熱情博愛、好打抱不平、不計成本付出、熱愛制定規則。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 頂級演說感染力、號召群眾、點燃團隊熱情、公眾影響力。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 打腫臉充胖子、燃燒自己照亮別人卻無人感激、易積怨爆發。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合教育演講、自媒體、公益傳播；伴侶要懂得適時讚美與崇拜，不可潑冷水。</div>
+                </div>
+                <!-- 巨門 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🗣️ 巨門星</div>
+                        <span class="badge-pill badge-cyan">真理法官</span>
+                    </div>
+                    <div class="star-motto">「真相可能刺耳，但唯有質疑與辯論，才能找到真正的破綻。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 批判思維、觀察細膩、善於辯論、暗曜特質（易看透陰暗面）。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 漏洞尋找專家、深層研究專研、極具說服力的辯證口才。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 說話太毒容易樹敵、生性多疑缺乏安全感、口舌是非多。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合律師、記者、品質檢驗、深度研究；感情中需學會放下「一定要講贏對方」的執念。</div>
+                </div>
+                <!-- 天機 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🧠 天機星</div>
+                        <span class="badge-pill badge-cyan">策劃智囊</span>
+                    </div>
+                    <div class="star-motto">「邏輯是我的天賦，但想得太多也是我失眠的根源。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 反應靈敏、多思多慮、擅長策劃佈局、神經系統敏感。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 瞬息萬變的局勢應變力、精密的戰略推演、善於解決複雜技術問題。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 精神內耗嚴重、想得太多而行動太慢、容易焦慮神經質。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合系統架構師、企劃戰略顧問；感情中需要能安撫情緒、給予堅定安全感的伴侶。</div>
+                </div>
+            </div>
+
+            <!-- 合作型容器 (預設隱藏) -->
+            <div class="star-cards-container" id="starGroupCoop" style="display: none;">
+                <!-- 天同 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🧸 天同星</div>
+                        <span class="badge-pill badge-emerald" style="background: rgba(6, 214, 160, 0.15); color: #06d6a0;">福星童子</span>
+                    </div>
+                    <div class="star-motto">「不計較是我的善良，不是我傻；懂得知足才有真正的快樂。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 隨遇而安、純真善良、重視人情味、愛好休閒娛樂。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 親和力爆棚、化解人際衝突的潤滑劑、天生貴人運好。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 抗壓性較低、軟爛拖延、害怕衝突而委曲求全。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合藝文休閒、幼教諮商、服務業；在感情中容易依賴對方，需建立自我獨立性。</div>
+                </div>
+                <!-- 太陰 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🌙 太陰星</div>
+                        <span class="badge-pill badge-emerald" style="background: rgba(6, 214, 160, 0.15); color: #06d6a0;">月亮慈母</span>
+                    </div>
+                    <div class="star-motto">「溫柔是強大的力量，但細膩的心思也需要安穩的港灣。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 溫柔細緻、重視家庭與生活情調、善於理財儲蓄、母性特質。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 敏銳的藝術美感、耐心無微不至、擅長以柔克剛與不動產置產。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 多愁善感、易陷入情緒低潮、缺乏果斷決策的魄力。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合設計美學、房產投資、行政財務；感情上需要細膩且能給予充足儀式感的對象。</div>
+                </div>
+                <!-- 天梁 -->
+                <div class="star-card">
+                    <div class="star-header-row">
+                        <div class="star-name-badge">🍵 天梁星</div>
+                        <span class="badge-pill badge-emerald" style="background: rgba(6, 214, 160, 0.15); color: #06d6a0;">老者蔭星</span>
+                    </div>
+                    <div class="star-motto">「我有茶有故事，但可能需要你稍微忍受我愛碎念一點。」</div>
+                    <div class="star-field"><strong>原型特質：</strong> 老派成熟、愛講道理、熱心助人、逢凶化吉的庇護之星。</div>
+                    <div class="star-field"><strong>超能力天賦：</strong> 道德制高點公信力、危機仲裁調解、先遇險難後獲福報。</div>
+                    <div class="star-field"><strong>致命阿基里斯腱：</strong> 愛說教碎碎念、好為人師、不自覺插手別人家務事。</div>
+                    <div class="star-field"><strong>情場與職場攻略：</strong> 適合法規監管、醫療保健、長照教育；感情上容易變成「老夫老妻」模式，需增添浪漫情趣。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模組 3：四化能量動能引擎 -->
+        <div class="section-box">
+            <div class="section-header">
+                <div class="section-icon">⚡</div>
+                <div>
+                    <h2 class="section-title">能量引擎：天干四化（祿·權·科·忌）的時空流轉</h2>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">星曜是演員，宮位是舞台，而四化則是<strong>「導演發動的關鍵事件與情緒化學反應」</strong>！</p>
+                </div>
+            </div>
+
+            <div class="si-hua-grid">
+                <!-- 化祿 -->
+                <div class="hua-card hua-lu">
+                    <div class="hua-badge badge-lu">🌱 化祿（春·緣起機遇）</div>
+                    <h4 style="font-size: 1.15rem; color: #ffffff; margin-bottom: 0.5rem;">擴展、多餘、機會、樂觀</h4>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
+                        代表情緣的開始、資源的滋生與好處。化祿在哪個宮位，那裡就會變得寬鬆、充滿機會，但若太多也容易讓人懈怠貪圖享樂。
+                    </p>
+                    <div style="font-size: 0.82rem; color: #6ee7b7; margin-top: 0.8rem; font-weight: 700;">
+                        💡 現代詮釋：商機開拓、人脈擴張、現金流入
+                    </div>
+                </div>
+
+                <!-- 化權 -->
+                <div class="hua-card hua-quan">
+                    <div class="hua-badge badge-quan">🔥 化權（夏·全力推進）</div>
+                    <h4 style="font-size: 1.15rem; color: #ffffff; margin-bottom: 0.5rem;">掌控、實權、執行、霸道</h4>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
+                        代表把想法落實為行動的強大力量，追求主導權與發言權。化權在哪裡，那裡就充滿競爭、要求完美與不服輸的拼勁。
+                    </p>
+                    <div style="font-size: 0.82rem; color: #fca5a5; margin-top: 0.8rem; font-weight: 700;">
+                        💡 現代詮釋：升遷掌權、高壓執行、專業技術
+                    </div>
+                </div>
+
+                <!-- 化科 -->
+                <div class="hua-card hua-ke">
+                    <div class="hua-badge badge-ke">🌾 化科（秋·名聲理性）</div>
+                    <h4 style="font-size: 1.15rem; color: #ffffff; margin-bottom: 0.5rem;">名譽、修飾、面子、理性</h4>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
+                        代表名聲傳播、貴人解厄、體面與理性思考。化科就像一件優雅的外套，給予你名氣與修養，但也容易讓人為了面子而掩蓋問題。
+                    </p>
+                    <div style="font-size: 0.82rem; color: #67e8f9; margin-top: 0.8rem; font-weight: 700;">
+                        💡 現代詮釋：證照考試、品牌美譽、冷靜理性
+                    </div>
+                </div>
+
+                <!-- 化忌 -->
+                <div class="hua-card hua-ji">
+                    <div class="hua-badge badge-ji">❄️ 化忌（冬·最強燃料）</div>
+                    <h4 style="font-size: 1.15rem; color: #ffffff; margin-bottom: 0.5rem;">空缺、執念、焦慮、底層動力</h4>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
+                        不是倒楣！化忌是<strong>「你覺得自己不夠好、最害怕失去的空缺」</strong>。正因感到飢餓，才會拼命捕獵！化忌是你這輩子最大的功課，也是突破極限的最強燃料。
+                    </p>
+                    <div style="font-size: 0.82rem; color: #d8b4fe; margin-top: 0.8rem; font-weight: 700;">
+                        💡 現代詮釋：深層痛點、專注執著、破繭成蝶
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模組 4：實戰解盤 SOP 四步法 -->
+        <div class="section-box">
+            <div class="section-header">
+                <div class="section-icon">🛠️</div>
+                <div>
+                    <h2 class="section-title">實戰推演：高手看盤的 4 大標準步驟（SOP）</h2>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">告別死背，跟著大耕老師的解盤邏輯建立清晰推演鏈！</p>
+                </div>
+            </div>
+
+            <div class="step-flow">
+                <div class="step-box">
+                    <div class="step-num">STEP 01</div>
+                    <div class="sop-title">定本命核心主星</div>
+                    <div class="sop-desc">
+                        先看<strong>命宮主星</strong>屬於四大類（開創/領導/支援/合作）哪一種，確立這張盤的「底層人格出廠值」與思維慣性。
+                    </div>
+                </div>
+                <div class="step-box">
+                    <div class="step-num">STEP 02</div>
+                    <div class="sop-title">照對宮看隱性心理</div>
+                    <div class="sop-desc">
+                        立刻檢視<strong>遷移宮（對宮）</strong>！對宮是照妖鏡，看他出外在社會環境的投射形象，以及內心深處的真正渴望。
+                    </div>
+                </div>
+                <div class="step-box">
+                    <div class="step-num">STEP 03</div>
+                    <div class="sop-title">構建三方四正矩陣</div>
+                    <div class="sop-desc">
+                        連線<strong>財帛宮（生存手段）＋ 官祿宮（價值追求）</strong>，分析這個人如何在現實世界中賺錢、做事與自我實現。
+                    </div>
+                </div>
+                <div class="step-box">
+                    <div class="step-num">STEP 04</div>
+                    <div class="sop-title">掛入大限與流年四化</div>
+                    <div class="sop-desc">
+                        將<strong>流年天干四化（祿權科忌）</strong>疊合在宮位上，找出「哪裡引動機遇（祿）」、「哪裡引發衝突執念（忌）」，精準斷事！
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模組 5：大師命盤診療所（感情/事業/財富） -->
+        <div class="section-box">
+            <div class="section-header">
+                <div class="section-icon">🩺</div>
+                <div>
+                    <h2 class="section-title">大師解盤診療所：常見人生三大難題深度剖析</h2>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">取材自《紫微攻略》真實案例，用邏輯破解現代人最痛的迷茫！</p>
+                </div>
+            </div>
+
+            <div class="clinic-grid">
+                <!-- 感情篇 -->
+                <div class="clinic-card">
+                    <div class="clinic-tag">❤️ 感情親密關係</div>
+                    <div class="clinic-q">為什麼我總是「相愛容易相處難」，甚至容易遇到不對的人？</div>
+                    <div class="clinic-ans">
+                        <strong>大師診療脈絡：</strong><br>
+                        1. 檢視<strong>夫妻宮與對宮官祿宮</strong>：許多人事業心強（官祿宮好），在感情中卻渴望一個能無條件崇拜自己、順從自己的對象（夫妻宮坐柔弱星）。<br>
+                        2. <strong>致命盲點：</strong> 當你因為對方的順從而在一起，久了卻又嫌棄對方沒上進心、不能分擔現實壓力！<br>
+                        3. <strong>解法：</strong> 明白親密關係是對宮官祿的平衡，停止用自己的工作標準來要求伴侶的生活方式。
+                    </div>
+                </div>
+
+                <!-- 財富篇 -->
+                <div class="clinic-card">
+                    <div class="clinic-tag">💰 財富水庫診斷</div>
+                    <div class="clinic-q">年薪百萬現金流很強，為什麼銀行戶頭總是空的？</div>
+                    <div class="clinic-ans">
+                        <strong>大師診療脈絡：</strong><br>
+                        1. 檢視<strong>財帛宮 vs 田宅宮</strong>：財帛宮代表「水龍頭」，田宅宮代表「水庫儲水池」。<br>
+                        2. <strong>致命盲點：</strong> 若財帛坐祿（賺錢快），但田宅宮坐破軍或化忌，代表家底存不住、錢一進來就立刻被轉投資或買奢侈品消耗掉！<br>
+                        3. <strong>解法：</strong> 強迫實施「不動產定存法」或建立難以隨意動用的硬核資產壁壘，封死田宅水庫的裂縫。
+                    </div>
+                </div>
+
+                <!-- 職涯篇 -->
+                <div class="clinic-card">
+                    <div class="clinic-tag">💼 職涯創業定位</div>
+                    <div class="clinic-q">我到底該當個穩定上班族，還是出來創業當老闆？</div>
+                    <div class="clinic-ans">
+                        <strong>大師診療脈絡：</strong><br>
+                        1. 檢視<strong>命宮格局與三方四正</strong>：若為「殺破狼」或「紫武廉」，骨子裡渴望冒險突破，安穩體制只會讓其精神萎靡。<br>
+                        2. <strong>若是「機月同梁」：</strong> 擅長在既有體系與規則下做精密規劃與運營，若盲目跟風獨立創業，常因難以承擔重大風險而心力交瘁。<br>
+                        3. <strong>解法：</strong> 機月同梁可做「體系內的合夥人」或「專業顧問」，殺破狼則適合在新領域開疆拓土。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模組 6：互動闖關測驗（新手出村考核） -->
+        <div class="quiz-card">
+            <h2 style="font-size: 1.7rem; font-weight: 900; color: #ffffff; margin-bottom: 0.6rem; text-align: center;">
+                🎓 紫微斗數「新手村」出村考核小測驗
+            </h2>
+            <p style="color: #94a3b8; text-align: center; margin-bottom: 2rem; font-size: 0.95rem;">
+                檢驗你是否已經掌握底層解盤思維！點擊你的直覺判斷，看大師如何解析：
+            </p>
+
+            <!-- 題目 1 -->
+            <div style="margin-bottom: 2.2rem;">
+                <div class="quiz-q-title">
+                    <span>Q1.</span> 朋友看到自己流年命盤「夫妻宮坐破軍化忌」，哭著說自己明年注定要被劈腿離婚，身為懂邏輯的高手，你應該怎麼回答？
+                </div>
+                <div class="quiz-options">
+                    <button class="quiz-opt-btn" onclick="checkQuiz(1, 'A')">
+                        <span>A. 對啊，破軍化忌是大破敗，建議趕快找老師畫符改運。</span>
+                        <span>👉</span>
+                    </button>
+                    <button class="quiz-opt-btn" onclick="checkQuiz(1, 'B')">
+                        <span>B. 破軍代表舊去新來，化忌代表空缺與渴望。這代表明年兩人關係容易打破既有舊相處模式，適合主動安排一起搬家、旅行或重塑彼此互動習慣，化被動為突破！</span>
+                        <span>👉</span>
+                    </button>
+                    <button class="quiz-opt-btn" onclick="checkQuiz(1, 'C')">
+                        <span>C. 只要都不講話冷處理，就能避開這個兇星。</span>
+                        <span>👉</span>
+                    </button>
+                </div>
+                <div class="quiz-feedback" id="quizFeedback1"></div>
+            </div>
+
+            <!-- 題目 2 -->
+            <div style="margin-bottom: 2.2rem;">
+                <div class="quiz-q-title">
+                    <span>Q2.</span> 要判斷一個人是否能「真正守得住財富、成為真正的有錢人」，最核心的宮位組合是哪一組？
+                </div>
+                <div class="quiz-options">
+                    <button class="quiz-opt-btn" onclick="checkQuiz(2, 'A')">
+                        <span>A. 只看財帛宮，只要財帛宮星曜耀眼就一定是大富翁。</span>
+                        <span>👉</span>
+                    </button>
+                    <button class="quiz-opt-btn" onclick="checkQuiz(2, 'B')">
+                        <span>B. 財帛宮（進財管道水龍頭）＋ 田宅宮（資產水庫與不動產庫藏）。</span>
+                        <span>👉</span>
+                    </button>
+                    <button class="quiz-opt-btn" onclick="checkQuiz(2, 'C')">
+                        <span>C. 只看父母宮，看有沒有遺產可以繼承。</span>
+                        <span>👉</span>
+                    </button>
+                </div>
+                <div class="quiz-feedback" id="quizFeedback2"></div>
+            </div>
+
+            <!-- 題目 3 -->
+            <div style="margin-bottom: 1rem;">
+                <div class="quiz-q-title">
+                    <span>Q3.</span> 命宮與遷移宮的「對宮」幾何關係，在心理學上的真意是什麼？
+                </div>
+                <div class="quiz-options">
+                    <button class="quiz-opt-btn" onclick="checkQuiz(3, 'A')">
+                        <span>A. 命宮代表本我真實個性，遷移宮是對宮的明鏡——展現出外社交時的投射面具與外在環境的回饋。</span>
+                        <span>👉</span>
+                    </button>
+                    <button class="quiz-opt-btn" onclick="checkQuiz(3, 'B')">
+                        <span>B. 遷移宮代表這輩子一定會移民出國，跟命宮完全沒有關係。</span>
+                        <span>👉</span>
+                    </button>
+                </div>
+                <div class="quiz-feedback" id="quizFeedback3"></div>
+            </div>
+        </div>
+
+        <!-- 結語金句 Banner -->
+        <div style="background: linear-gradient(135deg, rgba(0, 242, 255, 0.08) 0%, rgba(112, 0, 255, 0.12) 100%); border: 1px solid rgba(0, 242, 255, 0.35); border-radius: 20px; padding: 2.5rem; text-align: center; margin: 3.5rem 0;">
+            <h2 style="font-size: 1.85rem; font-weight: 900; color: #ffffff; margin-bottom: 0.8rem;">
+                ✨ 知命是為了活得更清醒，而不是為自己找藉口
+            </h2>
+            <p style="color: #cbd5e1; max-width: 780px; margin: 0 auto 1.5rem auto; line-height: 1.85; font-size: 1.02rem;">
+                這張命盤不是用來限制你的天花板，而是讓你看清自己的齒輪長什麼樣子。<br>
+                在對的時機做順應天賦的選擇，在化忌來臨時沉潛修煉自己的短板。<br>
+                <strong>掌握命理的底層邏輯，你就是自己人生劇本最優秀的總導演！</strong>
+            </p>
+            <div style="display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                <a href="../search.html" style="background: linear-gradient(135deg, var(--cosmic-cyan), var(--cosmic-violet)); color: #000; font-weight: 800; padding: 0.75rem 1.8rem; border-radius: 999px; text-decoration: none; box-shadow: 0 0 25px rgba(0, 242, 255, 0.35);">
+                    🔍 瀏覽更多精彩知識公告
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 互動腳本邏輯 -->
+    <script>
+        // 十二宮位資料庫
+        const palaceData = {
+            4: {
+                title: "👑 命宮（The Self）",
+                tag: "核心本我",
+                desc: "個人的出廠人格設定、思考本能與核心價值觀。代表你如何看待世界，以及在完全放鬆時最真實的自我樣貌。",
+                oppositeIdx: 10,
+                oppositeName: "遷移宮（社交面具與外在投射）",
+                oppositeDesc: "命宮（內在性格）與遷移宮（出外展現與社交表現）互為表裡。外在環境如何回應你，反映的正是你潛意識在外界的投影！",
+                triIdxs: [0, 8],
+                triName: "財帛宮 ＋ 官祿宮（生存事業鐵三角）",
+                triDesc: "個性（命宮）決定事業追求（官祿宮），進而影響進財交易手段（財帛宮）。這三者構成人生最關鍵的實踐矩陣。"
+            },
+            2: {
+                title: "❤️ 夫妻宮（Relationship Pattern）",
+                tag: "親密投射",
+                desc: "你在親密關係中的期待模式、盲點與恐懼。它不是另一半的長相，而是你渴望在伴侶身上看到或投射出的特質。",
+                oppositeIdx: 8,
+                oppositeName: "官祿宮（事業自我實現）",
+                oppositeDesc: "夫妻宮與官祿宮互為對宮！你追求什麼樣的事業價值，決定了你需要什麼樣的情感後盾。事業受挫往往直接投射在伴侶衝突上。",
+                triIdxs: [6, 10],
+                triName: "福德宮 ＋ 遷移宮（情感精神三方）",
+                triDesc: "福德宮（深層精神慾望）與遷移宮（社交外緣）深度影響夫妻宮的幸福感與親密關係品質。"
+            },
+            0: {
+                title: "🪙 財帛宮（Financial Pipeline）",
+                tag: "現金流水龍頭",
+                desc: "你與金錢的互動關係、賺錢管道、交易手段與花錢態度。注意：它代表金錢的進出流動，而不是累積的總財富！",
+                oppositeIdx: 6,
+                oppositeName: "福德宮（心態與享樂慾望）",
+                oppositeDesc: "財帛與福德互為對宮。賺錢的手段（財帛）受到內心精神追求與焦慮程度（福德）的強烈驅動；衝動消費往往源自精神空虛。",
+                triIdxs: [4, 8],
+                triName: "命宮 ＋ 官祿宮（財富三角）",
+                triDesc: "命宮（天賦特質）與官祿宮（事業平台）決定財帛宮進財的層次與穩健度。"
+            },
+            8: {
+                title: "💼 官祿宮（Career & Purpose）",
+                tag: "自我實現舞台",
+                desc: "你在社會上的價值追求、做事態度、工作責任感與奮鬥模式。是現代人尋求成就感的核心宮位。",
+                oppositeIdx: 2,
+                oppositeName: "夫妻宮（親密關係）",
+                oppositeDesc: "官祿宮與夫妻宮互為對宮。過度沈溺於工作往往導致親密關係疏離；反之，穩定的親密關係能提供強大事業後盾。",
+                triIdxs: [4, 0],
+                triName: "命宮 ＋ 財帛宮（事業行動同盟）",
+                triDesc: "你的個性（命宮）透過工作（官祿宮）發揮影響力，並收穫市場報酬（財帛宮）。"
+            },
+            7: {
+                title: "🏡 田宅宮（Wealth Reservoir）",
+                tag: "資產儲水池",
+                desc: "真正的財富水庫、不動產、祖產、家庭氛圍與心靈歸屬感。決定你能不能真正把賺來的錢守住存下！",
+                oppositeIdx: 1,
+                oppositeName: "子女宮（傳承與桃花產出）",
+                oppositeDesc: "田宅宮（收斂、沉澱、資產儲存）與子女宮（發散、生育、投資消費）互為對宮，展現「蓄積 vs 支出」的動態平衡。",
+                triIdxs: [3, 11],
+                triName: "兄弟宮 ＋ 疾厄宮（家庭與身心防線）",
+                triDesc: "家庭支持（田宅）連動原生同儕（兄弟）與身心安全感（疾厄），構成最底層的生活防禦系統。"
+            },
+            6: {
+                title: "🧘 福德宮（Soul & Desire）",
+                tag: "潛意識精神世界",
+                desc: "精神靈魂、內在幸福感、對生活的品味、隱藏的投機慾望與抗壓心理韌性。",
+                oppositeIdx: 0,
+                oppositeName: "財帛宮（現實金錢交易）",
+                oppositeDesc: "內心的精神富足（福德）直接反映在看待金錢的氣度（財帛）。福德宮若焦躁不安，財帛宮往往難以冷靜理財。",
+                triIdxs: [2, 10],
+                triName: "夫妻宮 ＋ 遷移宮（心理幸福感網絡）",
+                triDesc: "心靈的愉悅（福德）深深影響伴侶關係（夫妻）以及出外的人際吸引力（遷移）。"
+            },
+            10: {
+                title: "🌍 遷移宮（Social Horizon）",
+                tag: "社會社交面具",
+                desc: "出外運勢、遠行發展、社交面具、別人初次見到你的第一印象，以及面對陌生環境的應變能力。",
+                oppositeIdx: 4,
+                oppositeName: "命宮（內在本我）",
+                oppositeDesc: "遷移宮就像命宮掛在門口的外交照妖鏡。命宮是你在家穿睡衣的樣子，遷移宮是你在社交名利場穿禮服的表現！",
+                triIdxs: [2, 6],
+                triName: "夫妻宮 ＋ 福德宮（外緣同盟）",
+                triDesc: "出外的社交魅力直接牽動情感人緣與內心見聞的豐盈度。"
+            },
+            11: {
+                title: "🩺 疾厄宮（Health & Mind-Body）",
+                tag: "身心健康防線",
+                desc: "身體先天體質、器官弱點，以及長期心理壓力在生理上的累積反饋。是潛意識最誠實的鏡子。",
+                oppositeIdx: 5,
+                oppositeName: "父母宮（遺傳基因與體制）",
+                oppositeDesc: "疾厄宮與父母宮互為對宮。身體體質承接自原生家庭基因（父母），同時父母的相處與體制壓力也最容易直接誘發身心疾病！",
+                triIdxs: [3, 7],
+                triName: "兄弟宮 ＋ 田宅宮（家族生理網絡）",
+                triDesc: "居家環境安全度（田宅）與身心機能（疾厄）息息相關。"
+            },
+            1: {
+                title: "🌱 子女宮（Creation & Legacy）",
+                tag: "造物創造傳承",
+                desc: "後代子嗣、親自培育的學生與下屬、個人作品的產出，以及性生活與社交玩樂的慾望表達。",
+                oppositeIdx: 7,
+                oppositeName: "田宅宮（資產收斂水庫）",
+                oppositeDesc: "子女宮重「花費、教育、播種、享樂」，田宅宮重「累積、傳承、購置、守成」。",
+                triIdxs: [5, 9],
+                triName: "父母宮 ＋ 僕役宮（晚輩階級軸）",
+                triDesc: "向上尊親（父母）、向下傳承（子女）、橫向帶領眾人（僕役）。"
+            },
+            3: {
+                title: "🤝 兄弟宮（Peers & Cash Vault）",
+                tag: "同儕手足與現金庫",
+                desc: "親密手足、合夥平級夥伴、現金轉換的樞紐與短線流動性儲備。",
+                oppositeIdx: 9,
+                oppositeName: "僕役宮（大眾人脈社群）",
+                oppositeDesc: "核心身邊圈子（兄弟）與泛泛之交的公眾人脈（僕役）互為對照。",
+                triIdxs: [7, 11],
+                triName: "田宅宮 ＋ 疾厄宮（私密空間三角）",
+                triDesc: "資產金庫、家庭防禦與同儕資源的緊密結合。"
+            },
+            5: {
+                title: "🏛️ 父母宮（Origin & Authority）",
+                tag: "原生體制與長輩",
+                desc: "原生家庭父母關係、政府公家體制、師長主管階級、法律文書契約與家族遺傳相貌。",
+                oppositeIdx: 11,
+                oppositeName: "疾厄宮（內在身心）",
+                oppositeDesc: "外部權威的期待（父母）常常直接轉化為內心深處的焦慮與身體症狀（疾厄）。",
+                triIdxs: [1, 9],
+                triName: "子女宮 ＋ 僕役宮（長幼尊卑軸）",
+                triDesc: "與長輩、晚輩及社會階級的互動禮法架構。"
+            },
+            9: {
+                title: "👥 僕役宮（The Network）",
+                tag: "群眾人脈與粉絲",
+                desc: "廣泛的朋友圈、下屬、粉絲、群眾關係以及你在社群團體中的聲量與共鳴度。",
+                oppositeIdx: 3,
+                oppositeName: "兄弟宮（核心死黨圈）",
+                oppositeDesc: "面對大眾時的群體關係（僕役）與少數親密知己的鐵桿交情（兄弟）互為表裡。",
+                triIdxs: [1, 5],
+                triName: "子女宮 ＋ 父母宮（社會關係網絡）",
+                triDesc: "整合長輩、平輩與晚輩的完整社交生態系。"
+            }
+        };
+
+        // 選擇宮位連動
+        function selectPalace(idx) {
+            const data = palaceData[idx];
+            if (!data) return;
+
+            // 清除所有標籤樣式
+            document.querySelectorAll('.palace-cell').forEach(cell => {
+                cell.classList.remove('selected', 'opposite-match', 'tri-match');
+            });
+
+            // 標註選中
+            const selectedCell = document.querySelector(`.palace-cell[data-idx="${idx}"]`);
+            if (selectedCell) selectedCell.classList.add('selected');
+
+            // 標註對宮
+            const oppCell = document.querySelector(`.palace-cell[data-idx="${data.oppositeIdx}"]`);
+            if (oppCell) oppCell.classList.add('opposite-match');
+
+            // 標註三方
+            if (data.triIdxs) {
+                data.triIdxs.forEach(tIdx => {
+                    const triCell = document.querySelector(`.palace-cell[data-idx="${tIdx}"]`);
+                    if (triCell) triCell.classList.add('tri-match');
+                });
+            }
+
+            // 更新右側面板
+            document.getElementById('detailPalaceTitle').textContent = data.title;
+            document.getElementById('detailPalaceTag').textContent = data.tag;
+            document.getElementById('detailPalaceDesc').textContent = data.desc;
+
+            document.getElementById('detailOppositeTitle').textContent = "🪞 對宮照鏡：" + data.oppositeName;
+            document.getElementById('detailOppositeDesc').textContent = data.oppositeDesc;
+
+            document.getElementById('detailTriTitle').textContent = "📐 三方同盟：" + data.triName;
+            document.getElementById('detailTriDesc').textContent = data.triDesc;
+        }
+
+        // 十四主星分頁切換
+        function switchStarTab(group) {
+            const groups = ['open', 'lead', 'support', 'coop'];
+            groups.forEach(g => {
+                const el = document.getElementById('starGroup' + g.charAt(0).toUpperCase() + g.slice(1));
+                if (el) el.style.display = 'none';
+            });
+
+            document.querySelectorAll('.star-tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            if (group === 'open') {
+                document.getElementById('starGroupOpen').style.display = 'grid';
+                document.querySelectorAll('.star-tab-btn')[0].classList.add('active');
+            } else if (group === 'lead') {
+                document.getElementById('starGroupLead').style.display = 'grid';
+                document.querySelectorAll('.star-tab-btn')[1].classList.add('active');
+            } else if (group === 'support') {
+                document.getElementById('starGroupSupport').style.display = 'grid';
+                document.querySelectorAll('.star-tab-btn')[2].classList.add('active');
+            } else if (group === 'coop') {
+                document.getElementById('starGroupCoop').style.display = 'grid';
+                document.querySelectorAll('.star-tab-btn')[3].classList.add('active');
+            }
+        }
+
+        // 測驗答題邏輯
+        function checkQuiz(qNum, choice) {
+            const feedback = document.getElementById('quizFeedback' + qNum);
+            feedback.style.display = 'block';
+
+            if (qNum === 1) {
+                if (choice === 'B') {
+                    feedback.className = 'quiz-feedback correct';
+                    feedback.innerHTML = '🎉 <strong>完全正確！這才是大師級的解盤思維！</strong><br>破軍代表除舊布新，化忌代表對關係感到空缺與深層渴望。如果雙方關係本來就僵化平淡，坐等命運只會引爆摩擦；若主動安排環境改變（如一起旅行、重新裝潢、共同挑戰新目標），就能把這股破舊立新的衝勁轉化為感情升級的契機！';
+                } else {
+                    feedback.className = 'quiz-feedback wrong';
+                    feedback.innerHTML = '❌ <strong>答錯囉！這是宿命論迷信的陷阱！</strong><br>破軍化忌絕不等於注定離婚。越是冷處理或害怕，只會讓內心的匱乏與不滿在暗中發酵。唯有認清能量流轉，主動打破舊模式建立新溝通，才是破局之道。';
+                }
+            } else if (qNum === 2) {
+                if (choice === 'B') {
+                    feedback.className = 'quiz-feedback correct';
+                    feedback.innerHTML = '🎉 <strong>太厲害了！掌握了財富的核心水庫模型！</strong><br>財帛宮只是「進出管道的水龍頭」，有許多高收入工程師或業務財帛宮極好，但田宅宮有破漏，賺得多花得更多，幾十年下來依然沒有底氣；反之，若田宅宮厚重穩健，即使財帛宮收入普通，也能透過不動產或堅實資產聚沙成塔！';
+                } else {
+                    feedback.className = 'quiz-feedback wrong';
+                    feedback.innerHTML = '❌ <strong>答錯囉！</strong><br>光看財帛宮是初學者的最大誤區！只看水龍頭水流大不大，卻不管底下的水庫有沒有漏水，是無法真正守住財富的。田宅宮才是真正的財富庫藏指標。';
+                }
+            } else if (qNum === 3) {
+                if (choice === 'A') {
+                    feedback.className = 'quiz-feedback correct';
+                    feedback.innerHTML = '🎉 <strong>答對了！這就是「對宮照鏡」的精髓！</strong><br>命宮代表你在私下或熟人面前的最原始自我；而遷移宮是你在面對外在陌生世界時拿出來的社交面具與應變手段。外在環境如何回應你，其實正反映了你內心深處的投影！';
+                } else {
+                    feedback.className = 'quiz-feedback wrong';
+                    feedback.innerHTML = '❌ <strong>答錯囉！</strong><br>遷移宮不只是出國移民！在現代社會，遷移宮代表出門在外的人脈魅力、面對社會公眾時的應對進退，與命宮互為不可分割的表裡關係。';
+                }
+            }
+        }
+
+        // 初始化選中命宮
+        window.addEventListener('DOMContentLoaded', () => {
+            selectPalace(4);
+        });
+    </script>
+</body>
+</html>

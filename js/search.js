@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "大師級紫微斗數全圖解教學：從底層邏輯看懂你的命盤人生攻略",
+        date: "2026-09-20",
+        path: "announcements/z9k3v8m4.html",
+        preview: "打破宿命迷信與死記硬背！以現代心理學與時空統計學拆解：十二宮位立體矩陣、十四主星性格光譜、對宮照鏡與四化（祿權科忌）能量引擎。內附互動式十二宮星盤模擬器與實戰人生解盤診所。"
+    },
+    {
         title: "告別混亂架構：UML 類別圖全圖解教學（以電商系統為例）",
         date: "2026-09-20",
         path: "announcements/u8m3k7v2.html",
