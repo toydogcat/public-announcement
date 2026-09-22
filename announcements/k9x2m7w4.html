@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【最新發布 v1.1.1】用 Markdown 就能寫後端！JIT Protocol Synthesis (jit-api) 全圖解入門與實戰心得</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: rgba(0, 242, 255, 0.25);
+            --secondary-glow: rgba(112, 0, 255, 0.28);
+            --emerald-glow: rgba(16, 185, 129, 0.25);
+            --amber-glow: rgba(245, 158, 11, 0.22);
+            --danger-glow: rgba(239, 68, 68, 0.25);
+            --cyber-blue: #00f2ff;
+            --cyber-purple: #9d4edd;
+            --cyber-violet: #7000ff;
+            --cyber-emerald: #10b981;
+            --cyber-amber: #f59e0b;
+            --cyber-red: #ef4444;
+            --card-bg-dark: rgba(13, 17, 27, 0.85);
+            --card-border: rgba(0, 242, 255, 0.2);
+            --code-bg: #070a11;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #060910;
+            color: #dbe4ee;
+            line-height: 1.8;
+            background-image: 
+                radial-gradient(circle at 10% 12%, rgba(0, 242, 255, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 90% 45%, rgba(112, 0, 255, 0.09) 0%, transparent 50%),
+                radial-gradient(circle at 45% 85%, rgba(16, 185, 129, 0.06) 0%, transparent 40%);
+            background-attachment: fixed;
+            padding-bottom: 5rem;
+        }
+
+        code, pre, .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* 頂部導航列 */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 2.5rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-logo-badge {
+            background: linear-gradient(135deg, var(--cyber-blue), var(--cyber-violet));
+            color: #000;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link-btn {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link-btn:hover {
+            color: var(--cyber-blue);
+        }
+
+        /* Hero 區塊 */
+        .hero-section {
+            text-align: center;
+            padding: 2.5rem 1rem 3.5rem;
+            position: relative;
+        }
+
+        .version-badge-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(0, 242, 255, 0.08);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 999px;
+            padding: 0.4rem 1.3rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 25px var(--primary-glow);
+        }
+
+        .version-tag {
+            background: var(--cyber-blue);
+            color: #050811;
+            font-weight: 900;
+            font-size: 0.75rem;
+            padding: 0.15rem 0.55rem;
+            border-radius: 999px;
+            letter-spacing: 0.05em;
+        }
+
+        .version-status {
+            color: #e2e8f0;
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            font-weight: 900;
+            line-height: 1.25;
+            background: linear-gradient(135deg, #ffffff 20%, #90e0ef 60%, #c77dff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.18rem;
+            color: #94a3b8;
+            max-width: 820px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.8;
+        }
+
+        .meta-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.35rem 0.9rem;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .chip-cyan { border-color: rgba(0, 242, 255, 0.3); color: var(--cyber-blue); }
+        .chip-emerald { border-color: rgba(16, 185, 129, 0.3); color: var(--cyber-emerald); }
+        .chip-violet { border-color: rgba(157, 78, 221, 0.3); color: var(--cyber-purple); }
+
+        /* 核心摘要卡片 */
+        .summary-card {
+            background: linear-gradient(145deg, rgba(16, 24, 40, 0.95) 0%, rgba(10, 14, 24, 0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.25);
+            border-radius: 20px;
+            padding: 2.2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-violet), var(--cyber-emerald));
+        }
+
+        .golden-quote {
+            background: rgba(0, 242, 255, 0.07);
+            border-left: 4px solid var(--cyber-blue);
+            border-radius: 0 12px 12px 0;
+            padding: 1.1rem 1.4rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .highlight-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 1.2rem 1.1rem;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .highlight-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 242, 255, 0.35);
+        }
+
+        .highlight-icon {
+            font-size: 1.7rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .highlight-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+        }
+
+        .highlight-desc {
+            font-size: 0.86rem;
+            color: #94a3b8;
+            line-height: 1.55;
+        }
+
+        /* 通用章節標題 */
+        .section-header {
+            margin-bottom: 1.8rem;
+            margin-top: 3.5rem;
+        }
+
+        .section-badge {
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--cyber-blue);
+            margin-bottom: 0.4rem;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.96rem;
+            color: #8899ac;
+            margin-top: 0.3rem;
+        }
+
+        /* 生命週期三階段圖解 */
+        .lifecycle-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.8rem 0 2.5rem;
+        }
+
+        .phase-card {
+            background: var(--card-bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.8rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .phase-card.phase-1 { border-top: 4px solid var(--cyber-blue); }
+        .phase-card.phase-2 { border-top: 4px solid var(--cyber-amber); }
+        .phase-card.phase-3 { border-top: 4px solid var(--cyber-emerald); }
+
+        .phase-number {
+            font-size: 0.78rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            width: fit-content;
+        }
+
+        .phase-1 .phase-number { background: rgba(0, 242, 255, 0.15); color: var(--cyber-blue); }
+        .phase-2 .phase-number { background: rgba(245, 158, 11, 0.15); color: var(--cyber-amber); }
+        .phase-3 .phase-number { background: rgba(16, 185, 129, 0.15); color: var(--cyber-emerald); }
+
+        .phase-heading {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+        }
+
+        .phase-text {
+            font-size: 0.92rem;
+            color: #94a3b8;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .phase-footer {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 10px;
+            padding: 0.75rem 0.9rem;
+            font-size: 0.82rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* 步驟指南卡片 */
+        .step-card {
+            background: var(--card-bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 18px;
+            padding: 2rem;
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .step-index {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--cyber-blue), var(--cyber-violet));
+            color: #000;
+            font-weight: 900;
+            font-size: 1.15rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .step-title-box h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .step-title-box p {
+            font-size: 0.88rem;
+            color: #94a3b8;
+        }
+
+        /* 代碼區塊與複製按鈕 */
+        .code-wrapper {
+            background: var(--code-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.55rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            font-size: 0.8rem;
+            color: #8899ac;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--cyber-blue);
+            color: #000;
+            border-color: var(--cyber-blue);
+        }
+
+        pre code {
+            display: block;
+            padding: 1.1rem;
+            overflow-x: auto;
+            color: #e2e8f0;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        /* 互動式 API 演練器 */
+        .interactive-playground {
+            background: linear-gradient(145deg, rgba(15, 21, 35, 0.95) 0%, rgba(9, 13, 22, 0.95) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 20px;
+            padding: 2.2rem;
+            margin: 2.5rem 0;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+        }
+
+        .playground-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .playground-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .playground-mode-toggle {
+            display: flex;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.25rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, var(--cyber-blue), var(--cyber-violet));
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.25);
+        }
+
+        .playground-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 860px) {
+            .playground-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-panel, .output-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .panel-label {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-input, .form-select {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f8fafc;
+            padding: 0.7rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+        }
+
+        .preset-chips {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            font-size: 0.78rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .preset-chip:hover {
+            border-color: var(--cyber-blue);
+            color: var(--cyber-blue);
+            background: rgba(0, 242, 255, 0.08);
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--cyber-blue), #00c4cc);
+            color: #050811;
+            border: none;
+            padding: 0.85rem 1.4rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 255, 0.45);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .output-box {
+            background: var(--code-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.84rem;
+            color: #38bdf8;
+            height: 280px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .latency-indicator {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--cyber-emerald);
+        }
+
+        /* 雙模對照表 (Dev vs Prod) */
+        .comparison-table-wrapper {
+            background: var(--card-bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .comparison-table th {
+            background: rgba(0, 0, 0, 0.4);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-dev {
+            background: rgba(0, 242, 255, 0.15);
+            color: var(--cyber-blue);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+        }
+
+        .badge-prod {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--cyber-emerald);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+        }
+
+        /* 版本演進時程圖 (Roadmap Timeline) */
+        .timeline {
+            position: relative;
+            margin: 2.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 7px;
+            width: 3px;
+            background: linear-gradient(180deg, var(--cyber-blue) 0%, var(--cyber-emerald) 60%, rgba(255, 255, 255, 0.1) 100%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -2rem;
+            top: 4px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: #060910;
+            border: 3px solid var(--cyber-blue);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .timeline-item.active .timeline-dot {
+            border-color: var(--cyber-emerald);
+            box-shadow: 0 0 15px var(--emerald-glow);
+            background: var(--cyber-emerald);
+        }
+
+        .timeline-content {
+            background: var(--card-bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.3rem 1.4rem;
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .timeline-version {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .timeline-list {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .timeline-list li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .timeline-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--cyber-blue);
+        }
+
+        .timeline-item.active .timeline-list li::before {
+            color: var(--cyber-emerald);
+        }
+
+        /* 結論與行動號召 */
+        .cta-card {
+            background: radial-gradient(circle at 50% 0%, rgba(0, 242, 255, 0.15) 0%, rgba(13, 17, 27, 0.95) 75%);
+            border: 1px solid rgba(0, 242, 255, 0.4);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+        }
+
+        .cta-desc {
+            font-size: 1.05rem;
+            color: #94a3b8;
+            max-width: 650px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .cta-command-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: #000000;
+            border: 1px solid rgba(0, 242, 255, 0.35);
+            padding: 0.85rem 1.6rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--cyber-blue);
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.15);
+        }
+
+        /* Toast 訊息 */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #0f172a;
+            border: 1px solid var(--cyber-blue);
+            color: #ffffff;
+            padding: 0.8rem 1.4rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 640px) {
+            .hero-title { font-size: 1.9rem; }
+            .summary-card, .step-card, .interactive-playground { padding: 1.5rem; }
+            .cta-command-box { font-size: 0.9rem; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 頂部導航 -->
+    <nav class="top-nav">
+        <a href="#" class="nav-logo">
+            <span class="nav-logo-badge">JIT</span>
+            <span>jit-api 研發團隊公告</span>
+        </a>
+        <div class="nav-links">
+            <a href="#tutorial" class="nav-link-btn">新手教學</a>
+            <a href="#playground" class="nav-link-btn">線上模擬器</a>
+            <a href="#roadmap" class="nav-link-btn">版本地圖</a>
+            <a href="https://github.com/tobytoy/jit-api" target="_blank" class="nav-link-btn">GitHub 原始碼 ↗</a>
+        </div>
+    </nav>
+
+    <!-- Hero 區塊 -->
+    <header class="hero-section">
+        <div class="version-badge-group">
+            <span class="version-tag">RELEASE v1.1.1</span>
+            <span class="version-status">官方正式穩定版發布 🚀</span>
+        </div>
+        <h1 class="hero-title">告別繁瑣樣板代碼！<br>用 Markdown 就能寫出高效安全後端</h1>
+        <p class="hero-subtitle">
+            深入解析 <strong>jit-api (JIT Protocol Synthesis)</strong> 框架核心原理、Dev / Prod 雙模安全機制與新手 3 分鐘起手指南。讓後端開發如同寫筆記一樣優雅直覺。
+        </p>
+        <div class="meta-chips">
+            <span class="chip chip-cyan">⚡ 零 AI 延遲快路編譯</span>
+            <span class="chip chip-emerald">🔒 Dev/Prod 嚴格隔離</span>
+            <span class="chip chip-violet">🤖 原生支援 MCP (Claude/Cursor)</span>
+            <span class="chip">📦 一鍵秒級回滾 (Rollback)</span>
+            <span class="chip">🌐 純 API Gateway (--headless)</span>
+        </div>
+    </header>
+
+    <!-- 核心摘要卡片 -->
+    <section class="summary-card">
+        <div class="golden-quote">
+            💡 「規格即代碼，文檔即實作。」你只需要寫一份標準 Markdown，後端 Gateway、型別驗證、API Studio 與 AI Agent 工具鏈全部一次搞定。
+        </div>
+        <p style="color: #94a3b8; font-size: 0.98rem;">
+            過去構建一支後端 API，工程師必須維護 Controller 路由、寫 Zod/Pydantic Schema、配置 Swagger 文件、定義 TypeScript 型別介面，改動一個欄位得同步 5 個地方。<strong>jit-api</strong> 徹底翻轉了這個流程：以 Markdown 為單一真實數據來源（Single Source of Truth），自帶三階段動態協定合成演化，將開發週期由天縮短至分鐘級。
+        </p>
+        <div class="highlights-grid">
+            <div class="highlight-item">
+                <span class="highlight-icon">📝</span>
+                <div class="highlight-title">Markdown 驅動 API</div>
+                <div class="highlight-desc">在一個 <code>.api.md</code> 文件中宣告意圖、欄位與業務邏輯，存檔即刻熱加載上線。</div>
+            </div>
+            <div class="highlight-item">
+                <span class="highlight-icon">⚡</span>
+                <div class="highlight-title">三階段 JIT 演化</div>
+                <div class="highlight-desc">從動態語意匹配，經過自動穩定性觀測，自動凍結為 0ms AI 延遲的極速靜態快路。</div>
+            </div>
+            <div class="highlight-item">
+                <span class="highlight-icon">🛡️</span>
+                <div class="highlight-title">Dev / Prod 雙模隔離</div>
+                <div class="highlight-desc">v1.1.1 嚴格區隔開發與生產模式，Dev 草稿絕不外洩，高資安環境停用終端機與線上編輯。</div>
+            </div>
+            <div class="highlight-item">
+                <span class="highlight-icon">🤖</span>
+                <div class="highlight-title">MCP 協定原生整合</div>
+                <div class="highlight-desc">內建 Model Context Protocol (SSE)，直接給 Cursor、Claude Desktop 與 Antigravity 免費呼叫。</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 三階段演化原理剖析 -->
+    <section>
+        <div class="section-header">
+            <span class="section-badge">Architecture & Engine</span>
+            <h2 class="section-title">🧬 JIT 協定演化三階段：兼具極致靈活性與極速效能</h2>
+            <p class="section-subtitle">如何做到既能理解使用者的模糊自然語言，又能在高併發場景下達到原生靜態代碼的極致速度？</p>
+        </div>
+
+        <div class="lifecycle-container">
+            <!-- Phase 1 -->
+            <div class="phase-card phase-1">
+                <div>
+                    <span class="phase-number">Phase 1: Dynamic</span>
+                    <h3 class="phase-heading">動態語意探索</h3>
+                    <p class="phase-text">
+                        接受模糊查詢與非結構化請求（例如：「我想買 iPad 刷 LinePay 金額 25900」）。由 TypeSafe Jev 雲端或本地 Needle 引擎進行語意意圖匹配與實體萃取。
+                    </p>
+                </div>
+                <div class="phase-footer">
+                    延遲: 1 ~ 8ms (AI / 語意分析)<br>
+                    狀態: 觀測與學習階段
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="phase-card phase-2">
+                <div>
+                    <span class="phase-number">Phase 2: Observing</span>
+                    <h3 class="phase-heading">結構穩定性觀測</h3>
+                    <p class="phase-text">
+                        內建連續觀測器（Stability Observer）。每次請求均比對 Payload 結構與置信度，當連續 3 次請求結構一致且置信度達 85% 時，自動觸發「合約凍結（Freeze）」。
+                    </p>
+                </div>
+                <div class="phase-footer">
+                    門檻: 連續 3 次結構一致<br>
+                    動作: 自動編譯 TypeScript / Protobuf
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="phase-card phase-3">
+                <div>
+                    <span class="phase-number">Phase 3: Frozen</span>
+                    <h3 class="phase-heading">極速靜態快路 (0ms)</h3>
+                    <p class="phase-text">
+                        編譯出純靜態驗證器。往後符合格式的請求直接走快路執行，完全跳過 AI 呼叫，達到 <strong>0ms AI 延遲</strong>！若遇到結構突變（Schema Drift），自動無痛降級回 Phase 1 重新演化。
+                    </p>
+                </div>
+                <div class="phase-footer">
+                    延遲: 0ms (純原生代碼執行)<br>
+                    防護: 結構突變自動降級重訓
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新手起手式教學 -->
+    <section id="tutorial">
+        <div class="section-header">
+            <span class="section-badge">Step-by-Step Guide</span>
+            <h2 class="section-title">🚀 3 分鐘起手式：小白也能輕鬆上手的後端開發</h2>
+            <p class="section-subtitle">無須繁雜的 Docker 或伺服器配置，只要有 Node.js 環境即可使用 `npx` 隨處運行。</p>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-index">1</div>
+                <div class="step-title-box">
+                    <h3>一鍵初始化規格目錄</h3>
+                    <p>在任意空白資料夾或專案根目錄中建立規格檔</p>
+                </div>
+            </div>
+            <p style="color: #94a3b8; margin-bottom: 0.8rem;">
+                在終端機輸入以下指令，jit-api 將會自動建立 <code>specs/</code> 目錄與初始範本檔案 <code>order.api.md</code>：
+            </p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 init')">複製指令</button>
+                </div>
+                <pre><code>npx -y jit-api@1.1.1 init</code></pre>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-index">2</div>
+                <div class="step-title-box">
+                    <h3>看懂並撰寫你的 Markdown API 規格</h3>
+                    <p>一個文件搞定：路由、意圖、型別、範例與業務邏輯</p>
+                </div>
+            </div>
+            <p style="color: #94a3b8; margin-bottom: 0.8rem;">
+                以下是 <code>v1.1.1</code> 標準規範範本，以陽曆農曆與時間戳轉換 API 為例：
+            </p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>Markdown (specs/date_converter.api.md)</span>
+                    <button class="copy-btn" onclick="copyCode(sampleSpecCode)">複製範本</button>
+                </div>
+                <pre><code id="sampleSpecDisplay"># API: date_converter
+Version: 1.1.1
+Stage: prod
+> 日期轉換中心：支援 Timestamp 時間戳、陽曆與陰曆雙向精準互換
+
+## Intent
+User wants to convert dates, unix timestamp, solar to lunar calendar, or lunar to solar
+
+## Fields
+- action: enum (轉換模式)
+  - SOLAR_TO_LUNAR: 陽曆轉陰曆
+  - LUNAR_TO_SOLAR: 陰曆轉陽曆
+  - FROM_TIMESTAMP: 時間戳轉日期
+- date: string (陽曆日期如 2026-09-23)
+- timestamp: number (Unix 時間戳)
+
+## Sample
+- Semantic: 我想將國曆 2026 年 9 月 23 日轉換為農曆陰曆與時間戳
+- Payload:
+```json
+{
+  "action": "SOLAR_TO_LUNAR",
+  "date": "2026-09-23"
+}
+```
+
+## Logic
+```javascript
+// 純粹的 JavaScript 業務邏輯，ctx.phase 代表當前演化階段
+const pad = (n) => String(n).padStart(2, '0');
+const target = payload.date ? new Date(payload.date) : new Date();
+return {
+  status: "SUCCESS",
+  solar_date: target.toISOString().split('T')[0],
+  timestamp_seconds: Math.floor(target.getTime() / 1000),
+  phase: ctx.phase,
+  ai_latency_ms: ctx.aiLatencyMs
+};
+```</code></pre>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-index">3</div>
+                <div class="step-title-box">
+                    <h3>啟動開發者儀表板 (Dev Mode)</h3>
+                    <p>動態熱重載、Web Studio、整合終端與即時測試</p>
+                </div>
+            </div>
+            <p style="color: #94a3b8; margin-bottom: 0.8rem;">
+                輸入以下指令開啟開發環境。預設自動在 <code>http://localhost:3005</code> 啟動控制台，若遇連接埠佔用會<strong>自動安全遞增</strong>：
+            </p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 dev')">複製指令</button>
+                </div>
+                <pre><code>npx -y jit-api@1.1.1 dev
+
+# 若想要指定自訂 Port:
+npx -y jit-api@1.1.1 dev --port 3006</code></pre>
+            </div>
+            <ul style="color: #94a3b8; padding-left: 1.5rem; font-size: 0.92rem; margin-top: 0.8rem;">
+                <li>📂 <strong>規格熱重載</strong>：修改 <code>specs/*.api.md</code> 後存檔，約 200ms 自動加載更新。</li>
+                <li>💻 <strong>Web 終端</strong>：儀表板底部自帶 PTY 終端抽屜，無需在 IDE 與瀏覽器間頻繁切換。</li>
+                <li>🎯 <strong>動態 Payload</strong>：點擊「語意意圖請求」或「穩定快路請求」，自動灌入規格定義的真實 Payload。</li>
+            </ul>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-index">4</div>
+                <div class="step-title-box">
+                    <h3>一鍵部署生產模式 (Prod Mode)</h3>
+                    <p>關閉敏感端點、唯讀規格防護、隔離草稿 API</p>
+                </div>
+            </div>
+            <p style="color: #94a3b8; margin-bottom: 0.8rem;">
+                在生產伺服器上，只需使用 <code>prod</code> 或 <code>start</code> 指令：
+            </p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 prod')">複製指令</button>
+                </div>
+                <pre><code># 標準生產模式 (預設 Port: 3000，唯讀儀表板)
+npx -y jit-api@1.1.1 prod
+
+# 雲原生微服務純 API 模式 (完全關閉 Web 介面，極低記憶體開銷)
+npx -y jit-api@1.1.1 prod --headless</code></pre>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-index">5</div>
+                <div class="step-title-box">
+                    <h3>發布版本快照與秒級安全回滾 (Release & Rollback)</h3>
+                    <p>不怕線上發布出錯，孤兒規格自動備份隔離</p>
+                </div>
+            </div>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 release 1.0.0 \"首發穩定版\"')">複製指令</button>
+                </div>
+                <pre><code># 建立規格版本快照
+npx -y jit-api@1.1.1 release 1.0.0 "首發穩定版"
+
+# 線上發生突發狀況？秒級回滾至指定版本！
+npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.88rem;">
+                💡 <strong>v1.1.1 亮點</strong>：當降版時，若當前目錄存在該歷史版本中沒有的「孤兒規格」，系統會自動將其備份隔離至 <code>.jit/releases/orphaned_*/</code>，絕不遺失任何代碼。
+            </p>
+        </div>
+    </section>
+
+    <!-- 線上互動式演練器 -->
+    <section id="playground" class="interactive-playground">
+        <div class="playground-header">
+            <div class="playground-title">
+                <span>🎮</span>
+                <span>線上互動演練器 (API Simulator)</span>
+            </div>
+            <div class="playground-mode-toggle">
+                <button class="toggle-btn active" id="btnModePhase1" onclick="setPlaygroundMode('phase1')">Phase 1: 語意探索 (AI)</button>
+                <button class="toggle-btn" id="btnModePhase3" onclick="setPlaygroundMode('phase3')">Phase 3: 靜態快路 (0ms)</button>
+            </div>
+        </div>
+
+        <div class="playground-grid">
+            <!-- 左側輸入區 -->
+            <div class="input-panel">
+                <div class="panel-label">
+                    <span>選擇測試 API 與請求方式</span>
+                    <span id="playgroundPhaseBadge" class="badge-dev">動態學習階段 (Phase 1)</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="panel-label">選用 API 規格：</label>
+                    <select id="simRouteSelect" class="form-select" onchange="onRouteSelectChange()">
+                        <option value="date_converter">date_converter (日期與陰陽曆轉換)</option>
+                        <option value="create_order">create_order (電商訂單下單處理)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="panel-label">
+                        <span>請求 Payload (JSON)：</span>
+                        <span class="preset-chips">
+                            <span class="preset-chip" onclick="fillPreset('semantic')">自然語言語意</span>
+                            <span class="preset-chip" onclick="fillPreset('standard')">標準欄位結構</span>
+                        </span>
+                    </label>
+                    <textarea id="simPayloadInput" class="form-input" style="height: 110px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;"></textarea>
+                </div>
+
+                <button class="action-btn" onclick="executeSimulatedApi()">
+                    <span>⚡ 發送 JIT 請求 (Execute API)</span>
+                </button>
+            </div>
+
+            <!-- 右側輸出區 -->
+            <div class="output-panel">
+                <div class="panel-label">
+                    <span>伺服器即時回應 (JSON Output)</span>
+                    <span class="latency-indicator" id="latencyDisplay">延遲: 7ms (AI: 7ms)</span>
+                </div>
+                <div class="output-box" id="simOutputBox">// 點擊左側「發送 JIT 請求」以體驗執行結果...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dev 與 Prod 雙模對照表 -->
+    <section>
+        <div class="section-header">
+            <span class="section-badge">Security & Operations</span>
+            <h2 class="section-title">⚖️ 開發模式 vs 生產模式：全方位安全性對比</h2>
+            <p class="section-subtitle">jit-api 在兼顧極致靈活的同時，為生產環境提供了嚴格的零信任保護。</p>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">特性維度</th>
+                        <th style="width: 37.5%;"><span class="badge-dev">DEV 模式</span> (<code>npx jit-api dev</code>)</th>
+                        <th style="width: 37.5%;"><span class="badge-prod">PROD 模式</span> (<code>npx jit-api prod</code>)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>預設連接埠</strong></td>
+                        <td>Port <code>3005</code>（遇衝突自動嘗試 3006, 3007...）</td>
+                        <td>Port <code>3000</code>（遇衝突自動嘗試 3001, 3002...）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>API 規格載入範圍</strong></td>
+                        <td>全部載入（含 <code>Stage: dev</code> 草稿規格）</td>
+                        <td><strong>僅載入 <code>Stage: prod</code> 規格</strong>，草稿不外洩</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web Studio 儀表板</strong></td>
+                        <td>全面開啟（視覺化測試、線上壓測、合約匯出）</td>
+                        <td>唯讀狀態（或加上 <code>--headless</code> 完全關閉）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web 終端 (PTY)</strong></td>
+                        <td>開啟（底部自帶虛擬終端）</td>
+                        <td><strong>完全停用</strong>（阻斷遠端指令注入風險）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTTP 線上規格編輯</strong></td>
+                        <td>允許（<code>POST /api/specs/:file</code>）</td>
+                        <td><strong>嚴格封鎖</strong>（直接回應 <code>403 Forbidden</code>）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>規格自動熱重載</strong></td>
+                        <td>啟用（<code>fs.watch</code> 約 200ms 動態更新）</td>
+                        <td>停用（靜態鎖定，確保高吞吐穩定度）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MCP AI 工具鏈掛載</strong></td>
+                        <td>開啟（掛載全部工具）</td>
+                        <td>開啟（僅掛載生產級可用工具）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 版本演進路線圖 -->
+    <section id="roadmap">
+        <div class="section-header">
+            <span class="section-badge">Evolution & Roadmap</span>
+            <h2 class="section-title">🗺️ 版本演化進程：踏實邁向雲原生 JIT 生態</h2>
+            <p class="section-subtitle">持續傾聽開發者反饋，快速疊代，打造下一代協定合成標準。</p>
+        </div>
+
+        <div class="timeline">
+            <!-- v1.0.0 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-version">v1.0.0 - 初代誕生</span>
+                        <span class="timeline-date">2026 年初</span>
+                    </div>
+                    <ul class="timeline-list">
+                        <li>JIT 動態協定合成核心引擎問世。</li>
+                        <li>Markdown 規格解析驅動 API 端點。</li>
+                        <li>整合 Web Studio 觀測儀表板與整合式 PTY 終端。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- v1.1.0 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-version">v1.1.0 - Dev/Prod 雙模與版本快照</span>
+                        <span class="timeline-date">2026 年 9 月</span>
+                    </div>
+                    <ul class="timeline-list">
+                        <li>導入 <code>dev</code> 與 <code>prod</code> 模式安全分流。</li>
+                        <li>新增規格版本快照發布 (<code>release</code>) 與降版 (<code>rollback</code>)。</li>
+                        <li>支援 <code>## Sample</code> 區塊，解決範例 Payload 硬編碼痛點。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- v1.1.1 (Current) -->
+            <div class="timeline-item active">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content" style="border-color: rgba(16, 185, 129, 0.4);">
+                    <div class="timeline-header">
+                        <span class="timeline-version" style="color: var(--cyber-emerald);">v1.1.1 - 現行穩定版 (Current Stable) 🌟</span>
+                        <span class="timeline-date" style="color: var(--cyber-emerald); font-weight: 700;">最新發布</span>
+                    </div>
+                    <ul class="timeline-list">
+                        <li><strong>資安漏洞修復</strong>：修復 MCPAdapter 穿透漏過 Dev 草稿規格的問題。</li>
+                        <li><strong>容錯重試</strong>：連接埠佔用時自動優雅遞增切換 (<code>EADDRINUSE</code>)，不再拋錯崩潰。</li>
+                        <li><strong>純網關模式</strong>：新增 <code>--headless</code> 參數，專為微服務容器化設計。</li>
+                        <li><strong>智慧隔離</strong>：Rollback 時自動將孤兒規格隔離至 <code>.jit/releases/orphaned_*/</code>。</li>
+                        <li><strong>前端防護</strong>：生產模式自動隱藏終端機抽屜並鎖定規格儲存按鈕。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Future Roadmap -->
+            <div class="timeline-item">
+                <div class="timeline-dot" style="border-color: #64748b;"></div>
+                <div class="timeline-content" style="border-style: dashed;">
+                    <div class="timeline-header">
+                        <span class="timeline-version" style="color: #94a3b8;">v1.2.0+ - 未來演化藍圖 (Coming Soon)</span>
+                        <span class="timeline-date">規劃中</span>
+                    </div>
+                    <ul class="timeline-list">
+                        <li><strong>分散式快路快取</strong>：支援 Redis / Upstash，凍結合約跨節點同步。</li>
+                        <li><strong>雙向契約轉換</strong>：支援 OpenAPI 3.1 與 Markdown 規格雙向匯入匯出。</li>
+                        <li><strong>靜態二進位編譯</strong>：支援一鍵匯出 Go / Rust 高吞吐微服務單一檔案。</li>
+                        <li><strong>鑑權插件系統</strong>：內建 JWT、API Key 與 OAuth2 權限守衛。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 研發心得與評測重點 -->
+    <section>
+        <div class="section-header">
+            <span class="section-badge">Review & Takeaways</span>
+            <h2 class="section-title">💬 研發實踐心得：為什麼 jit-api 值得你在下個專案採用？</h2>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+            <div class="step-card" style="margin-bottom: 0;">
+                <h4 style="color: var(--cyber-blue); font-size: 1.1rem; margin-bottom: 0.6rem;">💡 「文檔即後端」消除溝通死角</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8;">
+                    在團隊協作中，最常發生的問題是前端看著過期的 Swagger 發呆。jit-api 的 Markdown 規格就是運行的邏輯，規格更新了，API 就立刻更新，真正實現「零同步成本」。
+                </p>
+            </div>
+
+            <div class="step-card" style="margin-bottom: 0;">
+                <h4 style="color: var(--cyber-emerald); font-size: 1.1rem; margin-bottom: 0.6rem;">🤖 AI 時代的 Agent-Native 架構</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8;">
+                    不用另外花時間寫 MCP Adapter！寫好 Markdown 規格後，Cursor、Claude 或自研 AI Agent 可以透過內建的 <code>/sse</code> 入口直接將你的 API 作為工具（Tools）呼叫，無縫擁抱智慧代理時代。
+                </p>
+            </div>
+
+            <div class="step-card" style="margin-bottom: 0;">
+                <h4 style="color: var(--cyber-purple); font-size: 1.1rem; margin-bottom: 0.6rem;">🛡️ 優雅平滑的漸進式凍結</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8;">
+                    你可以在前期隨意修改與讓 AI 寬鬆匹配；等到系統成熟、結構穩定時，引擎會自動接管變成 0ms 快路。這種「前期靈活、後期極速」的特質，是傳統框架難以企及的。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 行動號召 (CTA) -->
+    <footer class="cta-card">
+        <h2 class="cta-title">準備好開啟全新的 API 開發體驗了嗎？</h2>
+        <p class="cta-desc">
+            無需安裝大型軟體包，只需一行指令，即可在你的電腦或伺服器上體驗 jit-api v1.1.1 帶來的無縫開發流。
+        </p>
+        <div class="cta-command-box">
+            <span>npx -y jit-api@1.1.1 init</span>
+            <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 init')">一鍵複製</button>
+        </div>
+        <p style="color: #64748b; font-size: 0.85rem; margin-top: 1.5rem;">
+            MIT Licensed • 開源且持續演進 • 歡迎至 GitHub 提交 Issue 與 PR
+        </p>
+    </footer>
+</div>
+
+<!-- Toast 通知 -->
+<div id="toast" class="toast">
+    <span>✅</span>
+    <span id="toastMsg">指令已複製至剪貼簿！</span>
+</div>
+
+<script>
+    // 範例 Spec 代碼字串
+    const sampleSpecCode = `# API: date_converter
+Version: 1.1.1
+Stage: prod
+> 日期轉換中心：支援 Timestamp 時間戳、陽曆與陰曆雙向精準互換
+
+## Intent
+User wants to convert dates, unix timestamp, solar to lunar calendar, or lunar to solar
+
+## Fields
+- action: enum (轉換模式)
+  - SOLAR_TO_LUNAR: 陽曆轉陰曆
+  - LUNAR_TO_SOLAR: 陰曆轉陽曆
+  - FROM_TIMESTAMP: 時間戳轉日期
+- date: string (陽曆日期如 2026-09-23)
+- timestamp: number (Unix 時間戳)
+
+## Sample
+- Semantic: 我想將國曆 2026 年 9 月 23 日轉換為農曆陰曆與時間戳
+- Payload:
+\`\`\`json
+{
+  "action": "SOLAR_TO_LUNAR",
+  "date": "2026-09-23"
+}
+\`\`\`
+
+## Logic
+\`\`\`javascript
+const target = payload.date ? new Date(payload.date) : new Date();
+return {
+  status: "SUCCESS",
+  solar_date: target.toISOString().split('T')[0],
+  timestamp_seconds: Math.floor(target.getTime() / 1000),
+  phase: ctx.phase,
+  ai_latency_ms: ctx.aiLatencyMs
+};
+\`\`\``;
+
+    let currentPlaygroundMode = 'phase1';
+
+    // 預設 Payload 資料
+    const presets = {
+        date_converter: {
+            semantic: JSON.stringify({ message: "我想將國曆 2026 年 9 月 23 日轉換為農曆陰曆與時間戳" }, null, 2),
+            standard: JSON.stringify({ route: "date_converter", action: "SOLAR_TO_LUNAR", date: "2026-09-23" }, null, 2)
+        },
+        create_order: {
+            semantic: JSON.stringify({ message: "我想買一台 iPad Pro，金額 25900 元，用 LINE Pay" }, null, 2),
+            standard: JSON.stringify({ route: "create_order", item: "iPad Pro", amount: 25900, paymentMethod: "LINE_PAY" }, null, 2)
+        }
+    };
+
+    function onRouteSelectChange() {
+        fillPreset('standard');
+    }
+
+    function fillPreset(type) {
+        const route = document.getElementById('simRouteSelect').value;
+        document.getElementById('simPayloadInput').value = presets[route][type];
+    }
+
+    function setPlaygroundMode(mode) {
+        currentPlaygroundMode = mode;
+        const btn1 = document.getElementById('btnModePhase1');
+        const btn3 = document.getElementById('btnModePhase3');
+        const badge = document.getElementById('playgroundPhaseBadge');
+
+        if (mode === 'phase1') {
+            btn1.classList.add('active');
+            btn3.classList.remove('active');
+            badge.className = 'badge-dev';
+            badge.textContent = '動態學習階段 (Phase 1)';
+        } else {
+            btn3.classList.add('active');
+            btn1.classList.remove('active');
+            badge.className = 'badge-prod';
+            badge.textContent = '靜態快路已凍結 (Phase 3)';
+        }
+    }
+
+    function executeSimulatedApi() {
+        const route = document.getElementById('simRouteSelect').value;
+        const rawInput = document.getElementById('simPayloadInput').value;
+        let payload = {};
+
+        try {
+            payload = JSON.parse(rawInput);
+        } catch {
+            payload = { text: rawInput };
+        }
+
+        const isPhase3 = currentPlaygroundMode === 'phase3';
+        const latency = isPhase3 ? 0 : Math.floor(Math.random() * 5 + 4);
+        const aiLatency = isPhase3 ? 0 : latency;
+
+        document.getElementById('latencyDisplay').textContent = isPhase3
+            ? `延遲: 0ms (快路直達，跳過 AI 驗證)`
+            : `延遲: ${latency}ms (AI 意圖識別: ${aiLatency}ms)`;
+
+        let resData = {};
+        if (route === 'date_converter') {
+            resData = {
+                conversion_type: payload.action || "SOLAR_TO_LUNAR",
+                solar_date: "2026-09-23",
+                solar_details: { year: 2026, month: 9, day: 23 },
+                lunar_details: {
+                    lunarYear: 2026,
+                    lunarMonth: 8,
+                    lunarDay: 13,
+                    ganZhiYear: "丙午年",
+                    zodiac: "馬",
+                    chineseString: "農曆丙午年(馬) 八月十三"
+                },
+                timestamp: { seconds: 1790092800, milliseconds: 1790092800000 },
+                phase: isPhase3 ? "phase3_frozen" : "phase1_dynamic",
+                ai_latency_ms: aiLatency
+            };
+        } else {
+            resData = {
+                order_id: "ORD-" + Math.floor(Math.random() * 900000 + 100000),
+                status: "CONFIRMED",
+                item: payload.item || "iPad Pro",
+                amount: payload.amount || 25900,
+                payment_method: payload.paymentMethod || "LINE_PAY",
+                phase: isPhase3 ? "phase3_frozen" : "phase1_dynamic",
+                ai_latency_ms: aiLatency
+            };
+        }
+
+        const output = {
+            success: true,
+            data: resData,
+            context: {
+                route: route,
+                phase: isPhase3 ? "phase3_frozen" : "phase1_dynamic",
+                executionTimeMs: latency,
+                aiLatencyMs: aiLatency,
+                intentConfidence: isPhase3 ? 1.0 : 0.94,
+                engineUsed: isPhase3 ? "static_zod_validator" : "needle_local"
+            }
+        };
+
+        document.getElementById('simOutputBox').textContent = JSON.stringify(output, null, 2);
+    }
+
+    // 複製代碼提示
+    function copyCode(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('已成功複製到剪貼簿！');
+        }).catch(() => {
+            // Fallback
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            showToast('已成功複製到剪貼簿！');
+        });
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // 初始化模擬器預設值
+    document.addEventListener('DOMContentLoaded', () => {
+        fillPreset('standard');
+    });
+</script>
+
+</body>
+</html>

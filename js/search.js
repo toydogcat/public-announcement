@@ -1,5 +1,11 @@
 const announcements = [
     {
+        title: "【最新發布 v1.1.1】用 Markdown 就能寫後端！JIT Protocol Synthesis (jit-api) 全圖解入門與實戰心得",
+        date: "2026-09-23",
+        path: "announcements/k9x2m7w4.html",
+        preview: "以 Markdown 為單一真實數據來源！深度解析 JIT 協定演化三階段、Dev/Prod 雙模安全分流、秒級 Rollback 孤兒規格隔離與 --headless 純網關模式。內含互動式 API 演練器與極速起手教學。"
+    },
+    {
         title: "大師級紫微斗數全圖解教學：從底層邏輯看懂你的命盤人生攻略",
         date: "2026-09-20",
         path: "announcements/z9k3v8m4.html",
