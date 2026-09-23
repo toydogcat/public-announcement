@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【最新發布 v1.1.1】用 Markdown 就能寫後端！JIT Protocol Synthesis (jit-api) 全圖解入門與實戰心得</title>
+    <title>【最新發布 v1.2.0】用 Markdown 就能寫後端！JIT Protocol Synthesis (jit-api) 全圖解入門與實戰心得</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -19,8 +19,8 @@
             --cyber-emerald: #10b981;
             --cyber-amber: #f59e0b;
             --cyber-red: #ef4444;
-            --card-bg-dark: rgba(13, 17, 27, 0.85);
-            --card-border: rgba(0, 242, 255, 0.2);
+            --card-bg-dark: rgba(13, 17, 27, 0.88);
+            --card-border: rgba(0, 242, 255, 0.22);
             --code-bg: #070a11;
         }
 
@@ -112,9 +112,9 @@
             align-items: center;
             gap: 0.6rem;
             background: rgba(0, 242, 255, 0.08);
-            border: 1px solid rgba(0, 242, 255, 0.3);
+            border: 1px solid rgba(0, 242, 255, 0.35);
             border-radius: 999px;
-            padding: 0.4rem 1.3rem;
+            padding: 0.45rem 1.4rem;
             margin-bottom: 1.5rem;
             box-shadow: 0 0 25px var(--primary-glow);
         }
@@ -123,8 +123,8 @@
             background: var(--cyber-blue);
             color: #050811;
             font-weight: 900;
-            font-size: 0.75rem;
-            padding: 0.15rem 0.55rem;
+            font-size: 0.78rem;
+            padding: 0.2rem 0.65rem;
             border-radius: 999px;
             letter-spacing: 0.05em;
         }
@@ -149,7 +149,7 @@
         .hero-subtitle {
             font-size: 1.18rem;
             color: #94a3b8;
-            max-width: 820px;
+            max-width: 840px;
             margin: 0 auto 2rem auto;
             line-height: 1.8;
         }
@@ -178,6 +178,7 @@
         .chip-cyan { border-color: rgba(0, 242, 255, 0.3); color: var(--cyber-blue); }
         .chip-emerald { border-color: rgba(16, 185, 129, 0.3); color: var(--cyber-emerald); }
         .chip-violet { border-color: rgba(157, 78, 221, 0.3); color: var(--cyber-purple); }
+        .chip-amber { border-color: rgba(245, 158, 11, 0.3); color: var(--cyber-amber); }
 
         /* 核心摘要卡片 */
         .summary-card {
@@ -275,6 +276,7 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
+            flex-wrap: wrap;
         }
 
         .section-subtitle {
@@ -604,7 +606,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.84rem;
             color: #38bdf8;
-            height: 280px;
+            height: 310px;
             overflow-y: auto;
             white-space: pre-wrap;
             line-height: 1.5;
@@ -798,6 +800,8 @@
             font-size: 1.1rem;
             color: var(--cyber-blue);
             box-shadow: 0 0 25px rgba(0, 242, 255, 0.15);
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         /* Toast 訊息 */
@@ -855,18 +859,19 @@
     <!-- Hero 區塊 -->
     <header class="hero-section">
         <div class="version-badge-group">
-            <span class="version-tag">RELEASE v1.1.1</span>
-            <span class="version-status">官方正式穩定版發布 🚀</span>
+            <span class="version-tag">RELEASE v1.2.0</span>
+            <span class="version-status">官方重大升級版正式發布 🚀</span>
         </div>
-        <h1 class="hero-title">告別繁瑣樣板代碼！<br>用 Markdown 就能寫出高效安全後端</h1>
+        <h1 class="hero-title">告別繁瑣樣板代碼！<br>用 Markdown 就能寫出安全高效後端</h1>
         <p class="hero-subtitle">
-            深入解析 <strong>jit-api (JIT Protocol Synthesis)</strong> 框架核心原理、Dev / Prod 雙模安全機制與新手 3 分鐘起手指南。讓後端開發如同寫筆記一樣優雅直覺。
+            深入解析 <strong>jit-api (JIT Protocol Synthesis) v1.2.0</strong> 核心重大更新：內建規格自動化測試套件（Spec Test Runner）、原生 API 身份鑑權（Auth）、密碼學 SHA-256 防篡改驗簽與物理端點隔離！
         </p>
         <div class="meta-chips">
-            <span class="chip chip-cyan">⚡ 零 AI 延遲快路編譯</span>
-            <span class="chip chip-emerald">🔒 Dev/Prod 嚴格隔離</span>
-            <span class="chip chip-violet">🤖 原生支援 MCP (Claude/Cursor)</span>
-            <span class="chip">📦 一鍵秒級回滾 (Rollback)</span>
+            <span class="chip chip-cyan">🧪 規格自動測試 (npx jit-api test)</span>
+            <span class="chip chip-emerald">🔐 原生 API 鑑權 (## Auth)</span>
+            <span class="chip chip-amber">🛡️ SHA-256 密碼學防篡改</span>
+            <span class="chip chip-violet">🔒 物理端點隔離 (Zero Attack)</span>
+            <span class="chip">⚡ 零 AI 延遲快路編譯</span>
             <span class="chip">🌐 純 API Gateway (--headless)</span>
         </div>
     </header>
@@ -874,31 +879,31 @@
     <!-- 核心摘要卡片 -->
     <section class="summary-card">
         <div class="golden-quote">
-            💡 「規格即代碼，文檔即實作。」你只需要寫一份標準 Markdown，後端 Gateway、型別驗證、API Studio 與 AI Agent 工具鏈全部一次搞定。
+            💡 「規格即代碼，文檔即實作。」你只需要寫一份標準 Markdown，後端 Gateway、型別驗證、自動化整合測試、API 身份鑑權與 AI 工具鏈全部一次搞定。
         </div>
         <p style="color: #94a3b8; font-size: 0.98rem;">
             過去構建一支後端 API，工程師必須維護 Controller 路由、寫 Zod/Pydantic Schema、配置 Swagger 文件、定義 TypeScript 型別介面，改動一個欄位得同步 5 個地方。<strong>jit-api</strong> 徹底翻轉了這個流程：以 Markdown 為單一真實數據來源（Single Source of Truth），自帶三階段動態協定合成演化，將開發週期由天縮短至分鐘級。
         </p>
         <div class="highlights-grid">
             <div class="highlight-item">
-                <span class="highlight-icon">📝</span>
-                <div class="highlight-title">Markdown 驅動 API</div>
-                <div class="highlight-desc">在一個 <code>.api.md</code> 文件中宣告意圖、欄位與業務邏輯，存檔即刻熱加載上線。</div>
+                <span class="highlight-icon">🧪</span>
+                <div class="highlight-title">內建規格自動化測試</div>
+                <div class="highlight-desc">v1.2.0 新增 <code>npx jit-api test</code>，自動驗證 Fast-Path 與語意意圖辨識，毫秒級產出斷言報表。</div>
             </div>
             <div class="highlight-item">
-                <span class="highlight-icon">⚡</span>
-                <div class="highlight-title">三階段 JIT 演化</div>
-                <div class="highlight-desc">從動態語意匹配，經過自動穩定性觀測，自動凍結為 0ms AI 延遲的極速靜態快路。</div>
+                <span class="highlight-icon">🔐</span>
+                <div class="highlight-title">原生 API 身份鑑權</div>
+                <div class="highlight-desc">在 Markdown 中直接宣告 <code>## Auth</code>（Bearer / API-Key），未授權請求嚴格攔截並回傳 401。</div>
             </div>
             <div class="highlight-item">
                 <span class="highlight-icon">🛡️</span>
-                <div class="highlight-title">Dev / Prod 雙模隔離</div>
-                <div class="highlight-desc">v1.1.1 嚴格區隔開發與生產模式，Dev 草稿絕不外洩，高資安環境停用終端機與線上編輯。</div>
+                <div class="highlight-title">SHA-256 密碼學防篡改</div>
+                <div class="highlight-desc">發布快照自動雜湊簽名，回滾降版前自動嚴格驗證簽章，杜絕歷史版本遭惡意投毒篡改。</div>
             </div>
             <div class="highlight-item">
-                <span class="highlight-icon">🤖</span>
-                <div class="highlight-title">MCP 協定原生整合</div>
-                <div class="highlight-desc">內建 Model Context Protocol (SSE)，直接給 Cursor、Claude Desktop 與 Antigravity 免費呼叫。</div>
+                <span class="highlight-icon">🔒</span>
+                <div class="highlight-title">生產環境物理端點隔離</div>
+                <div class="highlight-desc">Prod 模式物理上完全不註冊管理路由，外部請求直接回應 404，達成真實零攻擊面。</div>
             </div>
         </div>
     </section>
@@ -963,7 +968,7 @@
     <section id="tutorial">
         <div class="section-header">
             <span class="section-badge">Step-by-Step Guide</span>
-            <h2 class="section-title">🚀 3 分鐘起手式：小白也能輕鬆上手的後端開發</h2>
+            <h2 class="section-title">🚀 3 分鐘起手式：小白也能輕鬆上手的後端開發 (v1.2.0)</h2>
             <p class="section-subtitle">無須繁雜的 Docker 或伺服器配置，只要有 Node.js 環境即可使用 `npx` 隨處運行。</p>
         </div>
 
@@ -982,9 +987,9 @@
             <div class="code-wrapper">
                 <div class="code-header">
                     <span>Bash</span>
-                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 init')">複製指令</button>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.2.0 init')">複製指令</button>
                 </div>
-                <pre><code>npx -y jit-api@1.1.1 init</code></pre>
+                <pre><code>npx -y jit-api@1.2.0 init</code></pre>
             </div>
         </div>
 
@@ -993,22 +998,26 @@
             <div class="step-header">
                 <div class="step-index">2</div>
                 <div class="step-title-box">
-                    <h3>看懂並撰寫你的 Markdown API 規格</h3>
-                    <p>一個文件搞定：路由、意圖、型別、範例與業務邏輯</p>
+                    <h3>看懂並撰寫你的 Markdown API 規格（支援 ## Auth）</h3>
+                    <p>一個文件搞定：路由、鑑權、意圖、型別、範例與業務邏輯</p>
                 </div>
             </div>
             <p style="color: #94a3b8; margin-bottom: 0.8rem;">
-                以下是 <code>v1.1.1</code> 標準規範範本，以陽曆農曆與時間戳轉換 API 為例：
+                以下是 <code>v1.2.0</code> 標準規範範本，以包含身份鑑權與日期轉換的 API 為例：
             </p>
             <div class="code-wrapper">
                 <div class="code-header">
-                    <span>Markdown (specs/date_converter.api.md)</span>
+                    <span>Markdown (specs/secure_service.api.md)</span>
                     <button class="copy-btn" onclick="copyCode(sampleSpecCode)">複製範本</button>
                 </div>
                 <pre><code id="sampleSpecDisplay"># API: date_converter
-Version: 1.1.1
+Version: 1.2.0
 Stage: prod
 > 日期轉換中心：支援 Timestamp 時間戳、陽曆與陰曆雙向精準互換
+
+## Auth
+- type: bearer
+- token: "my-secret-token-123"
 
 ## Intent
 User wants to convert dates, unix timestamp, solar to lunar calendar, or lunar to solar
@@ -1034,7 +1043,6 @@ User wants to convert dates, unix timestamp, solar to lunar calendar, or lunar t
 ## Logic
 ```javascript
 // 純粹的 JavaScript 業務邏輯，ctx.phase 代表當前演化階段
-const pad = (n) => String(n).padStart(2, '0');
 const target = payload.date ? new Date(payload.date) : new Date();
 return {
   status: "SUCCESS",
@@ -1047,10 +1055,47 @@ return {
             </div>
         </div>
 
-        <!-- Step 3 -->
+        <!-- Step 3 (New in 1.2.0!) -->
+        <div class="step-card" style="border-color: rgba(16, 185, 129, 0.4);">
+            <div class="step-header">
+                <div class="step-index" style="background: linear-gradient(135deg, var(--cyber-emerald), #00c4cc);">3</div>
+                <div class="step-title-box">
+                    <h3 style="color: var(--cyber-emerald);">執行自動化規格測試套件 (New in v1.2.0 🧪)</h3>
+                    <p>自動掃描所有規格，驗證 Fast-Path 與語意辨識，20ms 輸出完整測試報告</p>
+                </div>
+            </div>
+            <p style="color: #94a3b8; margin-bottom: 0.8rem;">
+                不再需要手動寫測試腳本或一個個發送 curl，<code>jit-api test</code> 會自動解析 <code>## Sample</code> 與 <code>## Auth</code> 進行全套端對端驗證：
+            </p>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.2.0 test')">複製指令</button>
+                </div>
+                <pre><code>npx -y jit-api@1.2.0 test</code></pre>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.88rem; margin-top: 0.5rem;">
+                輸出範例：
+            </p>
+            <div class="code-wrapper">
+                <pre style="color: #38bdf8; font-size: 0.82rem;"><code>🧪 JIT API 規格自動化測試套件 (Spec Test Runner)
+============================================================
+📂 載入規格目錄: ./specs
+📝 共掃描到 3 支 API 規格檔案：
+
+  ✅ [date_converter] (date_converter.api.md) - ✓ Fast-Path, ✓ 語意辨識 [12ms]
+  ✅ [create_order] (order.api.md) - ✓ Fast-Path, ✓ 語意辨識 [2ms]
+  ✅ [secure_wallet] (secure_wallet.api.md) - ✓ Fast-Path, ✓ 語意辨識 [4ms]
+
+============================================================
+📊 測試總結: 3 支通過, 0 支失敗 (共 6/6 個斷言通過) | 總耗時: 20ms</code></pre>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
         <div class="step-card">
             <div class="step-header">
-                <div class="step-index">3</div>
+                <div class="step-index">4</div>
                 <div class="step-title-box">
                     <h3>啟動開發者儀表板 (Dev Mode)</h3>
                     <p>動態熱重載、Web Studio、整合終端與即時測試</p>
@@ -1062,12 +1107,12 @@ return {
             <div class="code-wrapper">
                 <div class="code-header">
                     <span>Bash</span>
-                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 dev')">複製指令</button>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.2.0 dev')">複製指令</button>
                 </div>
-                <pre><code>npx -y jit-api@1.1.1 dev
+                <pre><code>npx -y jit-api@1.2.0 dev
 
 # 若想要指定自訂 Port:
-npx -y jit-api@1.1.1 dev --port 3006</code></pre>
+npx -y jit-api@1.2.0 dev --port 3006</code></pre>
             </div>
             <ul style="color: #94a3b8; padding-left: 1.5rem; font-size: 0.92rem; margin-top: 0.8rem;">
                 <li>📂 <strong>規格熱重載</strong>：修改 <code>specs/*.api.md</code> 後存檔，約 200ms 自動加載更新。</li>
@@ -1076,13 +1121,13 @@ npx -y jit-api@1.1.1 dev --port 3006</code></pre>
             </ul>
         </div>
 
-        <!-- Step 4 -->
+        <!-- Step 5 -->
         <div class="step-card">
             <div class="step-header">
-                <div class="step-index">4</div>
+                <div class="step-index">5</div>
                 <div class="step-title-box">
-                    <h3>一鍵部署生產模式 (Prod Mode)</h3>
-                    <p>關閉敏感端點、唯讀規格防護、隔離草稿 API</p>
+                    <h3>一鍵部署生產模式 (Prod Mode，物理端點隔離)</h3>
+                    <p>關閉敏感端點、管理路由物理 404、隔離草稿 API</p>
                 </div>
             </div>
             <p style="color: #94a3b8; margin-bottom: 0.8rem;">
@@ -1091,38 +1136,38 @@ npx -y jit-api@1.1.1 dev --port 3006</code></pre>
             <div class="code-wrapper">
                 <div class="code-header">
                     <span>Bash</span>
-                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 prod')">複製指令</button>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.2.0 prod')">複製指令</button>
                 </div>
-                <pre><code># 標準生產模式 (預設 Port: 3000，唯讀儀表板)
-npx -y jit-api@1.1.1 prod
+                <pre><code># 標準生產模式 (預設 Port: 3000，唯讀儀表板，物理隔離管理路由)
+npx -y jit-api@1.2.0 prod
 
 # 雲原生微服務純 API 模式 (完全關閉 Web 介面，極低記憶體開銷)
-npx -y jit-api@1.1.1 prod --headless</code></pre>
+npx -y jit-api@1.2.0 prod --headless</code></pre>
             </div>
         </div>
 
-        <!-- Step 5 -->
+        <!-- Step 6 -->
         <div class="step-card">
             <div class="step-header">
-                <div class="step-index">5</div>
+                <div class="step-index">6</div>
                 <div class="step-title-box">
-                    <h3>發布版本快照與秒級安全回滾 (Release & Rollback)</h3>
-                    <p>不怕線上發布出錯，孤兒規格自動備份隔離</p>
+                    <h3>發布版本快照與 SHA-256 驗簽回滾 (Release & Rollback)</h3>
+                    <p>密碼學防篡改驗證，孤兒規格自動備份隔離</p>
                 </div>
             </div>
             <div class="code-wrapper">
                 <div class="code-header">
                     <span>Bash</span>
-                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 release 1.0.0 \"首發穩定版\"')">複製指令</button>
+                    <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.2.0 release 1.2.0 \"正式發布版本\"')">複製指令</button>
                 </div>
-                <pre><code># 建立規格版本快照
-npx -y jit-api@1.1.1 release 1.0.0 "首發穩定版"
+                <pre><code># 建立規格版本快照 (自動為每支 API 計算 SHA-256 簽名)
+npx -y jit-api@1.2.0 release 1.2.0 "正式發布版本"
 
-# 線上發生突發狀況？秒級回滾至指定版本！
-npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
+# 線上發生突發狀況？自動驗證 SHA-256 簽名並秒級回滾！
+npx -y jit-api@1.2.0 rollback 1.2.0</code></pre>
             </div>
             <p style="color: #94a3b8; font-size: 0.88rem;">
-                💡 <strong>v1.1.1 亮點</strong>：當降版時，若當前目錄存在該歷史版本中沒有的「孤兒規格」，系統會自動將其備份隔離至 <code>.jit/releases/orphaned_*/</code>，絕不遺失任何代碼。
+                🛡️ <strong>v1.2.0 亮點</strong>：若歷史快照遭惡意修改，系統會觸發 <code>[Security Alert] 快照檔案完整性驗證失敗</code> 中斷回滾；若當前存在新孤兒規格，會自動備份隔離至 <code>.jit/releases/orphaned_*/</code>。
             </p>
         </div>
     </section>
@@ -1132,7 +1177,7 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
         <div class="playground-header">
             <div class="playground-title">
                 <span>🎮</span>
-                <span>線上互動演練器 (API Simulator)</span>
+                <span>線上互動演練器 (API & Auth Simulator)</span>
             </div>
             <div class="playground-mode-toggle">
                 <button class="toggle-btn active" id="btnModePhase1" onclick="setPlaygroundMode('phase1')">Phase 1: 語意探索 (AI)</button>
@@ -1153,6 +1198,16 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
                     <select id="simRouteSelect" class="form-select" onchange="onRouteSelectChange()">
                         <option value="date_converter">date_converter (日期與陰陽曆轉換)</option>
                         <option value="create_order">create_order (電商訂單下單處理)</option>
+                        <option value="secure_wallet">secure_wallet (需 Auth 鑑權之安全錢包 🔐)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="panel-label">Authorization Header 模擬 (Auth 鑑權)：</label>
+                    <select id="simAuthSelect" class="form-select">
+                        <option value="valid">✅ 帶入有效 Token (Bearer secret-super-key-999)</option>
+                        <option value="invalid">❌ 帶入無效 Token (Bearer wrong-token)</option>
+                        <option value="none">⚠️ 不帶 Authorization Header</option>
                     </select>
                 </div>
 
@@ -1164,7 +1219,7 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
                             <span class="preset-chip" onclick="fillPreset('standard')">標準欄位結構</span>
                         </span>
                     </label>
-                    <textarea id="simPayloadInput" class="form-input" style="height: 110px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;"></textarea>
+                    <textarea id="simPayloadInput" class="form-input" style="height: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;"></textarea>
                 </div>
 
                 <button class="action-btn" onclick="executeSimulatedApi()">
@@ -1187,8 +1242,8 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
     <section>
         <div class="section-header">
             <span class="section-badge">Security & Operations</span>
-            <h2 class="section-title">⚖️ 開發模式 vs 生產模式：全方位安全性對比</h2>
-            <p class="section-subtitle">jit-api 在兼顧極致靈活的同時，為生產環境提供了嚴格的零信任保護。</p>
+            <h2 class="section-title">⚖️ 開發模式 vs 生產模式：全方位安全性對比 (v1.2.0)</h2>
+            <p class="section-subtitle">jit-api 在兼顧極致靈活的同時，為生產環境提供了嚴格的零信任與物理端點隔離保護。</p>
         </div>
 
         <div class="comparison-table-wrapper">
@@ -1212,6 +1267,16 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
                         <td><strong>僅載入 <code>Stage: prod</code> 規格</strong>，草稿不外洩</td>
                     </tr>
                     <tr>
+                        <td><strong>API 身份鑑權 (## Auth)</strong></td>
+                        <td>全面生效（支援 Bearer / API-Key）</td>
+                        <td><strong>全面生效</strong>（未授權一律 401 拒絕）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>管理端點暴露 (Specs/Contracts)</strong></td>
+                        <td>開放查詢與載入</td>
+                        <td><strong>物理不註冊 (直接回應 404 Not Found)</strong></td>
+                    </tr>
+                    <tr>
                         <td><strong>Web Studio 儀表板</strong></td>
                         <td>全面開啟（視覺化測試、線上壓測、合約匯出）</td>
                         <td>唯讀狀態（或加上 <code>--headless</code> 完全關閉）</td>
@@ -1224,7 +1289,7 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
                     <tr>
                         <td><strong>HTTP 線上規格編輯</strong></td>
                         <td>允許（<code>POST /api/specs/:file</code>）</td>
-                        <td><strong>嚴格封鎖</strong>（直接回應 <code>403 Forbidden</code>）</td>
+                        <td><strong>物理不註冊</strong>（無法發起修改請求）</td>
                     </tr>
                     <tr>
                         <td><strong>規格自動熱重載</strong></td>
@@ -1232,9 +1297,9 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
                         <td>停用（靜態鎖定，確保高吞吐穩定度）</td>
                     </tr>
                     <tr>
-                        <td><strong>MCP AI 工具鏈掛載</strong></td>
-                        <td>開啟（掛載全部工具）</td>
-                        <td>開啟（僅掛載生產級可用工具）</td>
+                        <td><strong>自動化測試套件</strong></td>
+                        <td>支援（<code>npx jit-api test</code>）</td>
+                        <td>支援 CI/CD 流水線執行</td>
                     </tr>
                 </tbody>
             </table>
@@ -1272,7 +1337,7 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
                 <div class="timeline-content">
                     <div class="timeline-header">
                         <span class="timeline-version">v1.1.0 - Dev/Prod 雙模與版本快照</span>
-                        <span class="timeline-date">2026 年 9 月</span>
+                        <span class="timeline-date">2026 年 9 月中</span>
                     </div>
                     <ul class="timeline-list">
                         <li>導入 <code>dev</code> 與 <code>prod</code> 模式安全分流。</li>
@@ -1282,20 +1347,37 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
                 </div>
             </div>
 
-            <!-- v1.1.1 (Current) -->
+            <!-- v1.1.1 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-version">v1.1.1 - 安全防護與微服務強化</span>
+                        <span class="timeline-date">2026 年 9 月 23 日</span>
+                    </div>
+                    <ul class="timeline-list">
+                        <li>修復 MCPAdapter 穿透漏過 Dev 草稿規格問題。</li>
+                        <li>連接埠佔用時自動優雅遞增切換 (<code>EADDRINUSE</code>)。</li>
+                        <li>新增 <code>--headless</code> 純 API Gateway 模式。</li>
+                        <li>Rollback 時自動將孤兒規格隔離至 <code>.jit/releases/orphaned_*/</code>。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- v1.2.0 (Current) -->
             <div class="timeline-item active">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content" style="border-color: rgba(16, 185, 129, 0.4);">
                     <div class="timeline-header">
-                        <span class="timeline-version" style="color: var(--cyber-emerald);">v1.1.1 - 現行穩定版 (Current Stable) 🌟</span>
-                        <span class="timeline-date" style="color: var(--cyber-emerald); font-weight: 700;">最新發布</span>
+                        <span class="timeline-version" style="color: var(--cyber-emerald);">v1.2.0 - 企業級安全與測試升級 (Current Stable) 🌟</span>
+                        <span class="timeline-date" style="color: var(--cyber-emerald); font-weight: 700;">最新官方發布</span>
                     </div>
                     <ul class="timeline-list">
-                        <li><strong>資安漏洞修復</strong>：修復 MCPAdapter 穿透漏過 Dev 草稿規格的問題。</li>
-                        <li><strong>容錯重試</strong>：連接埠佔用時自動優雅遞增切換 (<code>EADDRINUSE</code>)，不再拋錯崩潰。</li>
-                        <li><strong>純網關模式</strong>：新增 <code>--headless</code> 參數，專為微服務容器化設計。</li>
-                        <li><strong>智慧隔離</strong>：Rollback 時自動將孤兒規格隔離至 <code>.jit/releases/orphaned_*/</code>。</li>
-                        <li><strong>前端防護</strong>：生產模式自動隱藏終端機抽屜並鎖定規格儲存按鈕。</li>
+                        <li><strong>規格自動化測試</strong>：新增 <code>npx jit-api test</code>，自動跑通 Fast-Path 與語意匹配。</li>
+                        <li><strong>原生 API 鑑權 (## Auth)</strong>：直接在 Markdown 定義 Bearer / API-Key 守衛，阻絕未授權存取 (401)。</li>
+                        <li><strong>密碼學防篡改 (SHA-256)</strong>：快照發布自動簽名，回滾前嚴格驗證，防止供應鏈投毒。</li>
+                        <li><strong>物理端點隔離</strong>：Prod 模式管理端點完全不掛載進路由，直接回傳 HTTP 404 (Zero Attack Surface)。</li>
+                        <li><strong>內建官方範本</strong>：包含下單、日期公農曆互轉與退款申請範本。</li>
                     </ul>
                 </div>
             </div>
@@ -1305,14 +1387,14 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
                 <div class="timeline-dot" style="border-color: #64748b;"></div>
                 <div class="timeline-content" style="border-style: dashed;">
                     <div class="timeline-header">
-                        <span class="timeline-version" style="color: #94a3b8;">v1.2.0+ - 未來演化藍圖 (Coming Soon)</span>
+                        <span class="timeline-version" style="color: #94a3b8;">v1.3.0+ - 未來演化藍圖 (Coming Soon)</span>
                         <span class="timeline-date">規劃中</span>
                     </div>
                     <ul class="timeline-list">
-                        <li><strong>分散式快路快取</strong>：支援 Redis / Upstash，凍結合約跨節點同步。</li>
-                        <li><strong>雙向契約轉換</strong>：支援 OpenAPI 3.1 與 Markdown 規格雙向匯入匯出。</li>
-                        <li><strong>靜態二進位編譯</strong>：支援一鍵匯出 Go / Rust 高吞吐微服務單一檔案。</li>
-                        <li><strong>鑑權插件系統</strong>：內建 JWT、API Key 與 OAuth2 權限守衛。</li>
+                        <li><strong>CJK 中文雙字切片斷詞</strong>：優化離線 Needle 引擎對純中文字串的語意辨識準確率。</li>
+                        <li><strong>分散式快路快取</strong>：支援 Redis / Upstash，凍結合約跨節點零延遲同步。</li>
+                        <li><strong>雙向契約轉換</strong>：支援 OpenAPI 3.1 與 Markdown 規格雙向無痛匯入匯出。</li>
+                        <li><strong>靜態二進位編譯</strong>：支援一鍵匯出 Go / Rust 高吞吐微服務二進位檔。</li>
                     </ul>
                 </div>
             </div>
@@ -1354,11 +1436,14 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
     <footer class="cta-card">
         <h2 class="cta-title">準備好開啟全新的 API 開發體驗了嗎？</h2>
         <p class="cta-desc">
-            無需安裝大型軟體包，只需一行指令，即可在你的電腦或伺服器上體驗 jit-api v1.1.1 帶來的無縫開發流。
+            無需安裝大型軟體包，只需一行指令，即可在你的電腦或伺服器上體驗 jit-api v1.2.0 帶來的極致無縫開發流。
         </p>
         <div class="cta-command-box">
-            <span>npx -y jit-api@1.1.1 init</span>
-            <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.1.1 init')">一鍵複製</button>
+            <span>npx -y jit-api@1.2.0 init</span>
+            <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.2.0 init')">一鍵複製</button>
+            <span style="color: #64748b;">|</span>
+            <span>npx -y jit-api@1.2.0 test</span>
+            <button class="copy-btn" onclick="copyCode('npx -y jit-api@1.2.0 test')">一鍵複製</button>
         </div>
         <p style="color: #64748b; font-size: 0.85rem; margin-top: 1.5rem;">
             MIT Licensed • 開源且持續演進 • 歡迎至 GitHub 提交 Issue 與 PR
@@ -1374,13 +1459,17 @@ npx -y jit-api@1.1.1 rollback 1.0.0</code></pre>
 
 <script>
     // 範例 Spec 代碼字串
-    const sampleSpecCode = `# API: date_converter
-Version: 1.1.1
+    const sampleSpecCode = `# API: secure_service
+Version: 1.2.0
 Stage: prod
-> 日期轉換中心：支援 Timestamp 時間戳、陽曆與陰曆雙向精準互換
+> 日期轉換與安全查詢中心
+
+## Auth
+- type: bearer
+- token: "my-secret-token-123"
 
 ## Intent
-User wants to convert dates, unix timestamp, solar to lunar calendar, or lunar to solar
+User wants to convert dates, unix timestamp, solar to lunar calendar, or query secure data
 
 ## Fields
 - action: enum (轉換模式)
@@ -1421,8 +1510,12 @@ return {
             standard: JSON.stringify({ route: "date_converter", action: "SOLAR_TO_LUNAR", date: "2026-09-23" }, null, 2)
         },
         create_order: {
-            semantic: JSON.stringify({ message: "我想買一台 iPad Pro，金額 25900 元，用 LINE Pay" }, null, 2),
+            semantic: JSON.stringify({ message: "我想買一台 iPad Pro，金額 25900 元，用 LINE Pay order" }, null, 2),
             standard: JSON.stringify({ route: "create_order", item: "iPad Pro", amount: 25900, paymentMethod: "LINE_PAY" }, null, 2)
+        },
+        secure_wallet: {
+            semantic: JSON.stringify({ message: "我要轉帳 500 元給 Alice transfer funds" }, null, 2),
+            standard: JSON.stringify({ route: "secure_wallet", amount: 500, to: "Alice" }, null, 2)
         }
     };
 
@@ -1432,7 +1525,9 @@ return {
 
     function fillPreset(type) {
         const route = document.getElementById('simRouteSelect').value;
-        document.getElementById('simPayloadInput').value = presets[route][type];
+        if (presets[route]) {
+            document.getElementById('simPayloadInput').value = presets[route][type];
+        }
     }
 
     function setPlaygroundMode(mode) {
@@ -1456,6 +1551,7 @@ return {
 
     function executeSimulatedApi() {
         const route = document.getElementById('simRouteSelect').value;
+        const authChoice = document.getElementById('simAuthSelect').value;
         const rawInput = document.getElementById('simPayloadInput').value;
         let payload = {};
 
@@ -1465,13 +1561,33 @@ return {
             payload = { text: rawInput };
         }
 
+        // Check Auth condition for secure_wallet route
+        if (route === 'secure_wallet') {
+            if (authChoice === 'none') {
+                document.getElementById('latencyDisplay').textContent = 'HTTP 401 Unauthorized (未授權)';
+                document.getElementById('simOutputBox').textContent = JSON.stringify({
+                    error: "Authentication required: missing header 'authorization' for route 'secure_wallet'",
+                    status: 401
+                }, null, 2);
+                return;
+            }
+            if (authChoice === 'invalid') {
+                document.getElementById('latencyDisplay').textContent = 'HTTP 401 Unauthorized (Token 錯誤)';
+                document.getElementById('simOutputBox').textContent = JSON.stringify({
+                    error: "Invalid Bearer token for route 'secure_wallet'",
+                    status: 401
+                }, null, 2);
+                return;
+            }
+        }
+
         const isPhase3 = currentPlaygroundMode === 'phase3';
         const latency = isPhase3 ? 0 : Math.floor(Math.random() * 5 + 4);
         const aiLatency = isPhase3 ? 0 : latency;
 
         document.getElementById('latencyDisplay').textContent = isPhase3
-            ? `延遲: 0ms (快路直達，跳過 AI 驗證)`
-            : `延遲: ${latency}ms (AI 意圖識別: ${aiLatency}ms)`;
+            ? `HTTP 200 OK | 延遲: 0ms (快路直達，跳過 AI 驗證)`
+            : `HTTP 200 OK | 延遲: ${latency}ms (AI 意圖識別: ${aiLatency}ms)`;
 
         let resData = {};
         if (route === 'date_converter') {
@@ -1488,6 +1604,16 @@ return {
                     chineseString: "農曆丙午年(馬) 八月十三"
                 },
                 timestamp: { seconds: 1790092800, milliseconds: 1790092800000 },
+                phase: isPhase3 ? "phase3_frozen" : "phase1_dynamic",
+                ai_latency_ms: aiLatency
+            };
+        } else if (route === 'secure_wallet') {
+            resData = {
+                status: "TRANSFERRED",
+                amount: payload.amount || 500,
+                to: payload.to || "Alice",
+                balance: 9500,
+                auth_verified: true,
                 phase: isPhase3 ? "phase3_frozen" : "phase1_dynamic",
                 ai_latency_ms: aiLatency
             };
@@ -1511,8 +1637,11 @@ return {
                 phase: isPhase3 ? "phase3_frozen" : "phase1_dynamic",
                 executionTimeMs: latency,
                 aiLatencyMs: aiLatency,
-                intentConfidence: isPhase3 ? 1.0 : 0.94,
-                engineUsed: isPhase3 ? "static_zod_validator" : "needle_local"
+                intentConfidence: isPhase3 ? 1.0 : 0.95,
+                engineUsed: isPhase3 ? "static_zod_validator" : "needle_local",
+                headers: {
+                    authorization: authChoice === 'valid' ? "Bearer secret-super-key-999" : undefined
+                }
             }
         };
 
@@ -1524,7 +1653,6 @@ return {
         navigator.clipboard.writeText(text).then(() => {
             showToast('已成功複製到剪貼簿！');
         }).catch(() => {
-            // Fallback
             const el = document.createElement('textarea');
             el.value = text;
             document.body.appendChild(el);

@@ -1,9 +1,9 @@
 const announcements = [
     {
-        title: "【最新發布 v1.1.1】用 Markdown 就能寫後端！JIT Protocol Synthesis (jit-api) 全圖解入門與實戰心得",
+        title: "【最新發布 v1.2.0】用 Markdown 就能寫後端！JIT Protocol Synthesis (jit-api) 全圖解入門與實戰心得",
         date: "2026-09-23",
         path: "announcements/k9x2m7w4.html",
-        preview: "以 Markdown 為單一真實數據來源！深度解析 JIT 協定演化三階段、Dev/Prod 雙模安全分流、秒級 Rollback 孤兒規格隔離與 --headless 純網關模式。內含互動式 API 演練器與極速起手教學。"
+        preview: "以 Markdown 為單一真實數據來源！全新 v1.2.0 深度加入規格自動化測試套件 (npx jit-api test)、原生 API 身份鑑權 (## Auth)、SHA-256 密碼學防篡改快照驗證與生產環境物理端點隔離。內附互動式 API 演練器與完整起手教學。"
     },
     {
         title: "大師級紫微斗數全圖解教學：從底層邏輯看懂你的命盤人生攻略",
